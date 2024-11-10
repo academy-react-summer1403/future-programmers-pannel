@@ -9,9 +9,9 @@ export default [
   },
   {
     id: "secondPage",
-    title: "Second Page",
+    title: "مدیریت کاربران",
     icon: <Mail size={20} />,
-    navLink: "/second-page",
+    navLink: "/user",
   },
   {
     id: "smaplePage",

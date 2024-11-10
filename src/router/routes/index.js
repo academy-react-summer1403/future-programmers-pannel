@@ -27,6 +27,9 @@ const DefaultRoute = "/home";
 
 const Home = lazy(() => import("../../pages/Home"));
 const Users = lazy(() => import("../../pages/Users"));
+const Courses = lazy(() => import("../../pages/Courses"));
+const News = lazy(() => import("../../pages/News"));
+const Comment = lazy(() => import("../../pages/Comment"));
 const Login = lazy(() => import("../../pages/Login"));
 const Register = lazy(() => import("../../pages/Register"));
 const ForgotPassword = lazy(() => import("../../pages/ForgotPassword"));
@@ -51,6 +54,18 @@ const Routes = [
   {
     path: "/user",
     element: <Users />,
+  },
+  {
+    path: "/courses",
+    element: <Courses />,
+  },
+  {
+    path: "/news",
+    element: <News />,
+  },
+  {
+    path: "/comment",
+    element: <Comment />,
   },
   {
     path: "/login",

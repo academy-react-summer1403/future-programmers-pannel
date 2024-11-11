@@ -1,4 +1,4 @@
-import { Mail, Home,BookOpen,Monitor, Airplay, Circle } from "react-feather";
+import { Home,BookOpen,Book,Users, Airplay, Circle } from "react-feather";
 
 export default [
   {
@@ -8,13 +8,13 @@ export default [
     navLink: "/home",
   },
   {
-    id: "secondPage",
+    id: "user",
     title: "مدیریت کاربران",
-    icon: <Mail size={20} />,
+    icon: <Users size={20} />,
     navLink: "/user",
   },
   {
-    id: "thirdPage",
+    id: "courses",
     title: "مدیریت دوره",
     icon: <BookOpen size={20} />,
     // navLink: "/courses",
@@ -23,40 +23,40 @@ export default [
         id: "courseList",
         title: "لیست دوره ها",
         icon: <Circle size={12} />,
-        navLink: "/apps/invoice/list",
+        navLink: "/apps/courses/list",
       },
       {
-        id: "addCourse",
+        id: "CourseAdd",
         title: "افزودن دوره جدید",
         icon: <Circle size={12} />,
-        navLink: "/apps/invoice/list",
+        navLink: "/apps/courses/addCourse",
       },
     ],
   },
   {
-    id: "forthPage",
+    id: "news-essay",
     title: "مدیریت اخبار و مقالات",
-    icon: <Monitor size={20} />,
+    icon: <Airplay size={20} />,
     // navLink: "/news",
     children: [
       {
         id: "newsList",
         title: "لیست  اخبار و مقالات",
         icon: <Circle size={12} />,
-        navLink: "/apps/invoice/list",
+        navLink: "/apps/news/list",
       },
       {
-        id: "addNews",
+        id: "newsAdd",
         title: "افزودن  اخبار و مقالات",
         icon: <Circle size={12} />,
-        navLink: "/apps/invoice/list",
+        navLink: "/apps/news/addNews",
       },
     ],
   },
   {
-    id: "fifthPage",
+    id: "comment",
     title: "مدیریت کامنت ها  ",
-    icon: <Mail size={20} />,
+    icon: <Book size={20} />,
     navLink: "/comment",
   },
   // {

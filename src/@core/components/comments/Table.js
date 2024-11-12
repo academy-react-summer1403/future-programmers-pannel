@@ -19,7 +19,7 @@ import pic from '../../../assets/images/avatars/1.png'
 import Select from 'react-select'
 import ReactPaginate from 'react-paginate'
 import DataTable from 'react-data-table-component'
-import { ChevronDown, Share, Printer, FileText, File, Grid, Copy, MoreVertical, Archive, Trash2, Sidebar } from 'react-feather'
+import { ChevronDown, Share, Printer, FileText, File, Grid, Copy, MoreVertical, Archive, Trash2, Sidebar, Eye } from 'react-feather'
 
 // ** Utils
 import { selectThemeColors } from '@utils'
@@ -223,13 +223,6 @@ const UsersList = () => {
     { value: 'team', label: 'Team' }
   ]
 
-  const statusOptions = [
-    { value: '', label: 'Select Status', number: 0 },
-    { value: 'pending', label: 'Pending', number: 1 },
-    { value: 'active', label: 'Active', number: 2 },
-    { value: 'inactive', label: 'Inactive', number: 3 }
-  ]
-
   // ** Function in get data on page change
   // const handlePagination = page => {
   //   dispatch(
@@ -360,7 +353,7 @@ const UsersList = () => {
     {
     name: 'کاربر',
     sortable: true,
-    minWidth: '300px',
+    minWidth: '150px',
     sortField: 'fullName',
     selector: row => row.name,
     cell: row => (
@@ -381,20 +374,28 @@ const UsersList = () => {
     )
   },
   {
-    name: 'نقش کاربر',
+    name: 'عنوان کامنت ',
     sortable: true,
-    minWidth: '172px',
+    minWidth: '150px',
     sortField: 'role',
     selector: row => row.teacher,
     // cell: row => renderRole(row)
   },
   {
-    name: 'ایمیل',
-    minWidth: '138px',
+    name: 'نمایش کامنت',
+    minWidth: '200px',
     sortable: true,
     sortField: 'currentPlan',
     selector: row => row.teacher,
     // cell: row => <span className='text-capitalize'>{row.teacher}</span>
+  },
+  {
+    name: ' دوره ',
+    sortable: true,
+    minWidth: '172px',
+    sortField: 'role',
+    selector: row => row.teacher,
+    // cell: row => renderRole(row)
   },
   {
     name: 'وضعیت',
@@ -409,8 +410,18 @@ const UsersList = () => {
     )
   },
   {
+    
+    // name: ' دوره ',
+    sortable: true,
+    minWidth: '80px',
+    sortField: 'role',
+    selector: row => row.teacher,
+    // cell: row => renderRole(row)
+    cell: row => <Eye size={15}/>
+  },
+  {
     name: 'Actions',
-    minWidth: '100px',
+    minWidth: '10px',
     cell: row => (
       <div className='column-action'>
         <UncontrolledDropdown>
@@ -510,32 +521,6 @@ const UsersList = () => {
                       role: currentRole.value,
                       currentPlan: data.value,
                       status: currentStatus.value
-                    })
-                  )
-                }}
-              />
-            </Col>
-            <Col md='4'>
-              <Label for='status-select'>Status</Label>
-              <Select
-                theme={selectThemeColors}
-                isClearable={false}
-                className='react-select'
-                classNamePrefix='select'
-                options={statusOptions}
-                value={currentStatus}
-                onChange={data => {
-                  setCurrentStatus(data)
-                  dispatch(
-                    getData({
-                      sort,
-                      sortColumn,
-                      q: searchTerm,
-                      page: currentPage,
-                      status: data.value,
-                      perPage: rowsPerPage,
-                      role: currentRole.value,
-                      currentPlan: currentPlan.value
                     })
                   )
                 }}

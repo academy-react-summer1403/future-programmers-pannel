@@ -1,6 +1,11 @@
+import Table from "../@core/components/comments/Table";
+
+
 const Comment = () => {
     return (
-      <div>salam5</div>
+      <div>
+        <Table />
+      </div>
     );
   };
   

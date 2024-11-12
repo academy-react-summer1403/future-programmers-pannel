@@ -51,10 +51,10 @@ const Routes = [
     path: "/home",
     element: <Home />,
   },
-  {
-    path: "/sample",
-    element: <Sample />,
-  },
+  // {
+  //   path: "/sample",
+  //   element: <Sample />,
+  // },
   {
     path: "/user",
     element: <Users />,

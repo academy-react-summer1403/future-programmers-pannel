@@ -1,6 +1,6 @@
 // ** React Imports
 import { useSkin } from "@hooks/useSkin";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // ** Icons Imports
 import { Facebook, Twitter, Mail, GitHub } from "react-feather";
@@ -26,9 +26,30 @@ import illustrationsDark from "@src/assets/images/pages/login-v2-dark.svg";
 
 // ** Styles
 import "@styles/react/pages/page-authentication.scss";
+import { useState } from "react";
+import { signin } from "../core/services/api/auth";
+import { setItem } from "../core/services/common/storage.services";
 
 const Login = () => {
   const { skin } = useSkin();
+  const [userName , setUserName] = useState('');
+  const [passWord , setPassWord] = useState('');
+//  console.log(userName, passWord)
+
+  const navigate = useNavigate()
+  
+  const handleSubmit = async()=>{
+    try {
+      const result = await signin({phoneOrGmail:userName, password:passWord, rememberMe:false })
+      console.log(result)
+      if(result.success){
+        setItem('token', result.token)
+        navigate("/home")
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const source = skin === "dark" ? illustrationsDark : illustrationsLight;
 
@@ -130,10 +151,12 @@ const Login = () => {
                   Email
                 </Label>
                 <Input
-                  type="email"
+                  value={userName}
+                  type="text"
                   id="login-email"
                   placeholder="john@example.com"
                   autoFocus
+                  onChange={(e)=>setUserName(e.target.value)}
                 />
               </div>
               <div className="mb-1">
@@ -148,6 +171,7 @@ const Login = () => {
                 <InputPasswordToggle
                   className="input-group-merge"
                   id="login-password"
+                  setPassWord={setPassWord}
                 />
               </div>
               <div className="form-check mb-1">
@@ -156,7 +180,7 @@ const Login = () => {
                   Remember Me
                 </Label>
               </div>
-              <Button tag={Link} to="/" color="primary" block>
+              <Button onClick={handleSubmit} color="primary" block>
                 Sign in
               </Button>
             </Form>

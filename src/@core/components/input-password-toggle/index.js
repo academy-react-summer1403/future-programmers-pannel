@@ -22,6 +22,7 @@ const InputPasswordToggle = forwardRef((props, ref) => {
     iconSize,
     inputClassName,
     invalid,
+    setPassWord,
     ...rest
   } = props;
 
@@ -53,6 +54,7 @@ const InputPasswordToggle = forwardRef((props, ref) => {
         })}
       >
         <Input
+          onChange={(e)=>setPassWord(e.target.value)}
           ref={ref}
           invalid={invalid}
           type={inputVisibility === false ? "password" : "text"}

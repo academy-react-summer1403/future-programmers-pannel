@@ -1,6 +1,6 @@
 import {Row, Col} from "reactstrap";
 import StatsHorizontal from "../@core/components/StatsHorizontal/StatsHorizontal";
-// import Table from "../@core/components/StatsHorizontal/Table";
+import Table from "../@core/components/StatsHorizontal/Table";
 import { User, UserPlus, UserCheck, UserX } from 'react-feather'
 
 
@@ -41,7 +41,7 @@ const Users = () => {
         />
       </Col>
     </Row>
-    {/* <Table /> */}
+    <Table />
   </div>
     
   );

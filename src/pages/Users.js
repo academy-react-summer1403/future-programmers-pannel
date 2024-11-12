@@ -2,9 +2,30 @@ import {Row, Col} from "reactstrap";
 import StatsHorizontal from "../@core/components/StatsHorizontal/StatsHorizontal";
 import Table from "../@core/components/StatsHorizontal/Table";
 import { User, UserPlus, UserCheck, UserX } from 'react-feather'
+import { useEffect, useState } from "react";
+import { userList } from "../core/services/api/userList";
+
 
 
 const Users = () => {
+
+  const [users , setUsers] = useState([])
+  console.log('qqq',users);
+
+  const getAllUsersList = async()=>{
+    try {
+      const result = await userList()
+      console.log('aaaaa',result)
+      setUsers(result.listUser)
+    } catch (error) {
+      
+    }
+  }
+
+  useEffect(()=>{
+    getAllUsersList(); 
+},[]);
+
   return (
     <div className='app-user-list'>
     <Row>

@@ -358,7 +358,7 @@ const UsersList = () => {
   }
   const columns =[
     {
-    name: 'کاربر',
+    name: 'نویسنده',
     sortable: true,
     minWidth: '300px',
     sortField: 'fullName',
@@ -381,15 +381,23 @@ const UsersList = () => {
     )
   },
   {
-    name: 'نقش کاربر',
+    name: 'عنوان خبر',
     sortable: true,
-    minWidth: '172px',
+    minWidth: '150px',
     sortField: 'role',
     selector: row => row.teacher,
     // cell: row => renderRole(row)
   },
   {
-    name: 'ایمیل',
+    name: 'دسته بندی خبر',
+    minWidth: '138px',
+    sortable: true,
+    sortField: 'currentPlan',
+    selector: row => row.teacher,
+    // cell: row => <span className='text-capitalize'>{row.teacher}</span>
+  },
+  {
+    name: 'توضیحات کوتاه',
     minWidth: '138px',
     sortable: true,
     sortField: 'currentPlan',
@@ -398,7 +406,7 @@ const UsersList = () => {
   },
   {
     name: 'وضعیت',
-    minWidth: '138px',
+    minWidth: '100px',
     sortable: true,
     sortField: 'status',
     selector: row => row.status,

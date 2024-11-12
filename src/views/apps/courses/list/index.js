@@ -4,6 +4,7 @@ import Table from "../../../../@core/components/users-list/Table";
 import { User, UserPlus, UserCheck, UserX } from 'react-feather'
 
 function index() {
+  
   return (
     <div className='app-user-list'>
     <Row>

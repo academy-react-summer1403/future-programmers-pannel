@@ -358,7 +358,7 @@ const UsersList = () => {
   }
   const columns =[
     {
-    name: 'کاربر',
+    name: 'دوره',
     sortable: true,
     minWidth: '300px',
     sortField: 'fullName',
@@ -381,23 +381,35 @@ const UsersList = () => {
     )
   },
   {
-    name: 'نقش کاربر',
-    sortable: true,
-    minWidth: '172px',
-    sortField: 'role',
-    selector: row => row.teacher,
-    // cell: row => renderRole(row)
-  },
-  {
-    name: 'ایمیل',
-    minWidth: '138px',
+    name: 'نوع دوره',
+    minWidth: '100px',
     sortable: true,
     sortField: 'currentPlan',
     selector: row => row.teacher,
     // cell: row => <span className='text-capitalize'>{row.teacher}</span>
   },
   {
-    name: 'وضعیت',
+    name: 'سطح دوره',
+    minWidth: '100px',
+    sortable: true,
+    sortField: 'currentPlan',
+    selector: row => row.teacher,
+    // cell: row => <span className='text-capitalize'>{row.teacher}</span>
+  },
+  {
+    name: 'وضعیت فعال بودن',
+    minWidth: '138px',
+    sortable: true,
+    sortField: 'status',
+    selector: row => row.status,
+    cell: row => (
+      <Badge className='text-capitalize' color={statusObj[row.status]} pill>
+        {row.status}
+      </Badge>
+    )
+  },
+  {
+    name: 'وضعیت موجود بودن',
     minWidth: '138px',
     sortable: true,
     sortField: 'status',

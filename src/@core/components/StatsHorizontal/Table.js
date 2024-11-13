@@ -345,16 +345,16 @@ const UsersList = () => {
   // }
 
   const data = [
-    {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'pending'},
-    {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'active'},
-    {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'pending'},
-    {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'inactive'},
-    {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'pending'},
+    {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'فعال'},
+    {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'غیرفعال'},
+    {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'ناموجود'},
+    {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'فعال'},
+    {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'غیرفعال'},
   ]
   const statusObj = {
-    pending: 'light-warning',
-    active: 'light-success',
-    inactive: 'light-secondary'
+    غیرفعال: 'light-warning',
+    فعال: 'light-success',
+    ناموجود: 'light-secondary'
   }
   const columns =[
     {
@@ -394,6 +394,14 @@ const UsersList = () => {
     sortable: true,
     sortField: 'currentPlan',
     selector: row => row.teacher,
+    // cell: row => <span className='text-capitalize'>{row.teacher}</span>
+  },
+  {
+    name: 'درصد تکمیل پروفایل',
+    minWidth: '100px',
+    sortable: true,
+    sortField: 'currentPlan',
+    // selector: row => row.teacher,
     // cell: row => <span className='text-capitalize'>{row.teacher}</span>
   },
   {

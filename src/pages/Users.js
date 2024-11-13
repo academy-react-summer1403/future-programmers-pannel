@@ -36,8 +36,14 @@ const Users = () => {
       
     }
   }
-const admins = statics?.filter((e)=>e.userRoles=="Student")
-console.log("vcdfd", admins.length)
+  const admins = statics?.filter((e)=>e.userRoles=="Administrator")
+  const adminNumber = admins.length
+  const teacher = statics?.filter((e)=>e.userRoles=="Teacher")
+  const teacherNumber = teacher.length
+  const student = statics?.filter((e)=>e.userRoles=="Student")
+  const studentNumber = student.length
+
+  
   
 
   useEffect(()=>{
@@ -63,7 +69,7 @@ console.log("vcdfd", admins.length)
           color='danger'
           statTitle='ادمین ها'
           icon={<UserPlus size={20} />}
-          renderStats={<h3 className='fw-bolder mb-75'>4,567</h3>}
+          renderStats={<h3 className='fw-bolder mb-75'>{adminNumber}</h3>}
         />
       </Col>
       <Col lg='3' sm='6'>
@@ -71,7 +77,7 @@ console.log("vcdfd", admins.length)
           color='success'
           statTitle='اساتید'
           icon={<UserCheck size={20} />}
-          renderStats={<h3 className='fw-bolder mb-75'>19,860</h3>}
+          renderStats={<h3 className='fw-bolder mb-75'>{teacherNumber}</h3>}
         />
       </Col>
       <Col lg='3' sm='6'>

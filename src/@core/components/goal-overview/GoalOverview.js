@@ -84,8 +84,8 @@ const GoalOverview = props => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle tag='h4'>Goal Overview</CardTitle>
-        <HelpCircle size={18} className='text-muted cursor-pointer' />
+        <CardTitle tag='h4'>درصد تکمیل پروفایل کاربران(بیش از 80%)</CardTitle>
+        {/* <HelpCircle size={18} className='text-muted cursor-pointer' /> */}
       </CardHeader>
       <CardBody className='p-0'>
         <Chart options={options} series={series} type='radialBar' height={245} />

@@ -10,17 +10,20 @@ import { userList } from "../core/services/api/userList";
 const Users = () => {
 
   const [users , setUsers] = useState([])
-  console.log('qqq',users);
+  const [usersCount , setAllUsers] = useState([])
 
   const getAllUsersList = async()=>{
     try {
       const result = await userList()
       console.log('aaaaa',result)
+
       setUsers(result.listUser)
+      setAllUsers(result.totalCount)
     } catch (error) {
       
     }
   }
+  
 
   useEffect(()=>{
     getAllUsersList(); 
@@ -34,7 +37,7 @@ const Users = () => {
           color='primary'
           statTitle='کل کاربران'
           icon={<User size={20} />}
-          renderStats={<h3 className='fw-bolder mb-75'>21,459</h3>}
+          renderStats={<h3 className='fw-bolder mb-75'>{usersCount}</h3>}
         />
       </Col>
       <Col lg='3' sm='6'>

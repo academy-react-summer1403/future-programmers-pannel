@@ -18,7 +18,7 @@ import http from '../interceptor'
 export const userList = async()=>{
     try {
         const result = await http.get('/User/UserMannage')
-        console.log('dddd', result.data)
+        // console.log('dddd', result)
         return result
     } catch (error) {
         console.log(error)

@@ -10,24 +10,42 @@ import { userList } from "../core/services/api/userList";
 const Users = () => {
 
   const [users , setUsers] = useState([])
-  const [usersCount , setAllUsers] = useState([])
+  const [usersCount , setUserCount] = useState([])
+  // console.log("ttt", usersCount)
+  const [admin , setAdmin] = useState([])
+  const [statics , setStatics] = useState([]);
+  console.log("qq", statics)
+
 
   const getAllUsersList = async()=>{
     try {
       const result = await userList()
-      console.log('aaaaa',result)
+      // console.log('aaaaa',result)
 
       setUsers(result.listUser)
-      setAllUsers(result.totalCount)
+      setUserCount(result.totalCount)
     } catch (error) {
       
     }
   }
+  const getUserStatic = async()=>{
+    try {
+      const result = await userList(1000, 1)
+      setStatics(result.listUser)
+    } catch (error) {
+      
+    }
+  }
+const admins = statics?.filter((e)=>e.userRoles=="Student")
+console.log("vcdfd", admins.length)
   
 
   useEffect(()=>{
     getAllUsersList(); 
+    getUserStatic(); 
 },[]);
+
+
 
   return (
     <div className='app-user-list'>

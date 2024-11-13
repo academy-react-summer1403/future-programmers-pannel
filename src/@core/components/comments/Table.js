@@ -359,7 +359,7 @@ const UsersList = () => {
     cell: row => (
       <div className='d-flex justify-content-left align-items-center'>
         {/* {renderClient(row)} */}
-        <Avatar img={pic}/>
+        <Avatar img={pic} className='me-1'/>
         <div className='d-flex flex-column'>
           {/* <Link
             to={`/apps/user/view/${row.id}`}

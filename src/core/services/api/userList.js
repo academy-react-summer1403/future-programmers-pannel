@@ -15,9 +15,15 @@ import http from '../interceptor'
 //     }
 // }
 
-export const userList = async()=>{
+export const userList = async(RowsOfPage, PageNumber)=>{
     try {
-        const result = await http.get('/User/UserMannage')
+        const queryObj = {}
+        if(RowsOfPage!== "" && RowsOfPage!==null) queryObj.RowsOfPage = RowsOfPage;
+        if(PageNumber!== "" && PageNumber!==null) queryObj.PageNumber = PageNumber;
+        
+
+        const result = await http.get('/User/UserMannage',{params:queryObj})
+
         // console.log('dddd', result)
         return result
     } catch (error) {

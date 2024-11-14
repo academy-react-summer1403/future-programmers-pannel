@@ -7,6 +7,7 @@ import { Fragment, useState, useEffect } from 'react'
 import Avatar from '@components/avatar'
 
 import pic from '../../../assets/images/avatars/1.png'
+// import Earnings from './Earnings.js'
 
 // ** Table Columns
 // import { columns } from './columns'
@@ -394,14 +395,6 @@ const UsersList = () => {
     sortable: true,
     sortField: 'currentPlan',
     selector: row => row.teacher,
-    // cell: row => <span className='text-capitalize'>{row.teacher}</span>
-  },
-  {
-    name: 'درصد تکمیل پروفایل',
-    minWidth: '100px',
-    sortable: true,
-    sortField: 'currentPlan',
-    // selector: row => row.teacher,
     // cell: row => <span className='text-capitalize'>{row.teacher}</span>
   },
   {

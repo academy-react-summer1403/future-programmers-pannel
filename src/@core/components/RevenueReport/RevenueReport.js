@@ -89,10 +89,10 @@ const RevenueReport = props => {
         name: 'Earning',
         data: [95, 177, 284, 256, 105, 63, 168, 218, 72]
       },
-      {
-        name: 'Expense',
-        data: [-145, -80, -60, -180, -100, -60, -85, -75, -100]
-      }
+      // {
+      //   name: 'Expense',
+      //   data: [-145, -80, -60, -180, -100, -60, -85, -75, -100]
+      // }
     ]
 
   // const budgetSeries = [

@@ -14,7 +14,7 @@ const Users = () => {
   // console.log("ttt", usersCount)
   const [admin , setAdmin] = useState([])
   const [statics , setStatics] = useState([]);
-  console.log("qq", statics)
+  // console.log("qq", statics)
 
 
   const getAllUsersList = async()=>{

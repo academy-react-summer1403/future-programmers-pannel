@@ -7,7 +7,8 @@ import { Fragment, useState, useEffect } from 'react'
 import Avatar from '@components/avatar'
 
 import pic from '../../../assets/images/portrait/small/pic.jpg'
-import Earnings from './Earnings'
+// import Earnings from './Earnings'
+import ProductsSearchbar from './ProductsSearchbar'
 
 // ** Table Columns
 // import { columns } from './columns'
@@ -170,7 +171,7 @@ import {
 //   )
 // }
 
-const UsersList = ({users}) => {
+const UsersList = ({users , setSearch}) => {
   // ** Store Vars
   // const dispatch = useDispatch()
   // const store = useSelector(state => state.users)
@@ -521,32 +522,10 @@ const UsersList = ({users}) => {
                 }}
               />
             </Col>
-            {/* <Col md='4'>
-              <Label for='status-select'>Status</Label>
-              <Select
-                theme={selectThemeColors}
-                isClearable={false}
-                className='react-select'
-                classNamePrefix='select'
-                options={statusOptions}
-                value={currentStatus}
-                onChange={data => {
-                  setCurrentStatus(data)
-                  dispatch(
-                    getData({
-                      sort,
-                      sortColumn,
-                      q: searchTerm,
-                      page: currentPage,
-                      status: data.value,
-                      perPage: rowsPerPage,
-                      role: currentRole.value,
-                      currentPlan: currentPlan.value
-                    })
-                  )
-                }}
-              />
-            </Col> */}
+            <Col md='4'>
+              <Label for='status-select'>Search</Label>
+              <ProductsSearchbar setSearch={setSearch}/>
+            </Col>
           </Row>
         </CardBody>
       </Card>

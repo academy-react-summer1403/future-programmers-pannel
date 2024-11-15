@@ -11,16 +11,15 @@ const Users = () => {
 
   const [users , setUsers] = useState([])
   const [usersCount , setUserCount] = useState([])
-  // console.log("ttt", usersCount)
   const [admin , setAdmin] = useState([])
   const [statics , setStatics] = useState([]);
-  // console.log("qq", statics)
+  const [search, setSearch] = useState('')
+  
 
 
-  const getAllUsersList = async()=>{
+  const getAllUsersList = async(search)=>{
     try {
-      const result = await userList()
-      // console.log('aaaaa',result)
+      const result = await userList("", "", search)
 
       setUsers(result.listUser)
       setUserCount(result.totalCount)
@@ -47,9 +46,9 @@ const Users = () => {
   
 
   useEffect(()=>{
-    getAllUsersList(); 
+    getAllUsersList(search); 
     getUserStatic(); 
-},[]);
+},[search]);
 
 
 
@@ -89,7 +88,7 @@ const Users = () => {
         />
       </Col>
     </Row>
-    <Table users={users} />
+    <Table users={users} setSearch={setSearch} />
   </div>
     
   );

@@ -521,7 +521,7 @@ const UsersList = ({users}) => {
                 }}
               />
             </Col>
-            <Col md='4'>
+            {/* <Col md='4'>
               <Label for='status-select'>Status</Label>
               <Select
                 theme={selectThemeColors}
@@ -546,7 +546,7 @@ const UsersList = ({users}) => {
                   )
                 }}
               />
-            </Col>
+            </Col> */}
           </Row>
         </CardBody>
       </Card>

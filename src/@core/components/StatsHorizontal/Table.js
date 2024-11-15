@@ -6,8 +6,8 @@ import { Fragment, useState, useEffect } from 'react'
 
 import Avatar from '@components/avatar'
 
-import pic from '../../../assets/images/avatars/1.png'
-// import Earnings from './Earnings.js'
+import pic from '../../../assets/images/portrait/small/pic.jpg'
+import Earnings from './Earnings'
 
 // ** Table Columns
 // import { columns } from './columns'
@@ -170,7 +170,7 @@ import {
 //   )
 // }
 
-const UsersList = () => {
+const UsersList = ({users}) => {
   // ** Store Vars
   // const dispatch = useDispatch()
   // const store = useSelector(state => state.users)
@@ -185,6 +185,7 @@ const UsersList = () => {
   const [currentRole, setCurrentRole] = useState({ value: '', label: 'Select Role' })
   const [currentPlan, setCurrentPlan] = useState({ value: '', label: 'Select Plan' })
   const [currentStatus, setCurrentStatus] = useState({ value: '', label: 'Select Status', number: 0 })
+  console.log('vvv',users)
 
   // ** Function to toggle sidebar
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen)
@@ -345,38 +346,40 @@ const UsersList = () => {
   //   )
   // }
 
-  const data = [
-    {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'فعال'},
-    {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'غیرفعال'},
-    {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'ناموجود'},
-    {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'فعال'},
-    {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'غیرفعال'},
-  ]
+  // const data = [
+  //   {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'فعال'},
+  //   {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'غیرفعال'},
+  //   {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'ناموجود'},
+  //   {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'فعال'},
+  //   {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'غیرفعال'},
+  // ]
   const statusObj = {
-    غیرفعال: 'light-warning',
-    فعال: 'light-success',
-    ناموجود: 'light-secondary'
+    // غیرفعال: 'light-warning',
+    true: 'light-success',
+    false: 'light-secondary'
   }
   const columns =[
     {
     name: 'کاربر',
     sortable: true,
-    minWidth: '300px',
+    // minWidth: '200px',
+    maxWidth: '200px',
     sortField: 'fullName',
-    selector: row => row.name,
+    // selector: row => row.name,
     cell: row => (
       <div className='d-flex justify-content-left align-items-center'>
         {/* {renderClient(row)} */}
-        <Avatar img={pic} className='me-1'/>
+        
+        {row.pictureAddress !== null && row.pictureAddress !== 'Not-set' ? <Avatar img={row.pictureAddress } className='me-1'/>: <Avatar img={pic} className='me-1'/>}
         <div className='d-flex flex-column'>
           {/* <Link
             to={`/apps/user/view/${row.id}`}
             className='user_name text-truncate text-body'
             onClick={() => store.dispatch(getUser(row.id))}
           > */}
-            <span className='fw-bolder'>{row.family}</span>
+            <span className='fw-bolder'>{row.fname}</span>
           {/* </Link> */}
-          <small className='text-truncate text-muted mb-0'>{row.email}</small>
+          <small className='text-truncate text-muted mb-0'>{row.lname}</small>
         </div>
       </div>
     )
@@ -386,7 +389,7 @@ const UsersList = () => {
     sortable: true,
     minWidth: '172px',
     sortField: 'role',
-    selector: row => row.teacher,
+    selector: row => row.userRoles??'اطلاعات موجود نیست',
     // cell: row => renderRole(row)
   },
   {
@@ -394,24 +397,26 @@ const UsersList = () => {
     minWidth: '138px',
     sortable: true,
     sortField: 'currentPlan',
-    selector: row => row.teacher,
+    selector: row => row.gmail,
     // cell: row => <span className='text-capitalize'>{row.teacher}</span>
   },
   {
     name: 'وضعیت',
-    minWidth: '138px',
+    minWidth: '100px',
+    maxWidth:'100px',
     sortable: true,
     sortField: 'status',
-    selector: row => row.status,
+    // selector: row => row.active,
     cell: row => (
-      <Badge className='text-capitalize' color={statusObj[row.status]} pill>
-        {row.status}
+      <Badge className='text-capitalize' color={statusObj[row.active]} pill>
+        {row.active}
       </Badge>
     )
   },
   {
     name: 'Actions',
     minWidth: '100px',
+    maxWidth:'200px',
     cell: row => (
       <div className='column-action'>
         <UncontrolledDropdown>
@@ -560,7 +565,7 @@ const UsersList = () => {
             sortIcon={<ChevronDown />}
             className='react-dataTable'
             // paginationComponent={CustomPagination}
-            data={data}
+            data={users}
             // subHeaderComponent={
             //   <CustomHeader
             //     store={store}

@@ -89,7 +89,7 @@ const Users = () => {
         />
       </Col>
     </Row>
-    <Table />
+    <Table users={users} />
   </div>
     
   );

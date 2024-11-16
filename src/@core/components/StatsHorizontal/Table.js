@@ -183,7 +183,7 @@ const UsersList = ({users , setSearch}) => {
   const [sortColumn, setSortColumn] = useState('id')
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [currentRole, setCurrentRole] = useState({ value: '', label: 'Select Role' })
+  const [currentRole, setCurrentRole] = useState({ value: '', label: 'انتخاب نقش کاربر' })
   const [currentPlan, setCurrentPlan] = useState({ value: '', label: 'Select Plan' })
   const [currentStatus, setCurrentStatus] = useState({ value: '', label: 'Select Status', number: 0 })
   console.log('vvv',users)
@@ -210,12 +210,12 @@ const UsersList = ({users , setSearch}) => {
 
   // ** User filter options
   const roleOptions = [
-    { value: '', label: 'Select Role' },
-    { value: 'admin', label: 'Admin' },
-    { value: 'author', label: 'Author' },
-    { value: 'editor', label: 'Editor' },
-    { value: 'maintainer', label: 'Maintainer' },
-    { value: 'subscriber', label: 'Subscriber' }
+    { value: '', label: ' نقش کاربر' },
+    { value: 'Administrator', label: 'ادمین' },
+    { value: 'Teacher', label: 'استاد' },
+    { value: 'Student', label: 'دانشجو' },
+    { value: 'Employee.Writer', label: 'نویسنده' },
+    // { value: 'subscriber', label: 'Subscriber' }
   ]
 
   const planOptions = [
@@ -226,12 +226,12 @@ const UsersList = ({users , setSearch}) => {
     { value: 'team', label: 'Team' }
   ]
 
-  const statusOptions = [
-    { value: '', label: 'Select Status', number: 0 },
-    { value: 'pending', label: 'Pending', number: 1 },
-    { value: 'active', label: 'Active', number: 2 },
-    { value: 'inactive', label: 'Inactive', number: 3 }
-  ]
+  // const statusOptions = [
+  //   { value: '', label: 'Select Status', number: 0 },
+  //   { value: 'pending', label: 'Pending', number: 1 },
+  //   { value: 'active', label: 'Active', number: 2 },
+  //   { value: 'inactive', label: 'Inactive', number: 3 }
+  // ]
 
   // ** Function in get data on page change
   // const handlePagination = page => {
@@ -466,12 +466,12 @@ const UsersList = ({users , setSearch}) => {
       
       <Card>
         <CardHeader>
-          <CardTitle tag='h4'>Filters</CardTitle>
+          <CardTitle tag='h4'>فیلترها</CardTitle>
         </CardHeader>
         <CardBody>
           <Row>
             <Col md='4'>
-              <Label for='role-select'>Role</Label>
+              <Label for='role-select'>نقش کاربر</Label>
               <Select
                 isClearable={false}
                 value={currentRole}
@@ -479,21 +479,7 @@ const UsersList = ({users , setSearch}) => {
                 className='react-select'
                 classNamePrefix='select'
                 theme={selectThemeColors}
-                onChange={data => {
-                  setCurrentRole(data)
-                  dispatch(
-                    getData({
-                      sort,
-                      sortColumn,
-                      q: searchTerm,
-                      role: data.value,
-                      page: currentPage,
-                      perPage: rowsPerPage,
-                      status: currentStatus.value,
-                      currentPlan: currentPlan.value
-                    })
-                  )
-                }}
+                onChange= {(e)=>setSort(e.target.value)}
               />
             </Col>
             <Col className='my-md-0 my-1' md='4'>

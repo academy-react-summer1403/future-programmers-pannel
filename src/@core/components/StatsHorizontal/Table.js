@@ -171,7 +171,7 @@ import {
 //   )
 // }
 
-const UsersList = ({users , setSearch}) => {
+const UsersList = ({users , setSearch, setRole, setActivation}) => {
   // ** Store Vars
   // const dispatch = useDispatch()
   // const store = useSelector(state => state.users)
@@ -183,10 +183,9 @@ const UsersList = ({users , setSearch}) => {
   const [sortColumn, setSortColumn] = useState('id')
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [currentRole, setCurrentRole] = useState({ value: '', label: 'انتخاب نقش کاربر' })
-  const [currentPlan, setCurrentPlan] = useState({ value: '', label: 'Select Plan' })
+  
   const [currentStatus, setCurrentStatus] = useState({ value: '', label: 'Select Status', number: 0 })
-  console.log('vvv',users)
+  
 
   // ** Function to toggle sidebar
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen)
@@ -218,12 +217,10 @@ const UsersList = ({users , setSearch}) => {
     // { value: 'subscriber', label: 'Subscriber' }
   ]
 
-  const planOptions = [
-    { value: '', label: 'Select Plan' },
-    { value: 'basic', label: 'Basic' },
-    { value: 'company', label: 'Company' },
-    { value: 'enterprise', label: 'Enterprise' },
-    { value: 'team', label: 'Team' }
+  const activationOptions = [
+    { value: '', label: 'انتخاب وضعیت' },
+    { value: 'True', label: 'فعال' },
+    { value: 'False', label: 'غیرفعال' },
   ]
 
   // const statusOptions = [
@@ -356,8 +353,8 @@ const UsersList = ({users , setSearch}) => {
   // ]
   const statusObj = {
     // غیرفعال: 'light-warning',
-    true: 'light-success',
-    false: 'light-secondary'
+    True: 'light-success',
+    False: 'light-secondary'
   }
   const columns =[
     {
@@ -474,15 +471,27 @@ const UsersList = ({users , setSearch}) => {
               <Label for='role-select'>نقش کاربر</Label>
               <Select
                 isClearable={false}
-                value={currentRole}
+                value={setRole}
                 options={roleOptions}
                 className='react-select'
                 classNamePrefix='select'
                 theme={selectThemeColors}
-                onChange= {(e)=>setSort(e.target.value)}
+                onChange= {(e)=>setRole(e.target.value)}
               />
             </Col>
             <Col className='my-md-0 my-1' md='4'>
+              <Label for='plan-select'>وضعیت فعالیت</Label>
+              <Select
+                theme={selectThemeColors}
+                isClearable={false}
+                className='react-select'
+                classNamePrefix='select'
+                options={activationOptions}
+                value={setActivation}
+                onChange={(e)=>setActivation(e.target.value)}
+              />
+            </Col>
+            {/* <Col className='my-md-0 my-1' md='4'>
               <Label for='plan-select'>Plan</Label>
               <Select
                 theme={selectThemeColors}
@@ -507,7 +516,8 @@ const UsersList = ({users , setSearch}) => {
                   )
                 }}
               />
-            </Col>
+            </Col> */}
+
             <Col md='4'>
               <Label for='status-select'>Search</Label>
               <ProductsSearchbar setSearch={setSearch}/>

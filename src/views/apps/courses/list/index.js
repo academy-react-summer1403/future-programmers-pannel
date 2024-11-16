@@ -2,9 +2,29 @@ import {Row, Col} from "reactstrap";
 import StatsHorizontal from "../../../../@core/components/users-list/StatsHorizontal";
 import Table from "../../../../@core/components/users-list/Table";
 import { User, UserPlus, UserCheck, UserX } from 'react-feather'
+import { useEffect, useState } from "react";
+import { courseList } from "../../../../core/services/api/courseList";
 
 function index() {
   
+  const [course, setCourse] = useState([])
+  const [search, setSearch] = useState('')
+  console.log(course)
+  
+  const getAllCourseList = async(search)=>{
+    try {
+      const result = await courseList("", "", search)
+      setCourse(result.courseDtos)
+    } catch (error) {
+      
+    }
+  }
+
+
+  useEffect(()=>{
+    getAllCourseList(search); 
+},[search]);
+
   return (
     <div className='app-user-list'>
     <Row>
@@ -41,7 +61,7 @@ function index() {
         />
       </Col>
     </Row>
-    <Table />
+    <Table course={course} setSearch={setSearch} />
   </div>
 
   )

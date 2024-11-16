@@ -7,6 +7,7 @@ import { Fragment, useState, useEffect } from 'react'
 import Avatar from '@components/avatar'
 
 import pic from '../../../assets/images/avatars/1.png'
+import ProductsSearchbar from './ProductsSearchbar'
 
 // ** Table Columns
 // import { columns } from './columns'
@@ -169,7 +170,7 @@ import {
 //   )
 // }
 
-const UsersList = () => {
+const UsersList = ({course, setSearch}) => {
   // ** Store Vars
   // const dispatch = useDispatch()
   // const store = useSelector(state => state.users)
@@ -229,7 +230,7 @@ const UsersList = () => {
     { value: 'active', label: 'Active', number: 2 },
     { value: 'inactive', label: 'Inactive', number: 3 }
   ]
-
+  
   // ** Function in get data on page change
   // const handlePagination = page => {
   //   dispatch(
@@ -344,17 +345,17 @@ const UsersList = () => {
   //   )
   // }
 
-  const data = [
-    {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'pending'},
-    {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'active'},
-    {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'pending'},
-    {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'inactive'},
-    {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'pending'},
-  ]
+  // const data = [
+  //   {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'pending'},
+  //   {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'active'},
+  //   {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'pending'},
+  //   {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'inactive'},
+  //   {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'pending'},
+  // ]
   const statusObj = {
-    pending: 'light-warning',
-    active: 'light-success',
-    inactive: 'light-secondary'
+    // pending: 'light-warning',
+    true: 'light-success',
+    false: 'light-secondary'
   }
   const columns =[
     {
@@ -362,20 +363,21 @@ const UsersList = () => {
     sortable: true,
     minWidth: '300px',
     sortField: 'fullName',
-    selector: row => row.name,
+    // selector: row => row.name,
     cell: row => (
       <div className='d-flex justify-content-left align-items-center'>
         {/* {renderClient(row)} */}
-        <Avatar img={pic} className='me-1'/>
+        {row.tumbImageAddress !== null && row.tumbImageAddress !== 'Not-set' ? <Avatar img={row.tumbImageAddress } className='me-1'/>: <Avatar img={pic} className='me-1'/>}
+
         <div className='d-flex flex-column'>
           {/* <Link
             to={`/apps/user/view/${row.id}`}
             className='user_name text-truncate text-body'
             onClick={() => store.dispatch(getUser(row.id))}
           > */}
-            <span className='fw-bolder'>{row.family}</span>
+            <span className='fw-bolder'>{row.title}</span>
           {/* </Link> */}
-          <small className='text-truncate text-muted mb-0'>{row.email}</small>
+          {/* <small className='text-truncate text-muted mb-0'>{row.title}</small> */}
         </div>
       </div>
     )
@@ -385,7 +387,7 @@ const UsersList = () => {
     minWidth: '100px',
     sortable: true,
     sortField: 'currentPlan',
-    selector: row => row.teacher,
+    selector: row => row.typeName,
     // cell: row => <span className='text-capitalize'>{row.teacher}</span>
   },
   {
@@ -393,7 +395,7 @@ const UsersList = () => {
     minWidth: '100px',
     sortable: true,
     sortField: 'currentPlan',
-    selector: row => row.teacher,
+    selector: row => row.levelName,
     // cell: row => <span className='text-capitalize'>{row.teacher}</span>
   },
   {
@@ -401,10 +403,11 @@ const UsersList = () => {
     minWidth: '138px',
     sortable: true,
     sortField: 'status',
-    selector: row => row.status,
+    // selector: row => row.isActive,
     cell: row => (
-      <Badge className='text-capitalize' color={statusObj[row.status]} pill>
-        {row.status}
+      <Badge className='text-capitalize' color={statusObj[row.isActive]} pill>
+        {row.isActive}
+
       </Badge>
     )
   },
@@ -413,10 +416,10 @@ const UsersList = () => {
     minWidth: '138px',
     sortable: true,
     sortField: 'status',
-    selector: row => row.status,
+    // selector: row => row.status,
     cell: row => (
-      <Badge className='text-capitalize' color={statusObj[row.status]} pill>
-        {row.status}
+      <Badge className='text-capitalize' color={statusObj[row.isActive]} pill>
+        {/* {row.isActive = true ? row.isActive ==='فعال' : row.isActive === "غیرفعال"} */}
       </Badge>
     )
   },
@@ -528,30 +531,8 @@ const UsersList = () => {
               />
             </Col>
             <Col md='4'>
-              <Label for='status-select'>Status</Label>
-              <Select
-                theme={selectThemeColors}
-                isClearable={false}
-                className='react-select'
-                classNamePrefix='select'
-                options={statusOptions}
-                value={currentStatus}
-                onChange={data => {
-                  setCurrentStatus(data)
-                  dispatch(
-                    getData({
-                      sort,
-                      sortColumn,
-                      q: searchTerm,
-                      page: currentPage,
-                      status: data.value,
-                      perPage: rowsPerPage,
-                      role: currentRole.value,
-                      currentPlan: currentPlan.value
-                    })
-                  )
-                }}
-              />
+            <Label for='status-select'>Search</Label>
+            <ProductsSearchbar setSearch={setSearch}/>
             </Col>
           </Row>
         </CardBody>
@@ -571,7 +552,7 @@ const UsersList = () => {
             sortIcon={<ChevronDown />}
             className='react-dataTable'
             // paginationComponent={CustomPagination}
-            data={data}
+            data={course}
             // subHeaderComponent={
             //   <CustomHeader
             //     store={store}

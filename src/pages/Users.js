@@ -14,9 +14,9 @@ const Users = () => {
   const [admin , setAdmin] = useState([])
   const [statics , setStatics] = useState([]);
   const [search, setSearch] = useState('')
-  const [role, setRole] = useState({ value: '', label: 'انتخاب نقش کاربر' })
-  const [activation, setActivation] = useState({ value: '', label: 'انتخاب وضعیت' })
+  const [role, setRole] = useState({ value: '', id: null, label: 'انتخاب نقش کاربر' })
   
+  const [activation, setActivation] = useState({ value: '', label: 'انتخاب وضعیت' })
 
 
   const getAllUsersList = async(search, role, activation)=>{
@@ -48,9 +48,9 @@ const Users = () => {
   
 
   useEffect(()=>{
-    getAllUsersList(search, role, activation); 
+    getAllUsersList(search, role?.id, activation?.value); 
     getUserStatic(); 
-},[search, role, activation]);
+},[search, role?.id, activation?.value]);
 
 
 
@@ -90,7 +90,7 @@ const Users = () => {
         />
       </Col>
     </Row>
-    <Table users={users} setSearch={setSearch} setSort={setRole} setActivation={setActivation}/>
+    <Table users={users} setSearch={setSearch} setRole={setRole} role={role} setActivation={setActivation}/>
   </div>
     
   );

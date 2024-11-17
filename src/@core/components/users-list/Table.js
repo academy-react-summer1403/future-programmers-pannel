@@ -170,7 +170,7 @@ import {
 //   )
 // }
 
-const UsersList = ({course, setSearch}) => {
+const UsersList = ({course, setSearch, setExpire, expire}) => {
   // ** Store Vars
   // const dispatch = useDispatch()
   // const store = useSelector(state => state.users)
@@ -182,7 +182,6 @@ const UsersList = ({course, setSearch}) => {
   const [sortColumn, setSortColumn] = useState('id')
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [currentRole, setCurrentRole] = useState({ value: '', label: 'Select Role' })
   const [currentPlan, setCurrentPlan] = useState({ value: '', label: 'Select Plan' })
   const [currentStatus, setCurrentStatus] = useState({ value: '', label: 'Select Status', number: 0 })
 
@@ -207,13 +206,12 @@ const UsersList = ({course, setSearch}) => {
   // }, [dispatch, store.data.length, sort, sortColumn, currentPage])
 
   // ** User filter options
-  const roleOptions = [
-    { value: '', label: 'Select Role' },
-    { value: 'admin', label: 'Admin' },
-    { value: 'author', label: 'Author' },
-    { value: 'editor', label: 'Editor' },
-    { value: 'maintainer', label: 'Maintainer' },
-    { value: 'subscriber', label: 'Subscriber' }
+  const expireOptions = [
+    { value: '', label: 'انتخاب وضعیت' },
+    { value: false, label: 'موجود' },
+    { value: true, label: 'منقضی' },
+    
+    
   ]
 
   const planOptions = [
@@ -224,12 +222,6 @@ const UsersList = ({course, setSearch}) => {
     { value: 'team', label: 'Team' }
   ]
 
-  const statusOptions = [
-    { value: '', label: 'Select Status', number: 0 },
-    { value: 'pending', label: 'Pending', number: 1 },
-    { value: 'active', label: 'Active', number: 2 },
-    { value: 'inactive', label: 'Inactive', number: 3 }
-  ]
   
   // ** Function in get data on page change
   // const handlePagination = page => {
@@ -352,11 +344,7 @@ const UsersList = ({course, setSearch}) => {
   //   {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'inactive'},
   //   {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'pending'},
   // ]
-  const statusObj = {
-    // pending: 'light-warning',
-    true: 'light-success',
-    false: 'light-secondary'
-  }
+
   const columns =[
     {
     name: 'دوره',
@@ -405,8 +393,8 @@ const UsersList = ({course, setSearch}) => {
     sortField: 'status',
     // selector: row => row.isActive,
     cell: row => (
-      <Badge className='text-capitalize' color={statusObj[row.isActive]} pill>
-        {row.isActive}
+      <Badge className='text-capitalize' color={row.isActive ? "light-success" : "light-danger"} pill>
+        {row.isActive ? "فعال" : "غیرفعال"}
 
       </Badge>
     )
@@ -418,8 +406,8 @@ const UsersList = ({course, setSearch}) => {
     sortField: 'status',
     // selector: row => row.status,
     cell: row => (
-      <Badge className='text-capitalize' color={statusObj[row.isActive]} pill>
-        {/* {row.isActive = true ? row.isActive ==='فعال' : row.isActive === "غیرفعال"} */}
+      <Badge className='text-capitalize' color={row.isExpire ? "light-danger" : "light-success"} pill>
+        {row.isExpire ? "منقضی شده" : "موجود است"}
       </Badge>
     )
   },
@@ -482,26 +470,27 @@ const UsersList = ({course, setSearch}) => {
               <Label for='role-select'>Role</Label>
               <Select
                 isClearable={false}
-                value={currentRole}
-                options={roleOptions}
+                value={expire}
+                options={expireOptions}
                 className='react-select'
                 classNamePrefix='select'
                 theme={selectThemeColors}
-                onChange={data => {
-                  setCurrentRole(data)
-                  dispatch(
-                    getData({
-                      sort,
-                      sortColumn,
-                      q: searchTerm,
-                      role: data.value,
-                      page: currentPage,
-                      perPage: rowsPerPage,
-                      status: currentStatus.value,
-                      currentPlan: currentPlan.value
-                    })
-                  )
-                }}
+                onChange= {(e)=>setExpire(e)}
+                // onChange={data => {
+                //   setCurrentRole(data)
+                //   dispatch(
+                //     getData({
+                //       sort,
+                //       sortColumn,
+                //       q: searchTerm,
+                //       role: data.value,
+                //       page: currentPage,
+                //       perPage: rowsPerPage,
+                //       status: currentStatus.value,
+                //       currentPlan: currentPlan.value
+                //     })
+                //   )
+                // }}
               />
             </Col>
             <Col className='my-md-0 my-1' md='4'>

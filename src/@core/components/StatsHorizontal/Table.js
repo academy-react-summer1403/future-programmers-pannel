@@ -171,7 +171,7 @@ import {
 //   )
 // }
 
-const UsersList = ({users , setSearch, setRole, setActivation}) => {
+const UsersList = ({users , setSearch, setRole, role, setActivation}) => {
   // ** Store Vars
   // const dispatch = useDispatch()
   // const store = useSelector(state => state.users)
@@ -209,18 +209,18 @@ const UsersList = ({users , setSearch, setRole, setActivation}) => {
 
   // ** User filter options
   const roleOptions = [
-    { value: '', label: ' نقش کاربر' },
-    { value: 'Administrator', label: 'ادمین' },
-    { value: 'Teacher', label: 'استاد' },
-    { value: 'Student', label: 'دانشجو' },
-    { value: 'Employee.Writer', label: 'نویسنده' },
+    { value: '',id: null ,label: ' نقش کاربر' },
+    { value: 'Administrator', id: 1, label: 'ادمین' },
+    { value: 'Teacher',id: 2 ,label: 'استاد' },
+    { value: 'Student',id: 5 ,label: 'دانشجو' },
+    { value: 'Employee.Writer',id: 4 ,label: 'نویسنده' },
     // { value: 'subscriber', label: 'Subscriber' }
   ]
 
   const activationOptions = [
-    { value: '', label: 'انتخاب وضعیت' },
-    { value: 'True', label: 'فعال' },
-    { value: 'False', label: 'غیرفعال' },
+    { value:'', label: 'انتخاب وضعیت' },
+    { value: true, label: 'فعال' },
+    { value: false, label: 'غیرفعال' },
   ]
 
   // const statusOptions = [
@@ -351,11 +351,11 @@ const UsersList = ({users , setSearch, setRole, setActivation}) => {
   //   {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'فعال'},
   //   {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'غیرفعال'},
   // ]
-  const statusObj = {
-    // غیرفعال: 'light-warning',
-    True: 'light-success',
-    False: 'light-secondary'
-  }
+  // const statusObj = {
+  //   // غیرفعال: 'light-warning',
+  //   True: 'light-success',
+  //   False: 'light-secondary'
+  // }
   const columns =[
     {
     name: 'کاربر',
@@ -406,8 +406,8 @@ const UsersList = ({users , setSearch, setRole, setActivation}) => {
     sortField: 'status',
     // selector: row => row.active,
     cell: row => (
-      <Badge className='text-capitalize' color={statusObj[row.active]} pill>
-        {row.active}
+      <Badge className='text-capitalize' color={row.active === "True" ? "light-success" : "light-danger"} pill>
+        {row.active === "True" ? "فعال" : "غیرفعال"}
       </Badge>
     )
   },
@@ -471,12 +471,12 @@ const UsersList = ({users , setSearch, setRole, setActivation}) => {
               <Label for='role-select'>نقش کاربر</Label>
               <Select
                 isClearable={false}
-                value={setRole}
+                value={role}
                 options={roleOptions}
                 className='react-select'
                 classNamePrefix='select'
                 theme={selectThemeColors}
-                onChange= {(e)=>setRole(e.target.value)}
+                onChange= {(e)=>setRole(e)}
               />
             </Col>
             <Col className='my-md-0 my-1' md='4'>
@@ -488,7 +488,7 @@ const UsersList = ({users , setSearch, setRole, setActivation}) => {
                 classNamePrefix='select'
                 options={activationOptions}
                 value={setActivation}
-                onChange={(e)=>setActivation(e.target.value)}
+                onChange={(e)=>setActivation(e)}
               />
             </Col>
             {/* <Col className='my-md-0 my-1' md='4'>

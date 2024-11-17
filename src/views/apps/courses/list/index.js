@@ -9,11 +9,12 @@ function index() {
   
   const [course, setCourse] = useState([])
   const [search, setSearch] = useState('')
-  console.log(course)
+  const [expire, setExpire] = useState({ value: '', label: 'انتخاب سطح دوره' })
   
-  const getAllCourseList = async(search)=>{
+  
+  const getAllCourseList = async(search, expire)=>{
     try {
-      const result = await courseList("", "", search)
+      const result = await courseList("", "", search, expire)
       setCourse(result.courseDtos)
     } catch (error) {
       
@@ -22,8 +23,8 @@ function index() {
 
 
   useEffect(()=>{
-    getAllCourseList(search); 
-},[search]);
+    getAllCourseList(search, expire); 
+},[search, expire]);
 
   return (
     <div className='app-user-list'>
@@ -61,7 +62,7 @@ function index() {
         />
       </Col>
     </Row>
-    <Table course={course} setSearch={setSearch} />
+    <Table course={course} setSearch={setSearch} setExpire={setExpire} expire={expire}/>
   </div>
 
   )

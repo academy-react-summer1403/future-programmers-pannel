@@ -1,7 +1,7 @@
 import {Row, Col} from "reactstrap";
 import StatsHorizontal from "../../../../@core/components/news-list/StatsHorizontal";
 import Table from "../../../../@core/components/news-list/Table";
-import { User, UserPlus, UserCheck, UserX } from 'react-feather'
+import { User, UserCheck, UserX } from 'react-feather'
 import { newsList } from "../../../../core/services/api/newsList";
 import { useEffect, useState } from "react";
 
@@ -27,21 +27,25 @@ function index() {
     try {
       const result = await newsList(1000, 1)
       setStatics(result.news)
-      console.log(setStatics)
     } catch (error) {
       
     }
   }
-  // const expire = statics?.filter((e)=>e.isActive=="true")
-  // const expireNumber = expire.length
-  // const notExpire = statics?.filter((e)=>e.isActive="false")
-  // const notExpireNumber = notExpire.length
+  const active = statics?.filter((e)=>e.isActive==true)
+  const activeNumber = active.length
+  const inactive = statics?.filter((e)=>e.isActive=false)
+  const inactiveNumber = inactive.length
 
 
   useEffect(()=>{
     getAllNewsList(search); 
     getNewsStatic();
 },[search]);
+
+// useEffect(() => {
+
+// }, [])
+
 
   return (
     <div className='app-user-list'>
@@ -59,7 +63,7 @@ function index() {
           color='success'
           statTitle=' خبر فعال'
           icon={<UserCheck size={20} />}
-          renderStats={<h3 className='fw-bolder mb-75'></h3>}
+          renderStats={<h3 className='fw-bolder mb-75'>{activeNumber}</h3>}
         />
       </Col>
       <Col lg='4' sm='6'>
@@ -67,7 +71,7 @@ function index() {
           color='danger'
           statTitle='خبر غیر فعال'
           icon={<UserX  size={20} />}
-          renderStats={<h3 className='fw-bolder mb-75'></h3>}
+          renderStats={<h3 className='fw-bolder mb-75'>{inactiveNumber}</h3>}
         />
       </Col>
       {/* <Col lg='3' sm='6'>

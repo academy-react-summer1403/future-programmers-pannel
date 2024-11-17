@@ -2,7 +2,7 @@ import {Row, Col} from "reactstrap";
 import StatsHorizontal from "../../../../@core/components/news-list/StatsHorizontal";
 import Table from "../../../../@core/components/news-list/Table";
 import { User, UserCheck, UserX } from 'react-feather'
-import { newsList } from "../../../../core/services/api/newsList";
+import { newsCount, newsList } from "../../../../core/services/api/newsList";
 import { useEffect, useState } from "react";
 
 function index() {
@@ -17,7 +17,7 @@ function index() {
     try {
       const result = await newsList("", "", search, activation)
       setNews(result.news)
-      setAllNews(result.totalCount)
+      
     } catch (error) {
       
     }
@@ -25,8 +25,9 @@ function index() {
 
   const getNewsStatic = async()=>{
     try {
-      const result = await newsList(1000, 1)
+      const result = await newsCount(1000, 1)
       setStatics(result.news)
+      setAllNews(result.totalCount)
     } catch (error) {
       
     }
@@ -38,9 +39,9 @@ function index() {
 
 
   useEffect(()=>{
-    getAllNewsList(search); 
+    getAllNewsList(search, activation?.value); 
     getNewsStatic();
-},[search]);
+},[search, activation?.value]);
 
 // useEffect(() => {
 

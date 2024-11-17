@@ -171,7 +171,7 @@ import {
 //   )
 // }
 
-const UsersList = ({users , setSearch, setRole, role, setActivation}) => {
+const UsersList = ({users , setSearch, setRole, role, setActivation, activation}) => {
   // ** Store Vars
   // const dispatch = useDispatch()
   // const store = useSelector(state => state.users)
@@ -344,18 +344,7 @@ const UsersList = ({users , setSearch, setRole, role, setActivation}) => {
   //   )
   // }
 
-  // const data = [
-  //   {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'فعال'},
-  //   {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'غیرفعال'},
-  //   {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'ناموجود'},
-  //   {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'فعال'},
-  //   {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'غیرفعال'},
-  // ]
-  // const statusObj = {
-  //   // غیرفعال: 'light-warning',
-  //   True: 'light-success',
-  //   False: 'light-secondary'
-  // }
+
   const columns =[
     {
     name: 'کاربر',
@@ -487,7 +476,7 @@ const UsersList = ({users , setSearch, setRole, role, setActivation}) => {
                 className='react-select'
                 classNamePrefix='select'
                 options={activationOptions}
-                value={setActivation}
+                value={activation}
                 onChange={(e)=>setActivation(e)}
               />
             </Col>

@@ -6,8 +6,21 @@ export const courseList = async(RowsOfPage, PageNumber, search, expire)=>{
         if(RowsOfPage!== "" && RowsOfPage!==null) queryObj.RowsOfPage = RowsOfPage;
         if(PageNumber!== "" && PageNumber!==null) queryObj.PageNumber = PageNumber;
         if(search!== "" && search!==null) queryObj.Query = search;
-        if(expire!== "" && expire!==null) queryObj.SortingCol = expire;
-        // if(type!== "" && type!==null) queryObj.IsActiveUser = type;
+        if(expire!== "" && expire!==null) queryObj.SortType = expire;
+
+
+        const result = await http.get('/Course/CourseList',{params:queryObj})
+        return result;
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const courseNumber = async(RowsOfPage, PageNumber)=>{
+    try {
+        const queryObj = {}
+        if(RowsOfPage!== "" && RowsOfPage!==null) queryObj.RowsOfPage = RowsOfPage;
+        if(PageNumber!== "" && PageNumber!==null) queryObj.PageNumber = PageNumber;
 
         const result = await http.get('/Course/CourseList',{params:queryObj})
         return result;

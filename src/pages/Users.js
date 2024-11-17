@@ -3,7 +3,7 @@ import StatsHorizontal from "../@core/components/StatsHorizontal/StatsHorizontal
 import Table from "../@core/components/StatsHorizontal/Table";
 import { User, UserPlus, UserCheck, UserX } from 'react-feather'
 import { useEffect, useState } from "react";
-import { userList } from "../core/services/api/userList";
+import { userCount, userList } from "../core/services/api/userList";
 
 
 
@@ -11,7 +11,6 @@ const Users = () => {
 
   const [users , setUsers] = useState([])
   const [usersCount , setUserCount] = useState([])
-  // const [admin , setAdmin] = useState([])
   const [statics , setStatics] = useState([]);
   const [search, setSearch] = useState('')
   const [role, setRole] = useState({ value: '', id: null, label: 'انتخاب نقش کاربر' })
@@ -24,15 +23,16 @@ const Users = () => {
       const result = await userList("", "", search, role, activation)
 
       setUsers(result.listUser)
-      setUserCount(result.totalCount)
+      
     } catch (error) {
       
     }
   }
   const getUserStatic = async()=>{
     try {
-      const result = await userList(1000, 1)
+      const result = await userCount(1000, 1)
       setStatics(result.listUser)
+      setUserCount(result.totalCount)
     } catch (error) {
       
     }
@@ -40,7 +40,8 @@ const Users = () => {
   const admins = statics?.filter((e)=>e.userRoles=="Administrator")
   const adminNumber = admins.length
   const teacher = statics?.filter((e)=>e.userRoles=="Teacher")
-  const teacherNumber = teacher.length
+  //  console.log(teacher)
+  const teacherNumber = teacher.length  
   const student = statics?.filter((e)=>e.userRoles=="Student")
   const studentNumber = student.length
 
@@ -90,7 +91,7 @@ const Users = () => {
         />
       </Col>
     </Row>
-    <Table users={users} setSearch={setSearch} setRole={setRole} role={role} setActivation={setActivation}/>
+    <Table users={users} setSearch={setSearch} setRole={setRole} role={role} setActivation={setActivation} activation={activation}/>
   </div>
     
   );

@@ -211,8 +211,8 @@ const UsersList = ({news, setSearch, setActivation, activation}) => {
  
   const activationOptions = [
     { value:'', label: 'انتخاب وضعیت' },
-    { value: true, label: 'فعال' },
-    { value: false, label: 'غیرفعال' },
+    { value: 'true', label: 'فعال' },
+    { value: 'false', label: 'غیرفعال' },
   ]
 
 

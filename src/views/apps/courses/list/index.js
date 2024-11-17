@@ -3,7 +3,7 @@ import StatsHorizontal from "../../../../@core/components/users-list/StatsHorizo
 import Table from "../../../../@core/components/users-list/Table";
 import { User, UserPlus, UserCheck, UserX, UserMinus } from 'react-feather'
 import { useEffect, useState } from "react";
-import { courseList } from "../../../../core/services/api/courseList";
+import { courseList, courseNumber } from "../../../../core/services/api/courseList";
 
 function index() {
   
@@ -11,14 +11,14 @@ function index() {
   const [courseCount, setCourseCount] = useState([])
   const [statics , setStatics] = useState([]);
   const [search, setSearch] = useState('')
-  const [expire, setExpire] = useState({ value: '', label: 'انتخاب سطح دوره' })
+  const [expire, setExpire] = useState({ value: '', label: 'انتخاب وضعیت دوره' })
   
   
   const getAllCourseList = async(search, expire)=>{
     try {
       const result = await courseList("", "", search, expire)
       setCourse(result.courseDtos)
-      setCourseCount(result.totalCount)
+      
     } catch (error) {
       
     }
@@ -26,8 +26,9 @@ function index() {
 
   const getCourseStatic = async()=>{
     try {
-      const result = await courseList(1000, 1)
+      const result = await courseNumber(1000, 1)
       setStatics(result.courseDtos)
+      setCourseCount(result.totalCount)
     } catch (error) {
       
     }

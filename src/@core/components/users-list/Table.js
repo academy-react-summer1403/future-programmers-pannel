@@ -208,18 +208,10 @@ const UsersList = ({course, setSearch, setExpire, expire}) => {
   // ** User filter options
   const expireOptions = [
     { value: '', label: 'انتخاب وضعیت' },
-    { value: false, label: 'موجود' },
-    { value: true, label: 'منقضی' },
+    { value: false , label: 'موجود' },
+    { value: true , label: 'منقضی' },
     
     
-  ]
-
-  const planOptions = [
-    { value: '', label: 'Select Plan' },
-    { value: 'basic', label: 'Basic' },
-    { value: 'company', label: 'Company' },
-    { value: 'enterprise', label: 'Enterprise' },
-    { value: 'team', label: 'Team' }
   ]
 
   
@@ -491,32 +483,6 @@ const UsersList = ({course, setSearch, setExpire, expire}) => {
                 //     })
                 //   )
                 // }}
-              />
-            </Col>
-            <Col className='my-md-0 my-1' md='4'>
-              <Label for='plan-select'>Plan</Label>
-              <Select
-                theme={selectThemeColors}
-                isClearable={false}
-                className='react-select'
-                classNamePrefix='select'
-                options={planOptions}
-                value={currentPlan}
-                onChange={data => {
-                  setCurrentPlan(data)
-                  dispatch(
-                    getData({
-                      sort,
-                      sortColumn,
-                      q: searchTerm,
-                      page: currentPage,
-                      perPage: rowsPerPage,
-                      role: currentRole.value,
-                      currentPlan: data.value,
-                      status: currentStatus.value
-                    })
-                  )
-                }}
               />
             </Col>
             <Col md='4'>

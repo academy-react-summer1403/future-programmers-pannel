@@ -520,7 +520,7 @@ const UsersList = ({course, setSearch, setExpire, expire}) => {
               />
             </Col>
             <Col md='4'>
-            <Label for='status-select'>Search</Label>
+            <Label for='status-select'>جستجو</Label>
             <ProductsSearchbar setSearch={setSearch}/>
             </Col>
           </Row>

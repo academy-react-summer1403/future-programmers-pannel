@@ -11,7 +11,7 @@ const Users = () => {
 
   const [users , setUsers] = useState([])
   const [usersCount , setUserCount] = useState([])
-  const [admin , setAdmin] = useState([])
+  // const [admin , setAdmin] = useState([])
   const [statics , setStatics] = useState([]);
   const [search, setSearch] = useState('')
   const [role, setRole] = useState({ value: '', id: null, label: 'انتخاب نقش کاربر' })

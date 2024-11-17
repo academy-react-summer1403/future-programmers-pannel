@@ -6,7 +6,9 @@ import { Fragment, useState, useEffect } from 'react'
 
 import Avatar from '@components/avatar'
 
-import pic from '../../../assets/images/avatars/1.png'
+import pic from '../../../assets/images/portrait/small/pic.jpg'
+import ProductsSearchbar from './ProductsSearchbar'
+
 
 // ** Table Columns
 // import { columns } from './columns'
@@ -169,7 +171,7 @@ import {
 //   )
 // }
 
-const UsersList = () => {
+const UsersList = ({news, setSearch, setActivation, activation}) => {
   // ** Store Vars
   // const dispatch = useDispatch()
   // const store = useSelector(state => state.users)
@@ -206,29 +208,13 @@ const UsersList = () => {
   // }, [dispatch, store.data.length, sort, sortColumn, currentPage])
 
   // ** User filter options
-  const roleOptions = [
-    { value: '', label: 'Select Role' },
-    { value: 'admin', label: 'Admin' },
-    { value: 'author', label: 'Author' },
-    { value: 'editor', label: 'Editor' },
-    { value: 'maintainer', label: 'Maintainer' },
-    { value: 'subscriber', label: 'Subscriber' }
+ 
+  const activationOptions = [
+    { value:'', label: 'انتخاب وضعیت' },
+    { value: true, label: 'فعال' },
+    { value: false, label: 'غیرفعال' },
   ]
 
-  const planOptions = [
-    { value: '', label: 'Select Plan' },
-    { value: 'basic', label: 'Basic' },
-    { value: 'company', label: 'Company' },
-    { value: 'enterprise', label: 'Enterprise' },
-    { value: 'team', label: 'Team' }
-  ]
-
-  const statusOptions = [
-    { value: '', label: 'Select Status', number: 0 },
-    { value: 'pending', label: 'Pending', number: 1 },
-    { value: 'active', label: 'Active', number: 2 },
-    { value: 'inactive', label: 'Inactive', number: 3 }
-  ]
 
   // ** Function in get data on page change
   // const handlePagination = page => {
@@ -344,13 +330,13 @@ const UsersList = () => {
   //   )
   // }
 
-  const data = [
-    {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'pending'},
-    {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'active'},
-    {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'pending'},
-    {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'inactive'},
-    {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'pending'},
-  ]
+  // const data = [
+  //   {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'pending'},
+  //   {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'active'},
+  //   {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'pending'},
+  //   {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'inactive'},
+  //   {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'pending'},
+  // ]
   const statusObj = {
     pending: 'light-warning',
     active: 'light-success',
@@ -362,20 +348,21 @@ const UsersList = () => {
     sortable: true,
     minWidth: '300px',
     sortField: 'fullName',
-    selector: row => row.name,
+    // selector: row => row.addUserFullName,
     cell: row => (
       <div className='d-flex justify-content-left align-items-center'>
         {/* {renderClient(row)} */}
-        <Avatar img={pic} className='me-1'/>
+        {row.addUserProfileImage !== null && row.addUserProfileImage !== 'Not-set' ? <Avatar img={row.addUserProfileImage } className='me-1'/>: <Avatar img={pic} className='me-1'/>}
+        
         <div className='d-flex flex-column'>
           {/* <Link
             to={`/apps/user/view/${row.id}`}
             className='user_name text-truncate text-body'
             onClick={() => store.dispatch(getUser(row.id))}
           > */}
-            <span className='fw-bolder'>{row.family}</span>
+            <span className='fw-bolder'>{row.addUserFullName}</span>
           {/* </Link> */}
-          <small className='text-truncate text-muted mb-0'>{row.email}</small>
+          {/* <small className='text-truncate text-muted mb-0'>{row.email}</small> */}
         </div>
       </div>
     )
@@ -385,7 +372,7 @@ const UsersList = () => {
     sortable: true,
     minWidth: '150px',
     sortField: 'role',
-    selector: row => row.teacher,
+    selector: row => row.title,
     // cell: row => renderRole(row)
   },
   {
@@ -393,7 +380,7 @@ const UsersList = () => {
     minWidth: '138px',
     sortable: true,
     sortField: 'currentPlan',
-    selector: row => row.teacher,
+    selector: row => row.newsCatregoryName,
     // cell: row => <span className='text-capitalize'>{row.teacher}</span>
   },
   {
@@ -401,7 +388,7 @@ const UsersList = () => {
     minWidth: '138px',
     sortable: true,
     sortField: 'currentPlan',
-    selector: row => row.teacher,
+    selector: row => row.miniDescribe,
     // cell: row => <span className='text-capitalize'>{row.teacher}</span>
   },
   {
@@ -409,10 +396,10 @@ const UsersList = () => {
     minWidth: '100px',
     sortable: true,
     sortField: 'status',
-    selector: row => row.status,
+    selector: row => row.isActive,
     cell: row => (
-      <Badge className='text-capitalize' color={statusObj[row.status]} pill>
-        {row.status}
+      <Badge className='text-capitalize' color={row.isActive ? "light-success" : "light-danger"} pill>
+        {row.isActive ? "فعال" : "غیرفعال"}
       </Badge>
     )
   },
@@ -472,82 +459,20 @@ const UsersList = () => {
         <CardBody>
           <Row>
             <Col md='4'>
-              <Label for='role-select'>Role</Label>
-              <Select
-                isClearable={false}
-                value={currentRole}
-                options={roleOptions}
-                className='react-select'
-                classNamePrefix='select'
-                theme={selectThemeColors}
-                onChange={data => {
-                  setCurrentRole(data)
-                  dispatch(
-                    getData({
-                      sort,
-                      sortColumn,
-                      q: searchTerm,
-                      role: data.value,
-                      page: currentPage,
-                      perPage: rowsPerPage,
-                      status: currentStatus.value,
-                      currentPlan: currentPlan.value
-                    })
-                  )
-                }}
-              />
-            </Col>
-            <Col className='my-md-0 my-1' md='4'>
-              <Label for='plan-select'>Plan</Label>
+              <Label for='role-select'>وضعیت خبر</Label>
               <Select
                 theme={selectThemeColors}
                 isClearable={false}
                 className='react-select'
                 classNamePrefix='select'
-                options={planOptions}
-                value={currentPlan}
-                onChange={data => {
-                  setCurrentPlan(data)
-                  dispatch(
-                    getData({
-                      sort,
-                      sortColumn,
-                      q: searchTerm,
-                      page: currentPage,
-                      perPage: rowsPerPage,
-                      role: currentRole.value,
-                      currentPlan: data.value,
-                      status: currentStatus.value
-                    })
-                  )
-                }}
+                options={activationOptions}
+                value={activation}
+                onChange={(e)=>setActivation(e)}
               />
             </Col>
             <Col md='4'>
-              <Label for='status-select'>Status</Label>
-              <Select
-                theme={selectThemeColors}
-                isClearable={false}
-                className='react-select'
-                classNamePrefix='select'
-                options={statusOptions}
-                value={currentStatus}
-                onChange={data => {
-                  setCurrentStatus(data)
-                  dispatch(
-                    getData({
-                      sort,
-                      sortColumn,
-                      q: searchTerm,
-                      page: currentPage,
-                      status: data.value,
-                      perPage: rowsPerPage,
-                      role: currentRole.value,
-                      currentPlan: currentPlan.value
-                    })
-                  )
-                }}
-              />
+            <Label for='status-select'>جستجو</Label>
+            <ProductsSearchbar setSearch={setSearch}/>
             </Col>
           </Row>
         </CardBody>
@@ -567,7 +492,7 @@ const UsersList = () => {
             sortIcon={<ChevronDown />}
             className='react-dataTable'
             // paginationComponent={CustomPagination}
-            data={data}
+            data={news}
             // subHeaderComponent={
             //   <CustomHeader
             //     store={store}

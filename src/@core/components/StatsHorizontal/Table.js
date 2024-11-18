@@ -21,7 +21,7 @@ import ProductsSearchbar from './ProductsSearchbar'
 import Select from 'react-select'
 import ReactPaginate from 'react-paginate'
 import DataTable from 'react-data-table-component'
-import { ChevronDown, Share, Printer, FileText, File, Grid, Copy, MoreVertical, Archive, Trash2, Sidebar } from 'react-feather'
+import { ChevronDown, Share, Printer, FileText, File, Grid, Copy, MoreVertical, Archive, Trash2, Sidebar, Link } from 'react-feather'
 
 // ** Utils
 import { selectThemeColors } from '@utils'
@@ -223,12 +223,7 @@ const UsersList = ({users , setSearch, setRole, role, setActivation, activation}
     { value: false, label: 'غیرفعال' },
   ]
 
-  // const statusOptions = [
-  //   { value: '', label: 'Select Status', number: 0 },
-  //   { value: 'pending', label: 'Pending', number: 1 },
-  //   { value: 'active', label: 'Active', number: 2 },
-  //   { value: 'inactive', label: 'Inactive', number: 3 }
-  // ]
+
 
   // ** Function in get data on page change
   // const handlePagination = page => {
@@ -359,11 +354,11 @@ const UsersList = ({users , setSearch, setRole, role, setActivation, activation}
         
         {row.pictureAddress !== null && row.pictureAddress !== 'Not-set' ? <Avatar img={row.pictureAddress } className='me-1'/>: <Avatar img={pic} className='me-1'/>}
         <div className='d-flex flex-column'>
-          {/* <Link
-            to={`/apps/user/view/${row.id}`}
-            className='user_name text-truncate text-body'
-            onClick={() => store.dispatch(getUser(row.id))}
-          > */}
+          {/* <Link */}
+            {/* to={`/apps/user/view/${row.id}`}  */}
+            {/* className='user_name text-truncate text-body' */}
+            {/* onClick={() => store.dispatch(getUser(row.id))} */}
+          {/* > */}
             <span className='fw-bolder'>{row.fname}</span>
           {/* </Link> */}
           <small className='text-truncate text-muted mb-0'>{row.lname}</small>

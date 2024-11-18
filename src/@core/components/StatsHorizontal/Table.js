@@ -355,6 +355,7 @@ const UsersList = ({users , setSearch, setRole, role, setActivation, activation}
         {row.pictureAddress !== null && row.pictureAddress !== 'Not-set' ? <Avatar img={row.pictureAddress } className='me-1'/>: <Avatar img={pic} className='me-1'/>}
         <div className='d-flex flex-column'>
           {/* <Link */}
+          {/* to={'/userDetail'} */}
             {/* to={`/apps/user/view/${row.id}`}  */}
             {/* className='user_name text-truncate text-body' */}
             {/* onClick={() => store.dispatch(getUser(row.id))} */}

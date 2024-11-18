@@ -212,7 +212,7 @@ const UserInfoCard = ({ selectedUser }) => {
               </Badge>
               <div className='ms-75'>
                 <h4 className='mb-0'>2</h4>
-                <small> دوره هاب رزرو</small>
+                <small> دوره های رزرو</small>
               </div>
             </div>
           </div>

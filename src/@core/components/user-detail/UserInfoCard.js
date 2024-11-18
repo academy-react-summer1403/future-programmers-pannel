@@ -8,7 +8,7 @@ import { Row, Col, Card, Form, CardBody, Button, Badge, Modal, Input, Label, Mod
 // ** Third Party Components
 import Swal from 'sweetalert2'
 import Select from 'react-select'
-import { Check, Briefcase, X } from 'react-feather'
+import { Check, Briefcase, X, Book, Bookmark } from 'react-feather'
 import { useForm, Controller } from 'react-hook-form'
 import withReactContent from 'sweetalert2-react-content'
 
@@ -23,7 +23,7 @@ import '@styles/react/libs/react-select/_react-select.scss'
 
 const roleColors = {
   editor: 'light-info',
-  admin: 'light-danger',
+  ادمین: 'light-danger',
   author: 'light-warning',
   maintainer: 'light-success',
   subscriber: 'light-primary'
@@ -41,21 +41,6 @@ const statusOptions = [
   { value: 'suspended', label: 'Suspended' }
 ]
 
-const countryOptions = [
-  { value: 'uk', label: 'UK' },
-  { value: 'usa', label: 'USA' },
-  { value: 'france', label: 'France' },
-  { value: 'russia', label: 'Russia' },
-  { value: 'canada', label: 'Canada' }
-]
-
-const languageOptions = [
-  { value: 'english', label: 'English' },
-  { value: 'spanish', label: 'Spanish' },
-  { value: 'french', label: 'French' },
-  { value: 'german', label: 'German' },
-  { value: 'dutch', label: 'Dutch' }
-]
 
 const MySwal = withReactContent(Swal)
 
@@ -96,7 +81,7 @@ const UserInfoCard = ({ selectedUser }) => {
   //         initials
   //         color={data.avatarColor || 'light-primary'}
   //         className='rounded mt-3 mb-2'
-  //         content={selectedUser.fullName}
+  //         content={data.fullName}
   //         contentStyles={{
   //           borderRadius: 0,
   //           fontSize: 'calc(48px)',
@@ -168,7 +153,7 @@ const UserInfoCard = ({ selectedUser }) => {
   //     }
   //   })
   // }
-  const data = {fullName:'oveiss', username :'09111111111',avatarColor:null, email:'sdsdsdsdsdsd', statuse : 'فعال', complete:'90%', gender:"مرد", identification:'99887766', phone:'0922222222', role:'admin'};
+  const data = {fullName:'oveiss', username :'09111111111',avatarColor:null, email:'sdsdsdsdsdsd', statuse : 'فعال', complete:'90%', gender:"مرد", identification:'99887766', phone:'0922222222', role:'ادمین'};
 
   return (
     <Fragment>
@@ -199,7 +184,7 @@ const UserInfoCard = ({ selectedUser }) => {
           <div className='d-flex justify-content-around my-2 pt-75'>
             <div className='d-flex align-items-start me-2'>
               <Badge color='light-primary' className='rounded p-75'>
-                <Check className='font-medium-2' />
+                <Book className='font-medium-2' />
               </Badge>
               <div className='ms-75'>
                 <h4 className='mb-0'>11</h4>
@@ -208,7 +193,7 @@ const UserInfoCard = ({ selectedUser }) => {
             </div>
             <div className='d-flex align-items-start'>
               <Badge color='light-primary' className='rounded p-75'>
-                <Briefcase className='font-medium-2' />
+                <Bookmark className='font-medium-2' />
               </Badge>
               <div className='ms-75'>
                 <h4 className='mb-0'>2</h4>

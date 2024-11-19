@@ -75,7 +75,7 @@ export const columns = [
   {
     name: 'اقدام',
     // minWidth: '100px',
-    maxWidth:'200px',
+    minWidth:'200px',
     cell: row => (
       <div className='column-action'>
         <UncontrolledDropdown>
@@ -84,21 +84,13 @@ export const columns = [
           </DropdownToggle>
           <DropdownMenu>
             <DropdownItem
-              // tag={Link}
-              // className='w-100'
-              // to={`/apps/user/view/${row.id}`}
-              // onClick={() => store.dispatch(getUser(row.id))}
-            >
-              <FileText size={14} className='me-50' />
-              <span className='align-middle'>Details</span>
-            </DropdownItem>
-            <DropdownItem
               // tag='a' 
               // href='/' 
-              // className='w-100' onClick={e => e.preventDefault()}
+              className='w-100' 
+              // onClick={e => e.preventDefault()}
             >
               <Archive size={14} className='me-50' />
-              <span className='align-middle'>Edit</span>
+              <span className='align-middle'>عدم تائید</span>
             </DropdownItem>
             <DropdownItem
               // tag='a'
@@ -110,7 +102,7 @@ export const columns = [
               // }}
             >
               <Trash2 size={14} className='me-50' />
-              <span className='align-middle'>Delete</span>
+              <span className='align-middle'>حذف</span>
             </DropdownItem>
           </DropdownMenu>
         </UncontrolledDropdown>

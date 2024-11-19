@@ -20,7 +20,7 @@ import ProductsSearchbar from './ProductsSearchbar'
 import Select from 'react-select'
 import ReactPaginate from 'react-paginate'
 import DataTable from 'react-data-table-component'
-import { ChevronDown, Share, Printer, FileText, File, Grid, Copy, MoreVertical, Archive, Trash2, Sidebar } from 'react-feather'
+import { ChevronDown, Share, Printer, FileText, File, Grid, Copy, MoreVertical, Archive, Trash2, Sidebar, CheckCircle, Slash, BookOpen } from 'react-feather'
 
 // ** Utils
 import { selectThemeColors } from '@utils'
@@ -329,14 +329,6 @@ const UsersList = ({course, setSearch, setExpire, expire}) => {
   //   )
   // }
 
-  // const data = [
-  //   {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'pending'},
-  //   {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'active'},
-  //   {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'pending'},
-  //   {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'inactive'},
-  //   {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'pending'},
-  // ]
-
   const columns =[
     {
     name: 'دوره',
@@ -405,7 +397,7 @@ const UsersList = ({course, setSearch, setExpire, expire}) => {
   },
   {
     name: 'Actions',
-    minWidth: '100px',
+    minWidth: '180px',
     cell: row => (
       <div className='column-action'>
         <UncontrolledDropdown>
@@ -414,34 +406,34 @@ const UsersList = ({course, setSearch, setExpire, expire}) => {
           </DropdownToggle>
           <DropdownMenu>
             <DropdownItem
+              // tag='a' 
+              href='/' 
+              // className='w-100' onClick={e => e.preventDefault()}
+            >
+              <CheckCircle size={14} className='me-50' />
+              <span className='align-middle'>موجود کردن </span>
+            </DropdownItem>
+            <DropdownItem
+              // tag='a'
+              // href='/'
+              className='w-100'
+              // onClick={e => {
+              //   e.preventDefault()
+              //   store.dispatch(deleteUser(row.id))
+              // }}
+            >
+              <Slash size={14} className='me-50' />
+              <span className='align-middle'>غیرفعال کردن</span>
+            </DropdownItem>
+            <DropdownItem
               // tag={Link}
               className='w-100'
               // to={`/apps/user/view/${row.id}`}
               // onClick={() => store.dispatch(getUser(row.id))}
             >
-              <FileText size={14} className='me-50' />
-              <span className='align-middle'>Details</span>
+              <BookOpen size={14} className='me-50' />
+              <span className='align-middle'>جزئیات </span>
             </DropdownItem>
-            <DropdownItem
-              // tag='a' 
-              href='/' 
-              // className='w-100' onClick={e => e.preventDefault()}
-            >
-              <Archive size={14} className='me-50' />
-              <span className='align-middle'>Edit</span>
-            </DropdownItem>
-            {/* <DropdownItem
-              tag='a'
-              href='/'
-              className='w-100'
-              onClick={e => {
-                e.preventDefault()
-                store.dispatch(deleteUser(row.id))
-              }}
-            >
-              <Trash2 size={14} className='me-50' />
-              <span className='align-middle'>Delete</span>
-            </DropdownItem> */}
           </DropdownMenu>
         </UncontrolledDropdown>
       </div>

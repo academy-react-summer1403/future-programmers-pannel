@@ -177,6 +177,9 @@ const UserInfoCard = ({ selectedUser }) => {
                       {data.role}
                     </Badge>
                   ) : null}
+                  {/* <Badge color={roleColors[data.role]} className='text-capitalize'>
+                      {data.role}
+                    </Badge> */}
                 </div>
               </div>
             </div>

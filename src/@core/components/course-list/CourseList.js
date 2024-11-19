@@ -170,7 +170,7 @@ import {
 //   )
 // }
 
-const UsersList = ({course, setSearch, setExpire, expire}) => {
+const CourseList = ({course, setSearch, setExpire, expire}) => {
   // ** Store Vars
   // const dispatch = useDispatch()
   // const store = useSelector(state => state.users)
@@ -519,4 +519,4 @@ const UsersList = ({course, setSearch, setExpire, expire}) => {
   )
 }
 
-export default UsersList
+export default CourseList

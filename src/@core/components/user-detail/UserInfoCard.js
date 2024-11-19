@@ -240,10 +240,10 @@ const UserInfoCard = ({ selectedUser }) => {
           </div>
           <div className='d-flex justify-content-center pt-2'>
             <Button color='primary' onClick={() => setShow(true)}>
-              Edit
+              ویرایش
             </Button>
             <Button className='ms-1' color='danger' outline > {/* onClick={handleSuspendedClick} */}
-              Suspended
+              غیرفعال کردن
             </Button>
           </div>
         </CardBody>

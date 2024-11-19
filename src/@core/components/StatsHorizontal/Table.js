@@ -22,7 +22,7 @@ import Select from 'react-select'
 import ReactPaginate from 'react-paginate'
 import DataTable from 'react-data-table-component'
 import { ChevronDown, Share, Printer, FileText, File, Grid, Copy, MoreVertical, Archive, Trash2, Sidebar, Link } from 'react-feather'
-
+import AddUser from './AddUser'
 // ** Utils
 import { selectThemeColors } from '@utils'
 
@@ -43,6 +43,7 @@ import {
   UncontrolledDropdown,
   Badge
 } from 'reactstrap'
+
 
 // ** Styles
 // import '@styles/react/libs/react-select/_react-select.scss'
@@ -452,7 +453,7 @@ const UsersList = ({users , setSearch, setRole, role, setActivation, activation}
         </CardHeader>
         <CardBody>
           <Row>
-            <Col md='4'>
+            <Col md='3'>
               <Label for='role-select'>نقش کاربر</Label>
               <Select
                 isClearable={false}
@@ -464,7 +465,7 @@ const UsersList = ({users , setSearch, setRole, role, setActivation, activation}
                 onChange= {(e)=>setRole(e)}
               />
             </Col>
-            <Col className='my-md-0 my-1' md='4'>
+            <Col className='my-md-0 my-1' md='3'>
               <Label for='plan-select'>وضعیت فعالیت</Label>
               <Select
                 theme={selectThemeColors}
@@ -503,9 +504,12 @@ const UsersList = ({users , setSearch, setRole, role, setActivation, activation}
               />
             </Col> */}
 
-            <Col md='4'>
+            <Col md='3'>
               <Label for='status-select'>Search</Label>
               <ProductsSearchbar setSearch={setSearch}/>
+            </Col>
+            <Col md='3'>
+              <AddUser />
             </Col>
           </Row>
         </CardBody>

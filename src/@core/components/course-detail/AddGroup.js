@@ -33,15 +33,11 @@ import { selectThemeColors } from '@utils'
 // ** Styles
 import '@styles/react/libs/react-select/_react-select.scss'
 
-const statusOptions = [
-  { value: 'active', label: 'Active' },
-  { value: 'inactive', label: 'Inactive' },
-  { value: 'suspended', label: 'Suspended' }
-]
+
 
 const defaultValues = {
-  firstName: 'Bob',
-  lastName: 'Barton',
+  groupName: 'Bob',
+  groupCapacity: 'Barton',
 }
 
 const AddGroup = () => {
@@ -49,8 +45,8 @@ const AddGroup = () => {
   const [show, setShow] = useState(false)
 
   const SignupSchema = yup.object().shape({
-    lastName: yup.string().min(3).required(),
-    firstName: yup.string().min(3).required(),
+    groupName: yup.string().min(3).required(),
+    groupCapacity: yup.string().min(3).required(),
   })
 
   // ** Hooks
@@ -72,10 +68,10 @@ const AddGroup = () => {
             <h6>Form Submitted!</h6>
             <ul className='list-unstyled mb-0'>
               <li>
-                <strong>نام گروه</strong>: {data.firstName}
+                <strong>نام گروه</strong>: {data.groupName}
               </li>
               <li>
-                <strong>ظرفیت گروه</strong>: {data.lastName}
+                <strong>ظرفیت گروه</strong>: {data.groupCapacity}
               </li>
             </ul>
           </div>
@@ -86,8 +82,8 @@ const AddGroup = () => {
 
   const handleReset = () => {
     reset({
-      firstName: '',
-      lastName: ''
+      groupName: '',
+      groupCapacity: ''
     })
   }
 
@@ -106,30 +102,30 @@ const AddGroup = () => {
           </div>
           <Form onSubmit={handleSubmit(onSubmit)}>
             <div className='mb-1'>
-              <Label className='form-label' for='firstName'>
-                نام
+              <Label className='form-label' for='groupName'>
+                 نام گروه 
               </Label>
               <Controller
-                id='firstName'
-                name='firstName'
+                id='groupName'
+                name='groupName'
                 defaultValue=''
                 control={control}
-                render={({ field }) => <Input {...field} placeholder='Bruce' invalid={errors.firstName && true} />}
+                render={({ field }) => <Input {...field} placeholder='Bruce' invalid={errors.groupName && true} />}
               />
-              {errors.firstName && <FormFeedback>{errors.firstName.message}</FormFeedback>}
+              {errors.groupName && <FormFeedback>{errors.groupName.message}</FormFeedback>}
             </div>
             <div className='mb-1'>
-              <Label className='form-label' for='lastName'>
-                نام خانوادگی
+              <Label className='form-label' for='groupCapacity'>
+                ظرفیت گروه
               </Label>
               <Controller
-                id='lastName'
-                name='lastName'
+                id='groupCapacity'
+                name='groupCapacity'
                 defaultValue=''
                 control={control}
-                render={({ field }) => <Input {...field} placeholder='Wayne' invalid={errors.lastName && true} />}
+                render={({ field }) => <Input {...field} placeholder='Wayne' invalid={errors.groupCapacity && true} />}
               />
-              {errors.lastName && <FormFeedback>{errors.lastName.message}</FormFeedback>}
+              {errors.groupCapacity && <FormFeedback>{errors.groupCapacity.message}</FormFeedback>}
             </div>
             <div className='d-flex mt-1'>
               <Button className='me-1'  color='primary' type='submit'>
@@ -144,6 +140,3 @@ const AddGroup = () => {
 }
 
 export default AddGroup
-
-
-         

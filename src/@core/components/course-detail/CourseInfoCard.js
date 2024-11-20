@@ -28,12 +28,19 @@ const statusColors = {
   غیرفعال: 'light-secondary'
 }
 
-const statusOptions = [
-  { value: 'active', label: 'Active' },
-  { value: 'inactive', label: 'Inactive' },
-  { value: 'suspended', label: 'Suspended' }
+const levelOptions = [
+  { value: 'active', label: 'ساده' },
+  { value: 'inactive', label: 'متوسط' },
+  { value: 'suspended', label: 'پیشرفته' }
 ]
-
+const typeOptions = [
+  { value: 'online', label: 'آنلاین' },
+  { value: 'offline', label: 'حضوری' }
+]
+const classOptions = [
+  { value: 'class1', label: 'classRoom1' },
+  { value: 'class2', label: 'classRoom2' }
+]
 
 const MySwal = withReactContent(Swal)
 
@@ -90,19 +97,19 @@ const CourseInfoCard = ({ selectedUser }) => {
   //   }
   // }
 
-  // const onSubmit = data => {
-  //   if (Object.values(data).every(field => field.length > 0)) {
-  //     setShow(false)
-  //   } else {
-  //     for (const key in data) {
-  //       if (data[key].length === 0) {
-  //         setError(key, {
-  //           type: 'manual'
-  //         })
-  //       }
-  //     }
-  //   }
-  // }
+  const onSubmit = data => {
+    if (Object.values(data).every(field => field.length > 0)) {
+      setShow(false)
+    } else {
+      for (const key in data) {
+        if (data[key].length === 0) {
+          setError(key, {
+            type: 'manual'
+          })
+        }
+      }
+    }
+  }
 
   // const handleReset = () => {
   //   reset({
@@ -146,7 +153,7 @@ const CourseInfoCard = ({ selectedUser }) => {
   //     }
   //   })
   // }
-  const data = {fullName:'Tailwind css', username :'09111111111',avatarColor:null, email:'sdsdsdsdsdsd', statuse : 'فعال', complete:'90%', gender:"مرد", identification:'99887766', phone:'0922222222', role:'ادمین', desc:'سلام خوبی من یک کار اکوز برنامه نویسی هستم تو چه کاره ای'};
+  const data = {fullName:'Tailwind css',subject:"asqwerty",capacity:'23', username :'09111111111',avatarColor:null, email:'sdsdsdsdsdsd', statuse : 'فعال', complete:'90%', gender:"مرد", identification:'99887766', phone:'0922222222',contact:'2323454567', role:'ادمین', desc:'سلام خوبی من یک کار اکوز برنامه نویسی هستم تو چه کاره ای'};
 
   return (
     <Fragment>
@@ -252,164 +259,207 @@ const CourseInfoCard = ({ selectedUser }) => {
           </div>
         </CardBody>
       </Card>
-      {/* <Modal isOpen={show} toggle={() => setShow(!show)} className='modal-dialog-centered modal-lg'>
+      <Modal isOpen={show} toggle={() => setShow(!show)} className='modal-dialog-centered modal-lg'>
         <ModalHeader className='bg-transparent' toggle={() => setShow(!show)}></ModalHeader>
         <ModalBody className='px-sm-5 pt-50 pb-5'>
           <div className='text-center mb-2'>
-            <h1 className='mb-1'>Edit User Information</h1>
-            <p>Updating user details will receive a privacy audit.</p>
+            <h1 className='mb-1'>ویرایش اطلاعات دوره</h1>
           </div>
           <Form onSubmit={handleSubmit(onSubmit)}>
             <Row className='gy-1 pt-75'>
-              <Col md={6} xs={12}>
-                <Label className='form-label' for='firstName'>
-                  First Name
+              <Col md={4} xs={12}>
+                <Label className='form-label' for='subject'>
+                  موضوع دوره
                 </Label>
                 <Controller
                   defaultValue=''
                   control={control}
-                  id='firstName'
-                  name='firstName'
+                  id='subject'
+                  name='subject'
                   render={({ field }) => (
-                    <Input {...field} id='firstName' placeholder='John' invalid={errors.firstName && true} />
+                    <Input {...field} id='subject' placeholder='John' invalid={errors.subject && true} />
                   )}
                 />
               </Col>
-              <Col md={6} xs={12}>
-                <Label className='form-label' for='lastName'>
-                  Last Name
+              <Col md={4} xs={12}>
+                <Label className='form-label' for='capacity'>
+                  ظرفیت دوره
                 </Label>
                 <Controller
                   defaultValue=''
                   control={control}
-                  id='lastName'
-                  name='lastName'
+                  id='capacity'
+                  name='capacity'
                   render={({ field }) => (
-                    <Input {...field} id='lastName' placeholder='Doe' invalid={errors.lastName && true} />
+                    <Input {...field} id='capacity' placeholder='Doe' invalid={errors.capacity && true} />
                   )}
+                />
+              </Col>
+              <Col md={4} xs={12}>
+                <Label className='form-label' for='type'>
+                  نوع دوره
+                </Label>
+                <Select
+                  id='type'
+                  isClearable={false}
+                  className='react-select'
+                  classNamePrefix='select'
+                  options={typeOptions}
+                  theme={selectThemeColors}
+                  defaultValue={typeOptions[typeOptions.findIndex(i => i.value === data.type)]}
+                />
+              </Col>
+              <Col md={7} xs={12}>
+                <Label className='form-label' for='shortDesc'>
+                  توضیحات کوتاه
+                </Label>
+                <Controller
+                  defaultValue=''
+                  control={control}
+                  id='shortDesc'
+                  name='shortDesc'
+                  render={({ field }) => (
+                    <Input {...field} id='shortDesc' placeholder='john.doe.007' invalid={errors.shortDesc && true} />
+                  )}
+                />
+              </Col>
+              <Col md={5} xs={12}>
+                <Label className='form-label' for='classRoom'>
+                  کلاس دوره
+                </Label>
+                <Select
+                  id='classRoom'
+                  isClearable={false}
+                  className='react-select'
+                  classNamePrefix='select'
+                  options={classOptions}
+                  theme={selectThemeColors}
+                  defaultValue={classOptions[classOptions.findIndex(i => i.value === data.classRoom)]}
+                />
+              </Col>
+              <Col md={4} xs={12}>
+                <Label className='form-label' for='teacher'>
+                  استاد دوره
+                </Label>
+                <Controller
+                  defaultValue=''
+                  control={control}
+                  id='teacher'
+                  name='teacher'
+                  render={({ field }) => (
+                    <Input {...field} id='teacher' placeholder='john.doe.007' invalid={errors.teacher && true} />
+                  )}
+                />
+              </Col>
+              <Col md={4} xs={12}>
+                <Label className='form-label' for='semester'>
+                  ترم 
+                </Label>
+                <Controller
+                  defaultValue=''
+                  control={control}
+                  id='semester'
+                  name='semester'
+                  render={({ field }) => (
+                    <Input {...field} id='semester' placeholder='john.doe.007' invalid={errors.semester && true} />
+                  )}
+                />
+              </Col>
+              <Col md={4} xs={12}>
+                <Label className='form-label' for='number'>
+                  تعداد جلسه
+                </Label>
+                <Controller
+                  defaultValue=''
+                  control={control}
+                  id='number'
+                  name='number'
+                  render={({ field }) => (
+                    <Input {...field} id='number' placeholder='john.doe.007' invalid={errors.number && true} />
+                  )}
+                />
+              </Col>
+              <Col md={4} xs={12}>
+                <Label className='form-label' for='number'>
+                  هزینه دوره 
+                </Label>
+                <Controller
+                  defaultValue=''
+                  control={control}
+                  id='number'
+                  name='number'
+                  render={({ field }) => (
+                    <Input {...field} id='number' placeholder='john.doe.007' invalid={errors.number && true} />
+                  )}
+                />
+              </Col>
+              <Col md={3} xs={12}>
+                <Label className='form-label' for='level'>
+                  سطح دوره:
+                </Label>
+                <Select
+                  id='level'
+                  isClearable={false}
+                  className='react-select'
+                  classNamePrefix='select'
+                  options={levelOptions}
+                  theme={selectThemeColors}
+                  defaultValue={levelOptions[levelOptions.findIndex(i => i.value === data.level)]}
+                />
+              </Col>
+              <Col md={5} xs={12}>
+                <Label className='form-label' for='startDate'>
+                  تاریخ شروع 
+                </Label>
+                <Input
+                  id='startDate'
+                  placeholder='شروع'
+                  defaultValue={data.contact.substr(data.contact.length - 4)}
+                />
+              </Col>
+              <Col md={6} xs={12}>
+                <Label className='form-label' for='endDate'>
+                  تاریخ پایان 
+                </Label>
+                <Input
+                  id='endDate'
+                  placeholder='پایان'
+                  defaultValue={data.contact.substr(data.contact.length - 4)}
+                />
+              </Col>
+              <Col md={6} xs={12}>
+                <Label className='form-label' for='code'>
+                  کد یکتا 
+                </Label>
+                <Input
+                  id='code'
+                  placeholder='کد یکتا'
+                  defaultValue={data.contact.substr(data.contact.length - 4)}
                 />
               </Col>
               <Col xs={12}>
-                <Label className='form-label' for='username'>
-                  Username
+                <Label className='form-label' for='desc'>
+                  توضیحات دوره 
                 </Label>
                 <Controller
                   defaultValue=''
                   control={control}
-                  id='username'
-                  name='username'
+                  id='desc'
+                  name='desc'
                   render={({ field }) => (
-                    <Input {...field} id='username' placeholder='john.doe.007' invalid={errors.username && true} />
+                    <Input {...field} id='desc' placeholder='john.doe.007' invalid={errors.desc && true} />
                   )}
                 />
-              </Col>
-              <Col md={6} xs={12}>
-                <Label className='form-label' for='billing-email'>
-                  Billing Email
-                </Label>
-                <Input
-                  type='email'
-                  id='billing-email'
-                  defaultValue={selectedUser.email}
-                  placeholder='example@domain.com'
-                />
-              </Col>
-              <Col md={6} xs={12}>
-                <Label className='form-label' for='status'>
-                  Status:
-                </Label>
-                <Select
-                  id='status'
-                  isClearable={false}
-                  className='react-select'
-                  classNamePrefix='select'
-                  options={statusOptions}
-                  theme={selectThemeColors}
-                  defaultValue={statusOptions[statusOptions.findIndex(i => i.value === selectedUser.status)]}
-                />
-              </Col>
-              <Col md={6} xs={12}>
-                <Label className='form-label' for='tax-id'>
-                  Tax ID
-                </Label>
-                <Input
-                  id='tax-id'
-                  placeholder='Tax-1234'
-                  defaultValue={selectedUser.contact.substr(selectedUser.contact.length - 4)}
-                />
-              </Col>
-              <Col md={6} xs={12}>
-                <Label className='form-label' for='contact'>
-                  Contact
-                </Label>
-                <Input id='contact' defaultValue={selectedUser.contact} placeholder='+1 609 933 4422' />
-              </Col>
-              <Col md={6} xs={12}>
-                <Label className='form-label' for='language'>
-                  language
-                </Label>
-                <Select
-                  id='language'
-                  isClearable={false}
-                  className='react-select'
-                  classNamePrefix='select'
-                  options={languageOptions}
-                  theme={selectThemeColors}
-                  defaultValue={languageOptions[0]}
-                />
-              </Col>
-              <Col md={6} xs={12}>
-                <Label className='form-label' for='country'>
-                  Country
-                </Label>
-                <Select
-                  id='country'
-                  isClearable={false}
-                  className='react-select'
-                  classNamePrefix='select'
-                  options={countryOptions}
-                  theme={selectThemeColors}
-                  defaultValue={countryOptions[0]}
-                />
-              </Col>
-              <Col xs={12}>
-                <div className='d-flex align-items-center mt-1'>
-                  <div className='form-switch'>
-                    <Input type='switch' defaultChecked id='billing-switch' name='billing-switch' />
-                    <Label className='form-check-label' htmlFor='billing-switch'>
-                      <span className='switch-icon-left'>
-                        <Check size={14} />
-                      </span>
-                      <span className='switch-icon-right'>
-                        <X size={14} />
-                      </span>
-                    </Label>
-                  </div>
-                  <Label className='form-check-label fw-bolder' for='billing-switch'>
-                    Use as a billing address?
-                  </Label>
-                </div>
               </Col>
               <Col xs={12} className='text-center mt-2 pt-50'>
                 <Button type='submit' className='me-1' color='primary'>
                   Submit
                 </Button>
-                <Button
-                  type='reset'
-                  color='secondary'
-                  outline
-                  onClick={() => {
-                    handleReset()
-                    setShow(false)
-                  }}
-                >
-                  Discard
-                </Button>
               </Col>
             </Row>
           </Form>
         </ModalBody>
-      </Modal> */}
+      </Modal>
     </Fragment>
   )
 }

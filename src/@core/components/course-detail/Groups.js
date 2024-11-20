@@ -1,5 +1,5 @@
 // ** Reactstrap Imports
-import { Badge, Button, Card, DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown } from 'reactstrap'
+import { Badge, Button, Card, CardBody, Col, DropdownItem, DropdownMenu, DropdownToggle, Row, UncontrolledDropdown } from 'reactstrap'
 import pic from '../../../assets/images/avatars/1.png'
 
 // ** Third Party Components
@@ -18,6 +18,7 @@ import Avatar from '@components/avatar'
 
 // ** Styles
 import '@styles/react/libs/tables/react-dataTable-component.scss'
+import AddGroup from './AddGroup'
 
 
 const data = [
@@ -139,6 +140,15 @@ export const columns = [
 const Groups = () => {
   return (
     <Card>
+       
+        
+          <Row>
+            <Col md=''>
+              <AddGroup />
+            </Col>
+          </Row>
+        
+      
       <div className='react-dataTable user-view-account-projects'>
         <DataTable
           noHeader

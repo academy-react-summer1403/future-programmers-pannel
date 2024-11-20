@@ -1,6 +1,6 @@
 // ** React Imports
 import { useState, Fragment } from 'react'
-import pic from '../../../assets/images/avatars/1.png'
+import pic from '../../../assets/images/portrait/small/500.png'
 
 // ** Reactstrap Imports
 import { Row, Col, Card, Form, CardBody, Button, Badge, Modal, Input, Label, ModalBody, ModalHeader } from 'reactstrap'
@@ -21,13 +21,6 @@ import { selectThemeColors } from '@utils'
 // ** Styles
 import '@styles/react/libs/react-select/_react-select.scss'
 
-const roleColors = {
-  editor: 'light-info',
-  ادمین: 'light-danger',
-  author: 'light-warning',
-  maintainer: 'light-success',
-  subscriber: 'light-primary'
-}
 
 const statusColors = {
   فعال: 'light-success',
@@ -153,7 +146,7 @@ const CourseInfoCard = ({ selectedUser }) => {
   //     }
   //   })
   // }
-  const data = {fullName:'oveiss', username :'09111111111',avatarColor:null, email:'sdsdsdsdsdsd', statuse : 'فعال', complete:'90%', gender:"مرد", identification:'99887766', phone:'0922222222', role:'ادمین', desc:'سلام خوبی من یک کار اکوز برنامه نویسی هستم تو چه کاره ای'};
+  const data = {fullName:'Tailwind css', username :'09111111111',avatarColor:null, email:'sdsdsdsdsdsd', statuse : 'فعال', complete:'90%', gender:"مرد", identification:'99887766', phone:'0922222222', role:'ادمین', desc:'سلام خوبی من یک کار اکوز برنامه نویسی هستم تو چه کاره ای'};
 
   return (
     <Fragment>
@@ -173,8 +166,8 @@ const CourseInfoCard = ({ selectedUser }) => {
                 <div className='user-info'>
                   <h4>{data !== null ? data.fullName : 'Eleanor Aguilar'}</h4>
                   {selectedUser !== null ? (
-                    <Badge color={roleColors[data.role]} className='text-capitalize'>
-                      {data.role}
+                    <Badge color={statusColors[data.statuse]} className='text-capitalize'>
+                      {data.statuse}
                     </Badge>
                   ) : null}
                   {/* <Badge color={roleColors[data.role]} className='text-capitalize'>

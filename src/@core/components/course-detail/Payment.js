@@ -22,25 +22,55 @@ import mailchimpIcon from '../../assets/images/icons/social/mailchimp.png'
 const connectedAccounts = [
   {
     checked: true,
-    title: 'Telegram Id',
+    title: 'درباره کاربر',
     subtitle: 'Calendar and contacts',
     logo: googleIcon
   },
   {
     checked: false,
-    title: 'LinkedIn Id',
+    title: 'آدرس محل سکونت',
     subtitle: 'Communication',
-    logo: linkedinIcon
+    logo: slackIcon
   },
+  {
+    checked: true,
+    title: 'تاریخ تولد',
+    subtitle: 'Git repositories',
+    logo: githubIcon
+  },
+  {
+    checked: false,
+    title: 'آی دی کاربر',
+    subtitle: 'Email marketing service',
+    logo: mailchimpIcon
+  },
+  {
+    checked: false,
+    title: 'تاریخ ایجاد حساب کاربری',
+    subtitle: 'Communication',
+    logo: asanaIcon
+  },
+  {
+    checked: false,
+    title: 'اعتبارسنجی دومرحله ای',
+    subtitle: 'Communication',
+    logo: asanaIcon
+  },
+  {
+    checked: false,
+    title: 'ایمیل بازیابی',
+    subtitle: 'Communication',
+    logo: asanaIcon
+  }
 ]
 
 
-const connections = () => {
+const Payment = () => {
   return (
     <Fragment>
       <Card>
         <CardBody>
-          <CardTitle className='mb-75'>شبکه های اجتماعی </CardTitle>
+          <CardTitle className='mb-75'>سایر اطلاعات کاربر </CardTitle>
           {/* <p>Display content from your connected accounts on your site</p> */}
           {connectedAccounts.map((item, index) => {
             return (
@@ -64,4 +94,4 @@ const connections = () => {
   )
 }
 
-export default connections
+export default Payment

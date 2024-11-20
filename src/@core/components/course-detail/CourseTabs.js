@@ -9,11 +9,10 @@ import {Bookmark, Link, Book, MessageCircle, FileText } from 'react-feather'
 
 // ** User Components
 // import InvoiceList from './InvoiceList'
-import ReserveTab from './ReserveTab'
-import Connections from './Connections'
-import UserProjectsList from './UserProjectsList'
+import Groups from './Groups'
+import Users from './Users'
 import CommentTab from './CommentTab'
-import OtherInformation from './OtherInformation'
+import Payment from './Payment'
 
 const CourseTabs = ({ active, toggleTab }) => {
   return (
@@ -22,13 +21,13 @@ const CourseTabs = ({ active, toggleTab }) => {
         <NavItem>
           <NavLink active={active === '1'} onClick={() => toggleTab('1')}>
             <Book className='font-medium-3 me-50' />
-            <span className='fw-bold'>دوره ها</span>
+            <span className='fw-bold'>کاربر ها</span>
           </NavLink>
         </NavItem>
         <NavItem>
           <NavLink active={active === '2'} onClick={() => toggleTab('2')}>
             <Bookmark className='font-medium-3 me-50' />
-            <span className='fw-bold'>دوره های رزرو</span>
+            <span className='fw-bold'>گروه ها </span>
           </NavLink>
         </NavItem>
         <NavItem>
@@ -40,31 +39,22 @@ const CourseTabs = ({ active, toggleTab }) => {
         <NavItem>
           <NavLink active={active === '4'} onClick={() => toggleTab('4')}>
             <FileText className='font-medium-3 me-50' />
-            <span className='fw-bold'>سایر اطلاعات کاربر</span>
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink active={active === '5'} onClick={() => toggleTab('5')}>
-            <Link className='font-medium-3 me-50' />
-            <span className='fw-bold'>ارتباط با کاربر</span>
+            <span className='fw-bold'>پرداختی ها  </span>
           </NavLink>
         </NavItem>
       </Nav>
       <TabContent activeTab={active}>
         <TabPane tabId='1'>
-          <UserProjectsList />
+          <Users />
         </TabPane>
         <TabPane tabId='2'>
-          <ReserveTab />
+          <Groups />
         </TabPane>
         <TabPane tabId='3'>
         <CommentTab />
         </TabPane>
         <TabPane tabId='4'>
-          <OtherInformation />
-        </TabPane>
-        <TabPane tabId='5'>
-          <Connections />
+          <Payment />
         </TabPane>
       </TabContent>
     </Fragment>

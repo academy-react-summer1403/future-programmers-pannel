@@ -114,7 +114,7 @@ export const columns = [
  
 ]
 
-const ReserveTab = () => {
+const Groups = () => {
   return (
     <Card>
       <div className='react-dataTable user-view-account-projects'>
@@ -131,4 +131,4 @@ const ReserveTab = () => {
   )
 }
 
-export default ReserveTab
+export default Groups

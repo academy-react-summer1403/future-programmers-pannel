@@ -153,7 +153,7 @@ const CourseInfoCard = ({ selectedUser }) => {
   //     }
   //   })
   // }
-  const data = {fullName:'oveiss', username :'09111111111',avatarColor:null, email:'sdsdsdsdsdsd', statuse : 'فعال', complete:'90%', gender:"مرد", identification:'99887766', phone:'0922222222', role:'ادمین'};
+  const data = {fullName:'oveiss', username :'09111111111',avatarColor:null, email:'sdsdsdsdsdsd', statuse : 'فعال', complete:'90%', gender:"مرد", identification:'99887766', phone:'0922222222', role:'ادمین', desc:'سلام خوبی من یک کار اکوز برنامه نویسی هستم تو چه کاره ای'};
 
   return (
     <Fragment>
@@ -191,7 +191,7 @@ const CourseInfoCard = ({ selectedUser }) => {
               </Badge>
               <div className='ms-75'>
                 <h4 className='mb-0'>11</h4>
-                <small> دوره ها</small>
+                <small> کاربر </small>
               </div>
             </div>
             <div className='d-flex align-items-start'>
@@ -200,7 +200,7 @@ const CourseInfoCard = ({ selectedUser }) => {
               </Badge>
               <div className='ms-75'>
                 <h4 className='mb-0'>2</h4>
-                <small> دوره های رزرو</small>
+                <small> کامنت ها</small>
               </div>
             </div>
           </div>
@@ -209,34 +209,42 @@ const CourseInfoCard = ({ selectedUser }) => {
             {selectedUser !== null ? (
               <ul className='list-unstyled'>
                 <li className='mb-75'>
-                  <span className='fw-bolder me-25'>نام کاربری:</span>
+                  <span className='fw-bolder me-25'>نام استاد:</span>
                   <span>{data.username}</span>
                 </li>
                 <li className='mb-75'>
-                  <span className='fw-bolder me-25'>ایمیل:</span>
+                  <span className='fw-bolder me-25'>نام کلاس:</span>
                   <span>{data.email}</span>
                 </li>
                 <li className='mb-75'>
-                  <span className='fw-bolder me-25'>وضعیت:</span>
+                  <span className='fw-bolder me-25'>سطح دوره:</span>
                   <Badge className='text-capitalize' color={statusColors[data.statuse]}>
                     {data.statuse}
                   </Badge>
                 </li>
                 <li className='mb-75'>
-                  <span className='fw-bolder me-25'>درصد تکمیل پروفایل:</span>
+                  <span className='fw-bolder me-25'>  وضعیت دوره:</span>
                   <span className='text-capitalize'>{data.complete}</span>
                 </li>
                 <li className='mb-75'>
-                  <span className='fw-bolder me-25'>جنسیت:</span>
+                  <span className='fw-bolder me-25'>نوع دوره:</span>
                   <span>{data.gender}</span>
                 </li>
                 <li className='mb-75'>
-                  <span className='fw-bolder me-25'>کد ملی:</span>
+                  <span className='fw-bolder me-25'>قیمت دوره :</span>
                   <span>{data.identification}</span>
                 </li>
                 <li className='mb-75'>
-                  <span className='fw-bolder me-25'>شماره موبایل:</span>
+                  <span className='fw-bolder me-25'> شروع دوره:</span>
                   <span>{data.phone}</span>
+                </li>
+                <li className='mb-75'>
+                  <span className='fw-bolder me-25'> پایان دوره:</span>
+                  <span>{data.phone}</span>
+                </li>
+                <li className='mb-75'>
+                  <span className='fw-bolder me-25'> توضیحات :</span>
+                  <span>{data.desc}</span>
                 </li>
               </ul>
             ) : null}

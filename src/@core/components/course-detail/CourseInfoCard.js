@@ -8,7 +8,7 @@ import { Row, Col, Card, Form, CardBody, Button, Badge, Modal, Input, Label, Mod
 // ** Third Party Components
 import Swal from 'sweetalert2'
 import Select from 'react-select'
-import { Check, Briefcase, X, Book, Bookmark } from 'react-feather'
+import { Check, Briefcase, X, Book, Bookmark, MessageCircle, User, Users } from 'react-feather'
 import { useForm, Controller } from 'react-hook-form'
 import withReactContent from 'sweetalert2-react-content'
 
@@ -187,7 +187,7 @@ const CourseInfoCard = ({ selectedUser }) => {
           <div className='d-flex justify-content-around my-2 pt-75'>
             <div className='d-flex align-items-start me-2'>
               <Badge color='light-primary' className='rounded p-75'>
-                <Book className='font-medium-2' />
+                <Users className='font-medium-2' />
               </Badge>
               <div className='ms-75'>
                 <h4 className='mb-0'>11</h4>
@@ -196,7 +196,7 @@ const CourseInfoCard = ({ selectedUser }) => {
             </div>
             <div className='d-flex align-items-start'>
               <Badge color='light-primary' className='rounded p-75'>
-                <Bookmark className='font-medium-2' />
+                <MessageCircle className='font-medium-2' />
               </Badge>
               <div className='ms-75'>
                 <h4 className='mb-0'>2</h4>

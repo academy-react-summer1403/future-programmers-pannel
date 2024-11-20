@@ -57,7 +57,7 @@ export const columns = [
   }
 ]
 
-const Users = () => {
+const UsersTab = () => {
   return (
     <Card>
       <div className='react-dataTable user-view-account-projects'>
@@ -74,4 +74,4 @@ const Users = () => {
   )
 }
 
-export default Users
+export default UsersTab

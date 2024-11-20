@@ -5,12 +5,12 @@ import { Fragment } from 'react'
 import { Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap'
 
 // ** Icons Imports
-import {Bookmark, Link, Book, MessageCircle, FileText } from 'react-feather'
+import {MessageCircle, Users, DollarSign, Folder } from 'react-feather'
 
 // ** User Components
 // import InvoiceList from './InvoiceList'
 import Groups from './Groups'
-import Users from './Users'
+import UsersTab from './UsersTab'
 import CommentTab from './CommentTab'
 import Payment from './Payment'
 
@@ -20,13 +20,13 @@ const CourseTabs = ({ active, toggleTab }) => {
       <Nav pills className='mb-2'>
         <NavItem>
           <NavLink active={active === '1'} onClick={() => toggleTab('1')}>
-            <Book className='font-medium-3 me-50' />
+            <Users className='font-medium-3 me-50' />
             <span className='fw-bold'>کاربر ها</span>
           </NavLink>
         </NavItem>
         <NavItem>
           <NavLink active={active === '2'} onClick={() => toggleTab('2')}>
-            <Bookmark className='font-medium-3 me-50' />
+            <Folder className='font-medium-3 me-50' />
             <span className='fw-bold'>گروه ها </span>
           </NavLink>
         </NavItem>
@@ -38,14 +38,14 @@ const CourseTabs = ({ active, toggleTab }) => {
         </NavItem>
         <NavItem>
           <NavLink active={active === '4'} onClick={() => toggleTab('4')}>
-            <FileText className='font-medium-3 me-50' />
+            <DollarSign className='font-medium-3 me-50' />
             <span className='fw-bold'>پرداختی ها  </span>
           </NavLink>
         </NavItem>
       </Nav>
       <TabContent activeTab={active}>
         <TabPane tabId='1'>
-          <Users />
+          <UsersTab />
         </TabPane>
         <TabPane tabId='2'>
           <Groups />

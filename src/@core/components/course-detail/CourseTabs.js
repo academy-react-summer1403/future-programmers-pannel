@@ -9,11 +9,11 @@ import {Bookmark, Link, Book, MessageCircle, FileText } from 'react-feather'
 
 // ** User Components
 // import InvoiceList from './InvoiceList'
-// import  from './ReserveTab'
-// import  from './Connections'
-import YourCourse from './yourCourse/YourCourse'
-import TeacherCourse from './teacherCourse/TeacherCourse'
-import ReserveCourse from './reserveCourse/ReserveCourse'
+import ReserveTab from './ReserveTab'
+import Connections from './Connections'
+import UserProjectsList from './UserProjectsList'
+import CommentTab from './CommentTab'
+import OtherInformation from './OtherInformation'
 
 const CourseTabs = ({ active, toggleTab }) => {
   return (
@@ -22,31 +22,49 @@ const CourseTabs = ({ active, toggleTab }) => {
         <NavItem>
           <NavLink active={active === '1'} onClick={() => toggleTab('1')}>
             <Book className='font-medium-3 me-50' />
-            <span className='fw-bold'> دوره های شما</span>
+            <span className='fw-bold'>دوره ها</span>
           </NavLink>
         </NavItem>
         <NavItem>
           <NavLink active={active === '2'} onClick={() => toggleTab('2')}>
             <Bookmark className='font-medium-3 me-50' />
-            <span className='fw-bold'>دوره های رزرو شده</span>
+            <span className='fw-bold'>دوره های رزرو</span>
           </NavLink>
         </NavItem>
         <NavItem>
           <NavLink active={active === '3'} onClick={() => toggleTab('3')}>
             <MessageCircle className='font-medium-3 me-50' />
-            <span className='fw-bold'> دوره های استاد</span>
+            <span className='fw-bold'>کامنت ها</span>
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink active={active === '4'} onClick={() => toggleTab('4')}>
+            <FileText className='font-medium-3 me-50' />
+            <span className='fw-bold'>سایر اطلاعات کاربر</span>
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink active={active === '5'} onClick={() => toggleTab('5')}>
+            <Link className='font-medium-3 me-50' />
+            <span className='fw-bold'>ارتباط با کاربر</span>
           </NavLink>
         </NavItem>
       </Nav>
       <TabContent activeTab={active}>
         <TabPane tabId='1'>
-          <YourCourse />
+          <UserProjectsList />
         </TabPane>
         <TabPane tabId='2'>
-          <ReserveCourse />
+          <ReserveTab />
         </TabPane>
         <TabPane tabId='3'>
-        <TeacherCourse />
+        <CommentTab />
+        </TabPane>
+        <TabPane tabId='4'>
+          <OtherInformation />
+        </TabPane>
+        <TabPane tabId='5'>
+          <Connections />
         </TabPane>
       </TabContent>
     </Fragment>

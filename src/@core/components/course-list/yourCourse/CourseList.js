@@ -6,7 +6,7 @@ import { Fragment, useState, useEffect } from 'react'
 
 import Avatar from '@components/avatar'
 
-import pic from '../../../assets/images/avatars/1.png'
+import pic from '../../../../assets/images/avatars/1.png'
 import ProductsSearchbar from './ProductsSearchbar'
 
 // ** Table Columns

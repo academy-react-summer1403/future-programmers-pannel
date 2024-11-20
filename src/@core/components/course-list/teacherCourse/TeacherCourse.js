@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { courseList, courseNumber } from '../../../core/services/api/courseList';
+import { courseList, courseNumber } from '../../../../core/services/api/courseList';
 import StatsHorizontal from './StatsHorizontal';
 import { Col, Row } from 'reactstrap';
 import CourseList from './CourseList';
 import { User, UserCheck, UserMinus, UserX } from 'react-feather';
 
-function YourCourse() {
+function TeacherCourse() {
 
     const [course, setCourse] = useState([])
     const [courseCount, setCourseCount] = useState([])
@@ -89,4 +89,4 @@ function YourCourse() {
     )
 }
 
-export default YourCourse
+export default TeacherCourse

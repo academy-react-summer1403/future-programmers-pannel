@@ -3,7 +3,7 @@ import { Badge, Button, Card, DropdownItem, DropdownMenu, DropdownToggle, Uncont
 import pic from '../../../assets/images/avatars/1.png'
 
 // ** Third Party Components
-import { Archive, ChevronDown, FileText, MoreVertical, Trash2 } from 'react-feather'
+import { Archive, CheckCircle, ChevronDown, FileText, MoreVertical, Trash2 } from 'react-feather'
 import DataTable from 'react-data-table-component'
 
 // ** Custom Components
@@ -89,8 +89,8 @@ export const columns = [
               className='w-100' 
               // onClick={e => e.preventDefault()}
             >
-              <Archive size={14} className='me-50' />
-              <span className='align-middle'>عدم تائید</span>
+              <CheckCircle size={14} className='me-50' />
+              <span className='align-middle'> تائید</span>
             </DropdownItem>
             <DropdownItem
               // tag='a'

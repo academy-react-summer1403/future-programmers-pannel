@@ -1,9 +1,9 @@
 // ** Reactstrap Imports
-import { Badge, Button, Card } from 'reactstrap'
+import { Badge, Button, Card, DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown } from 'reactstrap'
 import pic from '../../../assets/images/avatars/1.png'
 
 // ** Third Party Components
-import { ChevronDown } from 'react-feather'
+import { Archive, ChevronDown, Edit, MoreVertical, Trash2 } from 'react-feather'
 import DataTable from 'react-data-table-component'
 
 // ** Custom Components
@@ -31,86 +31,108 @@ export const columns = [
   {
     sortable: true,
     maxWidth: '200px',
-    name: 'نام دوره',
-    selector: row => row.title,
+    name: 'نام گروه',
     cell: row => {
       return (
         <div className='d-flex justify-content-left align-items-center'>
-          <div className='avatar-wrapper'>
-            <Avatar className='me-1' img={pic} alt={row.title} imgWidth='32' />
-          </div>
-          <div className='d-flex flex-column'>
-            <span className='text-truncate fw-bolder'>{row.title}</span>
-            <small className='text-muted'>{row.subtitle}</small>
-          </div>
+          <span className='text-truncate fw-bolder'>{row.title}</span> 
         </div>
       )
     }
   },
   {
-    name: 'تاریخ رزرو دوره ',
+    name: ' ظرفیت دوره ',
     maxWidth:'150px',
     selector: row => row.date
   },
   {
-    name: ' وضعیت دوره',
-    minWidth: '150px',
-    // maxWidth:'100px',
-    sortable: true,
-    sortField: 'status',
-    // selector: row => row.active,
-    cell: row => (
-      <Badge className='text-capitalize' color={row.active === "True" ? "light-success" : "light-danger"} pill>
-        {row.active === "True" ? "رزرو شده" : "رزرو نشده"}
-      </Badge>
-    )
+    name: '  نام استاد ',
+    maxWidth:'150px',
+    selector: row => row.date
   },
   {
-    name: 'عملیات',
+    name: 'اقدام',
     // minWidth: '100px',
-    maxWidth:'200px',
+    minWidth:'200px',
     cell: row => (
       <div className='column-action'>
-        {/* <UncontrolledDropdown>
+        <UncontrolledDropdown>
           <DropdownToggle tag='div' className='btn btn-sm'>
             <MoreVertical size={14} className='cursor-pointer' />
           </DropdownToggle>
           <DropdownMenu>
             <DropdownItem
-              tag={Link}
-              className='w-100'
-              to={`/apps/user/view/${row.id}`}
-              onClick={() => store.dispatch(getUser(row.id))}
+              // tag='a' 
+              // href='/' 
+              className='w-100' 
+              // onClick={e => e.preventDefault()}
             >
-              <FileText size={14} className='me-50' />
-              <span className='align-middle'>Details</span>
+              <Edit size={14} className='me-50' />
+              <span className='align-middle'>ویرایش </span>
             </DropdownItem>
             <DropdownItem
-              tag='a' 
-              href='/' 
-              className='w-100' onClick={e => e.preventDefault()}
-            >
-              <Archive size={14} className='me-50' />
-              <span className='align-middle'>Edit</span>
-            </DropdownItem>
-            <DropdownItem
-              tag='a'
-              href='/'
+              // tag='a'
+              // href='/'
               className='w-100'
-              onClick={e => {
-                e.preventDefault()
-                store.dispatch(deleteUser(row.id))
-              }}
+              // onClick={e => {
+              //   e.preventDefault()
+              //   store.dispatch(deleteUser(row.id))
+              // }}
             >
               <Trash2 size={14} className='me-50' />
-              <span className='align-middle'>Delete</span>
+              <span className='align-middle'>حذف</span>
             </DropdownItem>
           </DropdownMenu>
-        </UncontrolledDropdown> */}
-        <Button color='relief-secondary'>جزئیات</Button>
+        </UncontrolledDropdown>
       </div>
     )
   }
+  // {
+  //   name: 'عملیات',
+  //   // minWidth: '100px',
+  //   maxWidth:'200px',
+  //   cell: row => (
+  //     <div className='column-action'>
+  //       {/* <UncontrolledDropdown>
+  //         <DropdownToggle tag='div' className='btn btn-sm'>
+  //           <MoreVertical size={14} className='cursor-pointer' />
+  //         </DropdownToggle>
+  //         <DropdownMenu>
+  //           <DropdownItem
+  //             tag={Link}
+  //             className='w-100'
+  //             to={`/apps/user/view/${row.id}`}
+  //             onClick={() => store.dispatch(getUser(row.id))}
+  //           >
+  //             <FileText size={14} className='me-50' />
+  //             <span className='align-middle'>Details</span>
+  //           </DropdownItem>
+  //           <DropdownItem
+  //             tag='a' 
+  //             href='/' 
+  //             className='w-100' onClick={e => e.preventDefault()}
+  //           >
+  //             <Archive size={14} className='me-50' />
+  //             <span className='align-middle'>Edit</span>
+  //           </DropdownItem>
+  //           <DropdownItem
+  //             tag='a'
+  //             href='/'
+  //             className='w-100'
+  //             onClick={e => {
+  //               e.preventDefault()
+  //               store.dispatch(deleteUser(row.id))
+  //             }}
+  //           >
+  //             <Trash2 size={14} className='me-50' />
+  //             <span className='align-middle'>Delete</span>
+  //           </DropdownItem>
+  //         </DropdownMenu>
+  //       </UncontrolledDropdown> */}
+  //       <Button color='relief-secondary'>جزئیات</Button>
+  //     </div>
+  //   )
+  // }
  
 ]
 

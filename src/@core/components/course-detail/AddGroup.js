@@ -132,7 +132,7 @@ const AddGroup = () => {
               {errors.lastName && <FormFeedback>{errors.lastName.message}</FormFeedback>}
             </div>
             <div className='d-flex mt-1'>
-              <Button className='me-1' color='primary' type='submit'>
+              <Button className='me-1'  color='primary' type='submit'>
                 ثبت
               </Button>
             </div>

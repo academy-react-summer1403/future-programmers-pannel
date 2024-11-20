@@ -142,8 +142,8 @@ const Groups = () => {
     <Card>
        
         
-          <Row>
-            <Col md=''>
+          <Row className='match-height'>
+            <Col xl='4' md='4' xs='4'>
               <AddGroup />
             </Col>
           </Row>

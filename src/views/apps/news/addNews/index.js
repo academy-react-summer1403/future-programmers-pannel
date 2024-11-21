@@ -1,8 +1,9 @@
+import NewsAdd from "../../../../@core/components/news-add/NewsAdd"
 
 
 function index() {
   return (
-    <div>index3</div>
+    <div><NewsAdd /></div>
   )
 }
 

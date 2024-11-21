@@ -34,6 +34,7 @@ const CourseDetail = lazy(() => import("../../pages/CourseDetail"));
 const CourseAdd = lazy(() => import("../../views/apps/courses/addCourse"));
 const News = lazy(() => import("../../pages/News"));
 const NewsList = lazy(() => import("../../views/apps/news/list"));
+const NewsDeatil = lazy(() => import("../../pages/NewsDetail")); 
 const NewsAdd = lazy(() => import("../../views/apps/news/addNews"));
 const Comment = lazy(() => import("../../pages/Comment"));
 const Login = lazy(() => import("../../pages/Login"));
@@ -92,6 +93,10 @@ const Routes = [
   {
     path: "/apps/news/addNews",
     element: <NewsAdd />,
+  },
+  {
+    path: "/newsDetail",
+    element: <NewsDeatil />,
   },
   {
     path: "/comment",

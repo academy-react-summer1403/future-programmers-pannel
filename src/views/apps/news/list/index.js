@@ -1,6 +1,6 @@
 import {Row, Col} from "reactstrap";
 import StatsHorizontal from "../../../../@core/components/news-list/StatsHorizontal";
-import Table from "../../../../@core/components/news-list/Table";
+import NewsTable from "../../../../@core/components/news-list/NewsTable";
 import { User, UserCheck, UserX } from 'react-feather'
 import { newsCount, newsList } from "../../../../core/services/api/newsList";
 import { useEffect, useState } from "react";
@@ -84,7 +84,7 @@ function index() {
         />
       </Col> */}
     </Row>
-    <Table news={news} setSearch={setSearch} setActivation={setActivation} activation={activation} />
+    <NewsTable news={news} setSearch={setSearch} setActivation={setActivation} activation={activation} />
   </div>
 
   )

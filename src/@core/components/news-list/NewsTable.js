@@ -171,7 +171,7 @@ import {
 //   )
 // }
 
-const UsersList = ({news, setSearch, setActivation, activation}) => {
+const NewsTable = ({news, setSearch, setActivation, activation}) => {
   // ** Store Vars
   // const dispatch = useDispatch()
   // const store = useSelector(state => state.users)
@@ -512,4 +512,4 @@ const UsersList = ({news, setSearch, setActivation, activation}) => {
   )
 }
 
-export default UsersList
+export default NewsTable

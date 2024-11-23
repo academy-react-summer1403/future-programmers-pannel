@@ -20,9 +20,9 @@ const UserTabs = ({ active, toggleTab, detail }) => {
   const [reserveCourse, setReserveCourse] = useState([])
   const [comment, setComment] = useState([])
 
-  const courses = detail.courses;
-  setCourse(courses);
-  // console.log(course)
+  // const courses = detail.courses;
+  // setCourse(courses);
+  // console.log(detail)
 
   return (
     <Fragment>

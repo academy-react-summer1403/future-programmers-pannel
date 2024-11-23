@@ -15,22 +15,23 @@ function CourseDetail() {
 //   const store = useSelector(state => state.users)
 //   const dispatch = useDispatch()
 
-//   // ** Hooks
-//   const { id } = useParams()
-
 //   // ** Get suer on mount
 //   useEffect(() => {
 //     dispatch(getUser(parseInt(id)))
 //   }, [dispatch])
 
   const [active, setActive] = useState('1')
+  const [detail, setDetail]=useState([])
 
   const toggleTab = tab => {
     if (active !== tab) {
       setActive(tab)
     }
   }
+// ** Hooks
+  const { id } = useParams()
 
+  
   return (
     <div className='app-user-view'>
     <Row>

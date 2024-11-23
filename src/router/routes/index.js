@@ -75,7 +75,7 @@ const Routes = [
     element: <CourseList />,
   },
   {
-    path: "/courseDetail",
+    path: "/courseDetail/:id",
     element: <CourseDetail />,
   },
   {
@@ -95,7 +95,7 @@ const Routes = [
     element: <NewsAdd />,
   },
   {
-    path: "/newsDetail",
+    path: "/newsDetail/:id",
     element: <NewsDeatil />,
   },
   {

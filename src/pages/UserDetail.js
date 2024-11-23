@@ -1,46 +1,50 @@
 import { Col, Row } from "reactstrap"
 import UserInfoCard from "../@core/components/user-detail/UserInfoCard"
 import UserTabs from "../@core/components/user-detail/UserTabs"
+import getUserDetail from "../core/services/api/getUserDetail";
 // ** Styles
 import '@styles/react/apps/app-users.scss'
 
-import { getUser } from '../@core/components/user-detail/data2'
+// import { getUser } from '../@core/components/user-detail/data2'
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import { useDispatch, useSelector } from "react-redux"
 
 
 function UserDetail() {
-      // ** Store Vars
-//   const store = useSelector(state => state.users)
-//   const dispatch = useDispatch()
-
-//   // ** Hooks
-//   const { id } = useParams()
-
-//   // ** Get suer on mount
-//   useEffect(() => {
-//     dispatch(getUser(parseInt(id)))
-//   }, [dispatch])
-
   const [active, setActive] = useState('1')
-
+  const [detail, setDetail]=useState([])
+  
   const toggleTab = tab => {
     if (active !== tab) {
       setActive(tab)
     }
   }
 
+  // ** Hooks
+  const { id } = useParams()
+
+  const getDetail = async ()=>{
+    try {
+        const result = await getUserDetail(id)
+        setDetail(result)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+useEffect(() => {
+  getDetail(id);
+}, [])
+
+
   return (
     <div className='app-user-view'>
     <Row>
       <Col xl='4' lg='5' xs={{ order: 1 }} md={{ order: 0, size: 5 }}>
-        <UserInfoCard
-        //  selectedUser={store.selectedUser}
-        />
+        <UserInfoCard detail={detail} />
       </Col>
       <Col xl='8' lg='7' xs={{ order: 0 }} md={{ order: 1, size: 7 }}>
-        <UserTabs  active={active} toggleTab={toggleTab}/> {/**/}
+        <UserTabs  active={active} toggleTab={toggleTab} detail={detail}/>
       </Col>
     </Row>
   </div>

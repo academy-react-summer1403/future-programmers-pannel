@@ -1,6 +1,6 @@
 // ** React Imports
 import { useState, Fragment } from 'react'
-import pic from '../../../assets/images/avatars/1.png'
+import pic from '../../../assets/images/avatars/avatar-blank.png'
 
 // ** Reactstrap Imports
 import { Row, Col, Card, Form, CardBody, Button, Badge, Modal, Input, Label, ModalBody, ModalHeader } from 'reactstrap'
@@ -29,12 +29,6 @@ const roleColors = {
   subscriber: 'light-primary'
 }
 
-const statusColors = {
-  فعال: 'light-success',
-  pending: 'light-warning',
-  غیرفعال: 'light-secondary'
-}
-
 const statusOptions = [
   { value: 'active', label: 'Active' },
   { value: 'inactive', label: 'Inactive' },
@@ -44,7 +38,7 @@ const statusOptions = [
 
 const MySwal = withReactContent(Swal)
 
-const UserInfoCard = ({ selectedUser }) => {
+const UserInfoCard = ({ selectedUser, detail }) => {
   // ** State
   const [show, setShow] = useState(false)
 
@@ -63,15 +57,15 @@ const UserInfoCard = ({ selectedUser }) => {
     }
   })
 
-  // ** render user img
+  //  ** render user img
   // const renderUserImg = () => {
-  //   if (data !== null && data.avatar.length) {
+  //   if (detail.currentPictureAddress !== null && detail.currentPictureAddress !== "Not-set") {
   //     return (
   //       <img
   //         height='110'
   //         width='110'
   //         alt='user-avatar'
-  //         src={data.avatar}
+  //         src={detail.avatar}
   //         className='img-fluid rounded mt-3 mb-2'
   //       />
   //     )
@@ -79,9 +73,9 @@ const UserInfoCard = ({ selectedUser }) => {
   //     return (
   //       <Avatar
   //         initials
-  //         color={data.avatarColor || 'light-primary'}
+  //         color={detail.avatarColor || 'light-primary'}
   //         className='rounded mt-3 mb-2'
-  //         content={data.fullName}
+  //         content={detail.fullName}
   //         contentStyles={{
   //           borderRadius: 0,
   //           fontSize: 'calc(48px)',
@@ -154,32 +148,22 @@ const UserInfoCard = ({ selectedUser }) => {
   //   })
   // }
   const data = {fullName:'oveiss', username :'09111111111',avatarColor:null, email:'sdsdsdsdsdsd', statuse : 'فعال', complete:'90%', gender:"مرد", identification:'99887766', phone:'0922222222', role:'ادمین'};
-
+ console.log(detail)
   return (
     <Fragment>
       <Card>
         <CardBody>
           <div className='user-avatar-section'>
             <div className='d-flex align-items-center flex-column'>
-              {/* {renderUserImg()} */}
-              <img
-          height='110'
-          width='110'
-          alt='user-avatar'
-          src={pic}
-          className='img-fluid rounded mt-3 mb-2'
-        />
+              {detail.currentPictureAddress !== null && detail.currentPictureAddress !== 'Not-set' ? <img height='110' width='110' alt='user-avatar' src={detail.currentPictureAddress} className='img-fluid rounded mt-3 mb-2'/> :  <img height='110' width='110' alt='user-avatar' src={pic} className='img-fluid rounded mt-3 mb-2'/>}
               <div className='d-flex flex-column align-items-center text-center'>
                 <div className='user-info'>
-                  <h4>{data !== null ? data.fullName : 'Eleanor Aguilar'}</h4>
-                  {selectedUser !== null ? (
-                    <Badge color={roleColors[data.role]} className='text-capitalize'>
-                      {data.role}
+                  <h4>{detail !== null ? detail.fName : 'Eleanor Aguilar'}</h4>
+                  {/* {selectedUser !== null ? (
+                    <Badge color={roleColors[detail.roles[2]]} className='text-capitalize'>
+                      {detail.roles[2]}
                     </Badge>
-                  ) : null}
-                  {/* <Badge color={roleColors[data.role]} className='text-capitalize'>
-                      {data.role}
-                    </Badge> */}
+                  ) : null} */}
                 </div>
               </div>
             </div>
@@ -190,7 +174,7 @@ const UserInfoCard = ({ selectedUser }) => {
                 <Book className='font-medium-2' />
               </Badge>
               <div className='ms-75'>
-                <h4 className='mb-0'>11</h4>
+                <h4 className='mb-0'>11</h4> {    /* بررسی شود */}
                 <small> دوره ها</small>
               </div>
             </div>
@@ -210,33 +194,33 @@ const UserInfoCard = ({ selectedUser }) => {
               <ul className='list-unstyled'>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'>نام کاربری:</span>
-                  <span>{data.username}</span>
+                  <span>{detail.userName}</span>
                 </li>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'>ایمیل:</span>
-                  <span>{data.email}</span>
+                  <span>{detail.gmail}</span>
                 </li>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'>وضعیت:</span>
-                  <Badge className='text-capitalize' color={statusColors[data.statuse]}>
-                    {data.statuse}
+                  <Badge className='text-capitalize' color={detail.active = true ? "light-success" : "light-danger"} pill>
+                    {detail.active = true ? "فعال" : "غیرفعال"}
                   </Badge>
                 </li>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'>درصد تکمیل پروفایل:</span>
-                  <span className='text-capitalize'>{data.complete}</span>
+                  <span className='text-capitalize'>{detail.profileCompletionPercentage + " " }درصد</span>
                 </li>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'>جنسیت:</span>
-                  <span>{data.gender}</span>
+                  <span>{detail.gender = true ? "اعلام نشده": "اعلام شده"}</span>
                 </li>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'>کد ملی:</span>
-                  <span>{data.identification}</span>
+                  <span>{detail.nationalCode}</span>
                 </li>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'>شماره موبایل:</span>
-                  <span>{data.phone}</span>
+                  <span>{detail.phoneNumber}</span>
                 </li>
               </ul>
             ) : null}

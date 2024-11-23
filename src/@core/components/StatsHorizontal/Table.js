@@ -1,5 +1,6 @@
 // ** React Imports
 import { Fragment, useState, useEffect } from 'react'
+import { Link } from "react-router-dom";
 
 // ** Invoice List Sidebar
 // import Sidebar from './Sidebar'
@@ -21,7 +22,7 @@ import ProductsSearchbar from './ProductsSearchbar'
 import Select from 'react-select'
 import ReactPaginate from 'react-paginate'
 import DataTable from 'react-data-table-component'
-import { ChevronDown, Share, Printer, FileText, File, Grid, Copy, MoreVertical, Archive, Trash2, Sidebar, Link } from 'react-feather'
+import { ChevronDown, Share, Printer, FileText, File, Grid, Copy, MoreVertical, Archive } from 'react-feather'
 import AddUser from './AddUser'
 // ** Utils
 import { selectThemeColors } from '@utils'
@@ -355,14 +356,12 @@ const UsersList = ({users , setSearch, setRole, role, setActivation, activation}
         
         {row.pictureAddress !== null && row.pictureAddress !== 'Not-set' ? <Avatar img={row.pictureAddress } className='me-1'/>: <Avatar img={pic} className='me-1'/>}
         <div className='d-flex flex-column'>
-          {/* <Link */}
-          {/* to={'/userDetail'} */}
-            {/* to={`/apps/user/view/${row.id}`}  */}
-            {/* className='user_name text-truncate text-body' */}
-            {/* onClick={() => store.dispatch(getUser(row.id))} */}
-          {/* > */}
+          <Link
+            to={'/userDetail/'+row.id}
+            className='user_name text-truncate text-body' 
+          > 
             <span className='fw-bolder'>{row.fname}</span>
-          {/* </Link> */}
+          </Link> 
           <small className='text-truncate text-muted mb-0'>{row.lname}</small>
         </div>
       </div>

@@ -1,5 +1,5 @@
 // ** React Imports
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 
 // ** Reactstrap Imports
 import { Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap'
@@ -15,7 +15,15 @@ import UserProjectsList from './UserProjectsList'
 import CommentTab from './CommentTab'
 import OtherInformation from './OtherInformation'
 
-const UserTabs = ({ active, toggleTab }) => {
+const UserTabs = ({ active, toggleTab, detail }) => {
+  const [course, setCourse] = useState([]);
+  const [reserveCourse, setReserveCourse] = useState([])
+  const [comment, setComment] = useState([])
+
+  const courses = detail.courses;
+  setCourse(courses);
+  // console.log(course)
+
   return (
     <Fragment>
       <Nav pills className='mb-2'>

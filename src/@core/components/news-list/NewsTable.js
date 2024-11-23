@@ -43,6 +43,7 @@ import {
   UncontrolledDropdown,
   Badge
 } from 'reactstrap'
+import { Link, useParams } from 'react-router-dom'
 
 // ** Styles
 // import '@styles/react/libs/react-select/_react-select.scss'
@@ -209,6 +210,8 @@ const NewsTable = ({news, setSearch, setActivation, activation}) => {
 
   // ** User filter options
  
+
+
   const activationOptions = [
     { value:'', label: 'انتخاب وضعیت' },
     { value: 'true', label: 'فعال' },
@@ -337,6 +340,7 @@ const NewsTable = ({news, setSearch, setActivation, activation}) => {
   //   {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'inactive'},
   //   {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'pending'},
   // ]
+
   const statusObj = {
     pending: 'light-warning',
     active: 'light-success',
@@ -355,13 +359,12 @@ const NewsTable = ({news, setSearch, setActivation, activation}) => {
         {row.addUserProfileImage !== null && row.addUserProfileImage !== 'Not-set' ? <Avatar img={row.addUserProfileImage } className='me-1'/>: <Avatar img={pic} className='me-1'/>}
         
         <div className='d-flex flex-column'>
-          {/* <Link
-            to={`/apps/user/view/${row.id}`}
+          <Link
+            to={'/newsDetail/'+ row.id}
             className='user_name text-truncate text-body'
-            onClick={() => store.dispatch(getUser(row.id))}
-          > */}
+          >
             <span className='fw-bolder'>{row.addUserFullName}</span>
-          {/* </Link> */}
+          </Link>
           {/* <small className='text-truncate text-muted mb-0'>{row.email}</small> */}
         </div>
       </div>

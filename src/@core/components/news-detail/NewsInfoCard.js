@@ -22,11 +22,6 @@ import { selectThemeColors } from '@utils'
 import '@styles/react/libs/react-select/_react-select.scss'
 
 
-const statusColors = {
-  فعال: 'light-success',
-  غیرفعال: 'light-secondary'
-}
-
 const levelOptions = [
   { value: 'active', label: 'ساده' },
   { value: 'inactive', label: 'متوسط' },
@@ -43,7 +38,7 @@ const classOptions = [
 
 const MySwal = withReactContent(Swal)
 
-const NewsInfoCard = ({ selectedUser }) => {
+const NewsInfoCard = ({ selectedUser, cardDetail }) => {
   // ** State
   const [show, setShow] = useState(false)
 
@@ -160,20 +155,19 @@ const NewsInfoCard = ({ selectedUser }) => {
         <CardBody>
           <div className='user-avatar-section'>
             <div className='d-flex align-items-center flex-column'>
-              {/* {renderUserImg()} */}
               <img
-          height='110'
-          width='110'
-          alt='user-avatar'
-          src={pic}
-          className='img-fluid rounded mt-3 mb-2'
-        />
+                height='110'
+                width='110'
+                alt='user-avatar'
+                src={pic}
+                className='img-fluid rounded mt-3 mb-2'
+              />
               <div className='d-flex flex-column align-items-center text-center'>
                 <div className='user-info'>
-                  <h4>{data !== null ? data.fullName : 'Eleanor Aguilar'}</h4>
+                  <h4>{cardDetail !== null ? cardDetail.fullName : 'Eleanor Aguilar'}</h4>
                   {selectedUser !== null ? (
-                    <Badge color={statusColors[data.statuse]} className='text-capitalize'>
-                      {data.statuse}
+                    <Badge className='text-capitalize' color={cardDetail.active === 'true' ? "light-success" : "light-danger"} pill>
+                      {cardDetail.active === 'true' ? "فعال" : "غیرفعال"}
                     </Badge>
                   ) : null}
                   {/* <Badge color={roleColors[data.role]} className='text-capitalize'>
@@ -189,7 +183,7 @@ const NewsInfoCard = ({ selectedUser }) => {
                 <Eye className='font-medium-2' />
               </Badge>
               <div className='ms-75'>
-                <h4 className='mb-0'>11</h4>
+                <h4 className='mb-0'>{cardDetail.currentView}</h4>
                 <small> بازدیدها </small>
               </div>
             </div>
@@ -198,42 +192,42 @@ const NewsInfoCard = ({ selectedUser }) => {
                 <MessageCircle className='font-medium-2' />
               </Badge>
               <div className='ms-75'>
-                <h4 className='mb-0'>2</h4>
+                <h4 className='mb-0'>{cardDetail.commentsCount}</h4>
                 <small> کامنت ها</small>
               </div>
             </div>
           </div>
           <h4 className='fw-bolder border-bottom pb-50 mb-1'>جزئیات</h4>
           <div className='info-container'>
-            {selectedUser !== null ? (
+            {cardDetail !== null ? (
               <ul className='list-unstyled'>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'>نام نویسنده:</span>
-                  <span>{data.username}</span>
+                  <span>{cardDetail.addUserFullName}</span>
                 </li>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'> دسته بندی:</span>
-                  <span>{data.email}</span>
+                  <span>{cardDetail.newsCatregoryName}</span>
                 </li>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'>عنوان کوتاه :</span>
-                  <span>{data.email}</span>
+                  <span>{cardDetail.miniDescribe}</span>
                 </li>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'>عنوان گوگل :</span>
-                  <span>{data.email}</span>
+                  <span>{cardDetail.googleTitle}</span>
                 </li>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'>تاریخ ایجاد:</span>
-                  <span>{data.gender}</span>
+                  <span>{cardDetail?.insertDate?.toString()?.slice(0,10)}</span>
                 </li>
                 <li className='mb-75'>
-                  <span className='fw-bolder me-25'>تاذیخ بروزرسانی :</span>
-                  <span>{data.identification}</span>
+                  <span className='fw-bolder me-25'>تاریخ بروزرسانی :</span>
+                  <span>{cardDetail?.updateDate?.toString()?.slice(0,10)}</span>
                 </li>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'>  توضیحات دوره :</span>
-                  <span>{data.desc}</span>
+                  <span>{" " + cardDetail.describe}</span>
                 </li>
               </ul>
             ) : null}
@@ -382,3 +376,5 @@ const NewsInfoCard = ({ selectedUser }) => {
 }
 
 export default NewsInfoCard
+
+// selectedUser

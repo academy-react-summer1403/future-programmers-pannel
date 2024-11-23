@@ -1,6 +1,6 @@
 import {Row, Col} from "reactstrap";
-import StatsHorizontal from "../@core/components/StatsHorizontal/StatsHorizontal";
-import Table from "../@core/components/StatsHorizontal/Table";
+import StatsHorizontal from "../@core/components/User-list/StatsHorizontal";
+import UserTable from "../@core/components/User-list/UserTable";
 import { User, UserPlus, UserCheck, UserX } from 'react-feather'
 import { useEffect, useState } from "react";
 import { userCount, userList } from "../core/services/api/userList";
@@ -91,7 +91,7 @@ const Users = () => {
         />
       </Col>
     </Row>
-    <Table users={users} setSearch={setSearch} setRole={setRole} role={role} setActivation={setActivation} activation={activation}/>
+    <UserTable users={users} setSearch={setSearch} setRole={setRole} role={role} setActivation={setActivation} activation={activation}/>
   </div>
     
   );

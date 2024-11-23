@@ -8,6 +8,7 @@ import { useParams } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import NewsInfoCard from "../@core/components/news-detail/NewsInfoCard"
 import NewsTab from "../@core/components/news-detail/NewsTab"
+import getNewsDetail from "../core/services/api/getNewsDetail"
 
 
 function NewsDetail() {
@@ -23,24 +24,34 @@ function NewsDetail() {
 //     dispatch(getUser(parseInt(id)))
 //   }, [dispatch])
 
-  const [active, setActive] = useState('1')
+  const [cardDetail, setCardDetail]=useState([])
+  const [commentDetail, setCommentDetail] = useState([])
 
-  const toggleTab = tab => {
-    if (active !== tab) {
-      setActive(tab)
+  const { id } = useParams()
+  
+
+  const getDetail = async ()=>{
+    try {
+        const result = await getNewsDetail(id)
+        setCardDetail(result.detailsNewsDto)
+        setCommentDetail(result.commentDtos)
+    } catch (error) {
+        console.log(error)
     }
-  }
+}
+
+useEffect(() => {
+  getDetail(id);
+}, [])
 
   return (
     <div className='app-user-view'>
     <Row>
       <Col xl='4' lg='5' xs={{ order: 1 }} md={{ order: 0, size: 5 }}>
-        <NewsInfoCard
-        //  selectedUser={store.selectedUser}
-        />
+        <NewsInfoCard cardDetail={cardDetail}/>
       </Col>
       <Col xl='8' lg='7' xs={{ order: 0 }} md={{ order: 1, size: 7 }}>
-        <NewsTab  active={active} toggleTab={toggleTab}/> 
+        <NewsTab commentDetail={commentDetail}/> 
       </Col>
     </Row>
   </div>

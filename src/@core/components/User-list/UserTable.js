@@ -173,7 +173,7 @@ import {
 //   )
 // }
 
-const UsersList = ({users , setSearch, setRole, role, setActivation, activation}) => {
+const UserTable = ({users , setSearch, setRole, role, setActivation, activation}) => {
   // ** Store Vars
   // const dispatch = useDispatch()
   // const store = useSelector(state => state.users)
@@ -548,4 +548,4 @@ const UsersList = ({users , setSearch, setRole, role, setActivation, activation}
   )
 }
 
-export default UsersList
+export default UserTable

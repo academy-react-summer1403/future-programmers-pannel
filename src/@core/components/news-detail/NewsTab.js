@@ -13,14 +13,14 @@ import {MessageCircle } from 'react-feather'
 import CommentTab from './CommentTab'
 
 
-const NewsTab = ({ active, toggleTab }) => {
+const NewsTab = ({ commentDetail}) => {
   return (
     <Fragment>
       <Nav pills className='mb-2'>  
         <MessageCircle className='font-medium-3 me-50' />
         <span className='fw-bold'>کامنت ها</span>
       </Nav>
-      <CommentTab />
+      <CommentTab commentDetail={commentDetail} />
     </Fragment>
   )
 }

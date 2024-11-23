@@ -1,6 +1,6 @@
 // ** Reactstrap Imports
 import { Badge, Button, Card, DropdownItem, DropdownMenu, DropdownToggle, Modal, UncontrolledDropdown, ModalBody, ModalHeader } from 'reactstrap'
-import pic from '../../../assets/images/avatars/1.png'
+import pic from '../../../assets/images/avatars/avatar-blank.png'
 import { useState } from 'react'
 // ** Third Party Components
 import { CheckCircle, ChevronDown ,Eye , Trash2 } from 'react-feather'
@@ -32,12 +32,12 @@ export const columns = [
     sortable: true,
     minWidth: '200px',
     name: ' نام کاربر',
-    selector: row => row.title,
+    selector: row => row.commentDetail,
     cell: row => {
       return (
         <div className='d-flex justify-content-left align-items-center'>
           <div className='avatar-wrapper'>
-            <Avatar className='me-1' img={pic} alt={row.title} imgWidth='32' />
+          {row.pictureAddress !== null && row.pictureAddress !== 'Not-set' ? <Avatar img={row.pictureAddress } className='me-1' imgWidth='32'/>: <Avatar img={pic} className='me-1' imgWidth='32'/>}
           </div>
           <div className='d-flex flex-column'>
             <span className='text-truncate fw-bolder'>{row.title}</span>
@@ -50,7 +50,7 @@ export const columns = [
     name: '  عنوان کامنت ',
     maxWidth:'200px',
     minWidth:'150px',
-    selector: row => row.date
+    selector: row => row.title
   },
   // {
   //   name: '  متن کامنت ',
@@ -60,13 +60,13 @@ export const columns = [
   // },
   {
     sortable: true,
-    minWidth: '400px',
+    minWidth: '300px',
     name: ' متن کامنت',
     // selector: row => row.title,
     cell: row => {
       return (
         <div className='d-flex justify-content-left align-items-center' onClick={() => setShow(true)}>
-            <span className='text-truncate fw-bolder' >{row.title}</span>
+            <span className='text-truncate fw-bolder' >{row.describe}</span>
         </div>
       )
     }
@@ -111,7 +111,7 @@ export const columns = [
  
 ]
 
-const CommentTab = () => {
+const CommentTab = ({commentDetail}) => {
   const [show, setShow] = useState(false)
   return (
     <Card>
@@ -120,7 +120,7 @@ const CommentTab = () => {
           noHeader
           responsive
           columns={columns}
-          data={data}
+          data={commentDetail}
           className='react-dataTable'
           sortIcon={<ChevronDown size={10} />}
         />

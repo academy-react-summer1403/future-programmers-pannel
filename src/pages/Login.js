@@ -137,10 +137,10 @@ const Login = () => {
         >
           <Col className="px-xl-2 mx-auto" sm="8" md="6" lg="12">
             <CardTitle tag="h2" className="fw-bold mb-1">
-              Welcome to Vuexy! 👋
+              به پنل ادمین خوش آمدید! 👋
             </CardTitle>
             <CardText className="mb-2">
-              Please sign-in to your account and start the adventure
+              لطفا وارد حساب کاربری خود شوید
             </CardText>
             <Form
               className="auth-login-form mt-2"
@@ -148,7 +148,7 @@ const Login = () => {
             >
               <div className="mb-1">
                 <Label className="form-label" for="login-email">
-                  Email
+                  ایمیل یا شماره همراه
                 </Label>
                 <Input
                   value={userName}
@@ -162,10 +162,10 @@ const Login = () => {
               <div className="mb-1">
                 <div className="d-flex justify-content-between">
                   <Label className="form-label" for="login-password">
-                    Password
+                    رمز ورود
                   </Label>
                   <Link to="/forgot-password">
-                    <small>Forgot Password?</small>
+                    <small>روز خود را فراموش کردید؟</small>
                   </Link>
                 </div>
                 <InputPasswordToggle
@@ -181,7 +181,7 @@ const Login = () => {
                 </Label>
               </div>
               <Button onClick={handleSubmit} color="primary" block>
-                Sign in
+                وارد شوید
               </Button>
             </Form>
             <p className="text-center mt-2">

@@ -11,19 +11,46 @@ import Avatar from '@components/avatar'
 import { Card, CardHeader, CardTitle, CardBody, Button, Label, Input, Form, Row, Col } from 'reactstrap'
 
 import { selectThemeColors } from '@utils'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import getNewsCategory from '../../../core/services/api/getNewsCategory'
 
-const newsCategory = [
-  { value: 'news1', label: 'اخبار پژوهشگاه' },
-  { value: 'news2', label: 'اخبار حواشی پژوهشگاه' }
-]
+// const newsCategory = [
+//   { id: '1', categoryName: 'اخبار پژوهشگاه' },
+//   { id: '2', categoryName: 'اخبار حواشی پژوهشگاه' }
+// ]
 
 const data = {subject:'Tailwind css',googleTopic:"asqwerty",googleDesc:'23', shortDesc :'09111111111', keyWord:'sdsdsdsdsdsd', newsCategory : 'فعال', desc:'99887766'};
 
 const BasicHookForm = () => {
-
+  const [newsCategory, setNewsCategory] = useState([])
   const [addNews, setAddNews]= useState({Title:'', GoogleTitle:'',GoogleDescribe:'',MiniDescribe:'',Describe:'',Keyword:'',IsSlider:'',NewsCatregoryId:'',Image:''})
-  console.log(addNews)
+  console.log(newsCategory)
+  // console.log(addNews)
+
+  const getCategories = async()=>{
+    try {
+    const result = await getNewsCategory()
+    setNewsCategory(result)
+    } catch (error) {
+    
+    }
+}
+
+const postNews = async()=>{
+  try {
+  const result = await getNewsCategory()
+  setAddNews(result)
+  } catch (error) {
+  
+  }
+}
+
+useEffect(()=>{
+  getCategories();
+},[]);
+
+
+
   
   // ** Hooks
   const {
@@ -34,8 +61,8 @@ const BasicHookForm = () => {
     formState: { errors }
   } = useForm()
 
-  const onSubmit = data => {
-    if (Object.values(data).every(field => field.length > 0)) {
+  const onSubmit = addNews => {
+    if (Object.values(addNews).every(field => field.length > 0)) {
       toast(
         <div className='d-flex'>
           <div className='me-1'>
@@ -45,33 +72,21 @@ const BasicHookForm = () => {
             <h6>خبر با موفقیت ثبت شد</h6>
             <ul className='list-unstyled mb-0'>
               <li>
-                <strong>عنوان خبر</strong>: {data.subject}
+                <strong>عنوان خبر</strong>: {addNews.Title}
               </li>
               <li>
-                <strong>عنوان گوگل</strong>: {data.googleTopic}
+                <strong>توضیح کوتاه</strong>: {addNews.MiniDescribe}
               </li>
               <li>
-                <strong>توضیحات گوگل</strong>: {data.googleDesc}
-              </li>
-              <li>
-                <strong>توضیح کوتاه</strong>: {data.shortDesc}
-              </li>
-              <li>
-                <strong>کلمات کلیدی</strong>: {data.keyWord}
-              </li>
-              <li>
-                <strong>دسته بندی</strong>: {data.newsCategory}
-              </li>
-              <li>
-                <strong>توضیحات</strong>: {data.desc}
+                <strong>کلمات کلیدی</strong>: {addNews.Keyword}
               </li>
             </ul>
           </div>
         </div>
       )
     } else {
-      for (const key in data) {
-        if (data[key].length === 0) {
+      for (const key in addNews) {
+        if (addNews[key].length === 0) {
           setError(key, {
             type: 'manual'
           })
@@ -180,15 +195,13 @@ const BasicHookForm = () => {
                 <Label className='form-label' for='newsCategory'>
                   دسته بندی خبر
                 </Label>
-                <Select
-                  id='newsCategory'
-                  isClearable={false}
-                  className='react-select'
-                  classNamePrefix='select'
-                  options={newsCategory}
-                  theme={selectThemeColors}
-                  defaultValue={newsCategory[newsCategory.findIndex(i => i.value === data.newsCategory)]}
-                />
+                <select class="form-select form-select-md" id='newsCategory'  >
+                {newsCategory?.map((item, index)=>{
+                  return(
+                    <option key={index}>{item.categoryName}</option>
+                  )
+                })}
+                </select>
             </Col>
             <Col xs={12}>
                 <Label className='form-label' for='desc'>
@@ -207,7 +220,7 @@ const BasicHookForm = () => {
                 /> */}
             </Col>
             <Col xs={12} className='text-center mt-2 pt-50'>
-                <Button type='submit' className='me-1' color='primary'>
+                <Button type='submit' className='me-1' color='primary' >
                   Submit
                 </Button>
                 <Button outline color='secondary' type='reset' onClick={handleReset}>

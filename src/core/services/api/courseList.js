@@ -7,6 +7,7 @@ export const courseList = async(RowsOfPage, PageNumber, search, expire)=>{
         if(PageNumber!== "" && PageNumber!==null) queryObj.PageNumber = PageNumber;
         if(search!== "" && search!==null) queryObj.Query = search;
         if(expire!== "" && expire!==null) queryObj.SortType = expire;
+        console.log(RowsOfPage, PageNumber, search, expire )
 
 
         const result = await http.get('/Course/CourseList',{params:queryObj})

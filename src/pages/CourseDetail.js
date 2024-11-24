@@ -2,13 +2,13 @@ import { Col, Row } from "reactstrap"
 // ** Styles
 import '@styles/react/apps/app-users.scss'
 
-import { getUser } from '../@core/components/user-detail/data2'
+// import { getUser } from '../@core/components/user-detail/data2'
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import { useDispatch, useSelector } from "react-redux"
+// import { useDispatch, useSelector } from "react-redux"
 import CourseInfoCard from "../@core/components/course-detail/CourseInfoCard"
 import CourseTabs from "../@core/components/course-detail/CourseTabs"
-
+import getCourseDetail from '../core/services/api/getCourseDetail'
 
 function CourseDetail() {
       // ** Store Vars
@@ -30,6 +30,20 @@ function CourseDetail() {
   }
 // ** Hooks
   const { id } = useParams()
+  
+
+  const getDetail = async ()=>{
+    try {
+        const result = await getCourseDetail(id)
+        setDetail(result)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+useEffect(() => {
+  getDetail(id);
+}, [])
 
   
   return (

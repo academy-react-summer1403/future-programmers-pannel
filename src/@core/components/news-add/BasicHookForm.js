@@ -11,6 +11,7 @@ import Avatar from '@components/avatar'
 import { Card, CardHeader, CardTitle, CardBody, Button, Label, Input, Form, Row, Col } from 'reactstrap'
 
 import { selectThemeColors } from '@utils'
+import { useState } from 'react'
 
 const newsCategory = [
   { value: 'news1', label: 'اخبار پژوهشگاه' },
@@ -20,6 +21,10 @@ const newsCategory = [
 const data = {subject:'Tailwind css',googleTopic:"asqwerty",googleDesc:'23', shortDesc :'09111111111', keyWord:'sdsdsdsdsdsd', newsCategory : 'فعال', desc:'99887766'};
 
 const BasicHookForm = () => {
+
+  const [addNews, setAddNews]= useState({Title:'', GoogleTitle:'',GoogleDescribe:'',MiniDescribe:'',Describe:'',Keyword:'',IsSlider:'',NewsCatregoryId:'',Image:''})
+  console.log(addNews)
+  
   // ** Hooks
   const {
     reset,
@@ -95,21 +100,25 @@ const BasicHookForm = () => {
                 <Label className='form-label' for='subject'>
                   عنوان خبر
                 </Label>
-                <Controller
+                <Input onChange={(e)=>setAddNews({...addNews,Title:e.target.value})} id='subject' placeholder='John' invalid={errors.subject && true} />
+
+                {/* <Controller
                   defaultValue=''
                   control={control}
                   id='subject'
-                  name='subject'
-                  render={({ field }) => (
-                    <Input {...field} id='subject' placeholder='John' invalid={errors.subject && true} />
+                  name='subject' */}
+
+                  {/* render={({ field }) => (
                   )}
-                />
+                /> */}
             </Col>
             <Col md={6} xs={12}>
                 <Label className='form-label' for='googleTopic'>
                   عنوان گوگل
                 </Label>
-                <Controller
+                <Input onChange={(e)=>setAddNews({...addNews,GoogleTitle:e.target.value})} id='googleTopic' placeholder='John' invalid={errors.subject && true} />
+
+                {/* <Controller
                   defaultValue=''
                   control={control}
                   id='googleTopic'
@@ -117,13 +126,15 @@ const BasicHookForm = () => {
                   render={({ field }) => (
                     <Input {...field} id='googleTopic' placeholder='Doe' invalid={errors.googleTopic && true} />
                   )}
-                />
+                /> */}
             </Col>
             <Col md={6} xs={12}>
                 <Label className='form-label' for='googleDesc'>
                   توضیحات گوگل
                 </Label>
-                <Controller
+                <Input onChange={(e)=>setAddNews({...addNews,GoogleDescribe:e.target.value})} id='googleDesc' placeholder='John' invalid={errors.subject && true} />
+
+                {/* <Controller
                   defaultValue=''
                   control={control}
                   id='googleDesc'
@@ -131,13 +142,15 @@ const BasicHookForm = () => {
                   render={({ field }) => (
                     <Input {...field} type='textarea' name='googleDesc' id='googleDesc' rows='3' placeholder='Textarea' invalid={errors.googleDesc && true}/>
                   )}
-                />
+                /> */}
             </Col>
             <Col md={6} xs={12}>
                 <Label className='form-label' for='shortDesc'>
                   توضیح کوتاه
                 </Label>
-                <Controller
+                <Input onChange={(e)=>setAddNews({...addNews,MiniDescribe:e.target.value})} id='shortDesc' placeholder='John' invalid={errors.subject && true} />
+                
+                {/* <Controller
                   defaultValue=''
                   control={control}
                   id='shortDesc'
@@ -145,13 +158,15 @@ const BasicHookForm = () => {
                   render={({ field }) => (
                     <Input {...field} type='textarea' name='shortDesc' id='shortDesc' rows='3' placeholder='Textarea' invalid={errors.shortDesc && true}/>
                   )}
-                />
+                /> */}
             </Col>
             <Col md={6} xs={12}>
                 <Label className='form-label' for='keyWord'>
                   کلمات کلیدی
                 </Label>
-                <Controller
+                <Input onChange={(e)=>setAddNews({...addNews,Keyword:e.target.value})} id='keyWord' placeholder='John' invalid={errors.subject && true} />
+
+                {/* <Controller
                   defaultValue=''
                   control={control}
                   id='keyWord'
@@ -159,7 +174,7 @@ const BasicHookForm = () => {
                   render={({ field }) => (
                     <Input {...field} id='keyWord' placeholder='john.doe.007' invalid={errors.keyWord && true} />
                   )}
-                />
+                /> */}
             </Col>
             <Col md={6} xs={12}>
                 <Label className='form-label' for='newsCategory'>
@@ -179,7 +194,9 @@ const BasicHookForm = () => {
                 <Label className='form-label' for='desc'>
                   توضیحات دوره 
                 </Label>
-                <Controller
+                <Input onChange={(e)=>setAddNews({...addNews,Describe:e.target.value})} type='textarea' name='desc' id='desc' rows='3' placeholder='Textarea' invalid={errors.desc && true}/>
+
+                {/* <Controller
                   defaultValue=''
                   control={control}
                   id='desc'
@@ -187,15 +204,15 @@ const BasicHookForm = () => {
                   render={({ field }) => (
                     <Input {...field} type='textarea' name='desc' id='desc' rows='3' placeholder='Textarea' invalid={errors.desc && true}/>
                   )}
-                />
+                /> */}
             </Col>
             <Col xs={12} className='text-center mt-2 pt-50'>
                 <Button type='submit' className='me-1' color='primary'>
                   Submit
                 </Button>
                 <Button outline color='secondary' type='reset' onClick={handleReset}>
-              Reset
-            </Button>
+                  Reset
+                </Button>
             </Col>
           </Row>
         </Form>

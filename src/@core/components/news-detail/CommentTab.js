@@ -75,13 +75,16 @@ export const columns = [
     name: 'پاسخ ها',
     // minWidth: '100px',
     minWidth:'200px',
-    cell: row => (
+    
+    cell: row => {
+      const [show, setShow] = useState(false);
+      return(
       <div className='column-action'>
         <UncontrolledDropdown>
           <DropdownToggle tag='div' className='btn btn-sm'>
-            <Eye size={16} className='cursor-pointer' />
+            <Eye size={16} className='cursor-pointer' onClick={()=>setShow(!show)}/>
           </DropdownToggle>
-          <DropdownMenu>
+          {/* <DropdownMenu>
             <DropdownItem
               // tag='a' 
               // href='/' 
@@ -103,29 +106,9 @@ export const columns = [
               <Trash2 size={14} className='me-50' />
               <span className='align-middle'>حذف</span>
             </DropdownItem>
-          </DropdownMenu>
+          </DropdownMenu> */}
         </UncontrolledDropdown>
-      </div>
-    )
-  }
- 
-]
-
-const CommentTab = ({commentDetail}) => {
-  const [show, setShow] = useState(false)
-  return (
-    <Card>
-      <div className='react-dataTable user-view-account-projects'>
-        <DataTable
-          noHeader
-          responsive
-          columns={columns}
-          data={commentDetail}
-          className='react-dataTable'
-          sortIcon={<ChevronDown size={10} />}
-        />
-      </div>
-      <Modal isOpen={show} toggle={() => setShow(!show)} className='modal-dialog-centered modal-lg'>
+        <Modal isOpen={show} toggle={() => setShow(!show)} className='modal-dialog-centered modal-lg'>
         <ModalHeader className='bg-transparent' toggle={() => setShow(!show)}></ModalHeader>
         <ModalBody className='px-sm-5 pt-50 pb-5'>
           {/* <Form>
@@ -204,6 +187,27 @@ const CommentTab = ({commentDetail}) => {
           </Form> */}
         </ModalBody>
       </Modal>
+      </div>)
+  }
+  }
+ 
+]
+
+const CommentTab = ({commentDetail}) => {
+  const [show, setShow] = useState(false)
+  return (
+    <Card>
+      <div className='react-dataTable user-view-account-projects'>
+        <DataTable
+          noHeader
+          responsive
+          columns={columns}
+          data={commentDetail}
+          className='react-dataTable'
+          sortIcon={<ChevronDown size={10} />}
+        />
+      </div>
+      
     </Card>
   )
 }

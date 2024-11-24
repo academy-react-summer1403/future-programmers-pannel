@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 import Avatar from '@components/avatar'
 
-import pic from '../../../../assets/images/avatars/1.png'
+import pic from '../../../../assets/images/portrait/small/500.png'
 import ProductsSearchbar from './ProductsSearchbar'
 
 // ** Table Columns

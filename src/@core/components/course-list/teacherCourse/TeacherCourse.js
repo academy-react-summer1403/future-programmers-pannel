@@ -44,9 +44,9 @@ function TeacherCourse() {
 
 
     useEffect(()=>{
-        getAllCourseList(search, expire);
+        getAllCourseList(currentPage, search, expire);
         getCourseStatic(); 
-    },[search, expire]);
+    },[currentPage, search, expire]);
 
     return (
         <div className='app-user-list'>

@@ -12,10 +12,12 @@ function index() {
   const [statics , setStatics] = useState([]);
   const [search, setSearch] = useState('')
   const [activation, setActivation] = useState({ value: '', label: 'انتخاب وضعیت' })
+  const [currentPage, setCurrentPage] = useState(1)
 
-  const getAllNewsList = async(search, activation)=>{
+
+  const getAllNewsList = async(currentPage, search, activation)=>{
     try {
-      const result = await newsList("", "", search, activation)
+      const result = await newsList(10, currentPage, search, activation)
       setNews(result.news)
       
     } catch (error) {
@@ -39,9 +41,9 @@ function index() {
 
 
   useEffect(()=>{
-    getAllNewsList(search, activation?.value); 
+    getAllNewsList(currentPage, search, activation?.value); 
     getNewsStatic();
-},[search, activation?.value]);
+},[currentPage, search, activation?.value]);
 
 // useEffect(() => {
 
@@ -84,7 +86,7 @@ function index() {
         />
       </Col> */}
     </Row>
-    <NewsTable news={news} setSearch={setSearch} setActivation={setActivation} activation={activation} />
+    <NewsTable news={news} setSearch={setSearch} setActivation={setActivation} activation={activation} currentPage={currentPage} setCurrentPage={setCurrentPage} allNews={allNews}/>
   </div>
 
   )

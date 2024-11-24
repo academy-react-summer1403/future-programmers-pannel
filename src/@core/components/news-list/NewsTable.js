@@ -172,7 +172,7 @@ import { Link, useParams } from 'react-router-dom'
 //   )
 // }
 
-const NewsTable = ({news, setSearch, setActivation, activation}) => {
+const NewsTable = ({news, setSearch, setActivation, activation, currentPage, setCurrentPage, allNews}) => {
   // ** Store Vars
   // const dispatch = useDispatch()
   // const store = useSelector(state => state.users)
@@ -180,7 +180,6 @@ const NewsTable = ({news, setSearch, setActivation, activation}) => {
   // ** States
   const [sort, setSort] = useState('desc')
   const [searchTerm, setSearchTerm] = useState('')
-  const [currentPage, setCurrentPage] = useState(1)
   const [sortColumn, setSortColumn] = useState('id')
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -220,21 +219,9 @@ const NewsTable = ({news, setSearch, setActivation, activation}) => {
 
 
   // ** Function in get data on page change
-  // const handlePagination = page => {
-  //   dispatch(
-  //     getData({
-  //       sort,
-  //       sortColumn,
-  //       q: searchTerm,
-  //       perPage: rowsPerPage,
-  //       page: page.selected + 1,
-  //       role: currentRole.value,
-  //       status: currentStatus.value,
-  //       currentPlan: currentPlan.value
-  //     })
-  //   )
-  //   setCurrentPage(page.selected + 1)
-  // }
+  const handlePagination = page => {
+    setCurrentPage(page.selected + 1)
+  }
 
   // ** Function in get data on rows per page
   // const handlePerPage = e => {
@@ -272,27 +259,27 @@ const NewsTable = ({news, setSearch, setActivation, activation}) => {
   // }
 
   // ** Custom Pagination
-  // const CustomPagination = () => {
-  //   const count = Number(Math.ceil(store.total / rowsPerPage))
+  const CustomPagination = () => {
+    const count = Number(Math.ceil(allNews / 10))
 
-  //   return (
-  //     <ReactPaginate
-  //       previousLabel={''}
-  //       nextLabel={''}
-  //       pageCount={count || 1}
-  //       activeClassName='active'
-  //       forcePage={currentPage !== 0 ? currentPage - 1 : 0}
-  //       onPageChange={page => handlePagination(page)}
-  //       pageClassName={'page-item'}
-  //       nextLinkClassName={'page-link'}
-  //       nextClassName={'page-item next'}
-  //       previousClassName={'page-item prev'}
-  //       previousLinkClassName={'page-link'}
-  //       pageLinkClassName={'page-link'}
-  //       containerClassName={'pagination react-paginate justify-content-end my-2 pe-1'}
-  //     />
-  //   )
-  // }
+    return (
+      <ReactPaginate
+        previousLabel={''}
+        nextLabel={''}
+        pageCount={count || 1}
+        activeClassName='active'
+        forcePage={currentPage !== 0 ? currentPage - 1 : 0}
+        onPageChange={page => handlePagination(page)}
+        pageClassName={'page-item'}
+        nextLinkClassName={'page-link'}
+        nextClassName={'page-item next'}
+        previousClassName={'page-item prev'}
+        previousLinkClassName={'page-link'}
+        pageLinkClassName={'page-link'}
+        containerClassName={'pagination react-paginate justify-content-end my-2 pe-1'}
+      />
+    )
+  }
 
   // ** Table data to render
   // const dataToRender = () => {
@@ -494,7 +481,7 @@ const NewsTable = ({news, setSearch, setActivation, activation}) => {
             // onSort={handleSort}
             sortIcon={<ChevronDown />}
             className='react-dataTable'
-            // paginationComponent={CustomPagination}
+            paginationComponent={CustomPagination}
             data={news}
             // subHeaderComponent={
             //   <CustomHeader

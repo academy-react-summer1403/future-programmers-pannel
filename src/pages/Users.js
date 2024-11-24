@@ -14,13 +14,14 @@ const Users = () => {
   const [statics , setStatics] = useState([]);
   const [search, setSearch] = useState('')
   const [role, setRole] = useState({ value: '', id: null, label: 'انتخاب نقش کاربر' })
-  
   const [activation, setActivation] = useState({ value: '', label: 'انتخاب وضعیت' })
+  const [currentPage, setCurrentPage] = useState(1)
 
 
-  const getAllUsersList = async(search, role, activation)=>{
+
+  const getAllUsersList = async(currentPage, search, role, activation)=>{
     try {
-      const result = await userList("", "", search, role, activation)
+      const result = await userList(10, currentPage, search, role, activation)
 
       setUsers(result.listUser)
       
@@ -49,9 +50,9 @@ const Users = () => {
   
 
   useEffect(()=>{
-    getAllUsersList(search, role?.id, activation?.value); 
+    getAllUsersList(currentPage, search, role?.id, activation?.value); 
     getUserStatic(); 
-},[search, role?.id, activation?.value]);
+},[currentPage, search, role?.id, activation?.value]);
 
 
 
@@ -91,7 +92,7 @@ const Users = () => {
         />
       </Col>
     </Row>
-    <UserTable users={users} setSearch={setSearch} setRole={setRole} role={role} setActivation={setActivation} activation={activation}/>
+    <UserTable users={users} setSearch={setSearch} setRole={setRole} role={role} setActivation={setActivation} activation={activation} currentPage={currentPage} setCurrentPage={setCurrentPage} usersCount={usersCount}/>
   </div>
     
   );

@@ -86,7 +86,7 @@ function YourCourse() {
             />
         </Col>
         </Row>
-        <CourseList course={course} setSearch={setSearch} setExpire={setExpire} expire={expire} currentPage={currentPage} setCurrentPage={setCurrentPage} courseCount={courseCount}/>
+        <CourseList course={course} setSearch={setSearch} setExpire={setExpire} expire={expire} currentPage={currentPage} setCurrentPage={setCurrentPage} courseCount={courseCount} />
     </div>
     )
 }

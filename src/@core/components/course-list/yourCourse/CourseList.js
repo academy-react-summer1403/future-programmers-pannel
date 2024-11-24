@@ -215,7 +215,6 @@ const CourseList = ({course, setSearch, setExpire, expire, currentPage, setCurre
   
   // ** Function in get data on page change
   const handlePagination = page => {
-   
     setCurrentPage(page.selected + 1)
   }
 

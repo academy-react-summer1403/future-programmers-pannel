@@ -1,6 +1,6 @@
 // ** React Imports
 import { Fragment, useState, useEffect } from 'react'
-
+import { Link } from "react-router-dom";
 // ** Invoice List Sidebar
 // import Sidebar from './Sidebar'
 
@@ -342,13 +342,12 @@ const CourseList = ({course, setSearch, setExpire, expire}) => {
         {row.tumbImageAddress !== null && row.tumbImageAddress !== 'Not-set' ? <Avatar img={row.tumbImageAddress } className='me-1'/>: <Avatar img={pic} className='me-1'/>}
 
         <div className='d-flex flex-column'>
-          {/* <Link
-            to={`/apps/user/view/${row.id}`}
+          <Link
+            to={`/courseDetail/${row.id}`}
             className='user_name text-truncate text-body'
-            onClick={() => store.dispatch(getUser(row.id))}
-          > */}
+          >
             <span className='fw-bolder'>{row.title}</span>
-          {/* </Link> */}
+          </Link>
           {/* <small className='text-truncate text-muted mb-0'>{row.title}</small> */}
         </div>
       </div>

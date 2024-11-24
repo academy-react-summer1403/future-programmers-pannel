@@ -28,8 +28,8 @@ const levelOptions = [
   { value: 'suspended', label: 'پیشرفته' }
 ]
 const typeOptions = [
-  { value: 'online', label: 'آنلاین' },
-  { value: 'offline', label: 'حضوری' }
+  { value: 'online', label: 'اخبار پژوهشگاه' },
+  { value: 'offline', label: 'اخبار تکنولوژی' }
 ]
 const classOptions = [
   { value: 'class1', label: 'classRoom1' },
@@ -350,7 +350,7 @@ const NewsInfoCard = ({ selectedUser, cardDetail }) => {
               </Col>
               <Col md={5} xs={12}>
                 <Label className='form-label' for='exampleMultipleFileBrowser'>
-                  هزینه دوره 
+                  آپلود عکس 
                 </Label>
                 <Controller
                   defaultValue=''

@@ -12,11 +12,11 @@ function TeacherCourse() {
     const [statics , setStatics] = useState([]);
     const [search, setSearch] = useState('')
     const [expire, setExpire] = useState({ value: '', label: 'انتخاب وضعیت دوره' })
+    const [currentPage, setCurrentPage] = useState(1)
   
-  
-    const getAllCourseList = async(search, expire)=>{
+    const getAllCourseList = async(currentPage, search, expire)=>{
         try {
-        const result = await courseList("", "", search, expire)
+        const result = await courseList(10 ,currentPage, search, expire)
         setCourse(result.courseDtos)
         } catch (error) {
         
@@ -84,7 +84,7 @@ function TeacherCourse() {
             />
         </Col>
         </Row>
-        <CourseList course={course} setSearch={setSearch} setExpire={setExpire} expire={expire}/>
+        <CourseList course={course} setSearch={setSearch} setExpire={setExpire} expire={expire} currentPage={currentPage} setCurrentPage={setCurrentPage} courseCount={courseCount}/>
     </div>
     )
 }

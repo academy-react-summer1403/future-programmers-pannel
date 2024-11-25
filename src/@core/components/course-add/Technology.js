@@ -16,14 +16,6 @@ const Technology = ({ stepper, type }) => {
     { value: 'suspended', label: 'React', color: '#5243AA', isFixed: false },
     { value: 'suspend', label: 'NextJs', color: '#FF5630', isFixed: false },
   ]
-  // const colorOptions = [
-  //   { value: 'ocean', label: 'Ocean', color: '#00B8D9', isFixed: true },
-  //   { value: 'blue', label: 'Blue', color: '#0052CC', isFixed: true },
-  //   { value: 'purple', label: 'Purple', color: '#5243AA', isFixed: true },
-  //   { value: 'red', label: 'Red', color: '#FF5630', isFixed: false },
-  //   { value: 'orange', label: 'Orange', color: '#FF8B00', isFixed: false },
-  //   { value: 'yellow', label: 'Yellow', color: '#FFC400', isFixed: false }
-  // ]
   return (
     <Fragment>
       <div className='content-header'>

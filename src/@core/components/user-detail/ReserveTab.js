@@ -1,6 +1,7 @@
 // ** Reactstrap Imports
 import { Badge, Button, Card } from 'reactstrap'
 import pic from '../../../assets/images/avatars/1.png'
+import { Link } from "react-router-dom";
 
 // ** Third Party Components
 import { ChevronDown } from 'react-feather'
@@ -40,7 +41,9 @@ export const columns = [
             <Avatar className='me-1' img={pic} alt={row.title} imgWidth='32' />
           </div>
           <div className='d-flex flex-column'>
+            <Link to={`/courseDetail/${row.id}`}>
             <span className='text-truncate fw-bolder'>{row.title}</span>
+            </Link>
             <small className='text-muted'>{row.subtitle}</small>
           </div>
         </div>
@@ -65,53 +68,6 @@ export const columns = [
       </Badge>
     )
   },
-  {
-    name: 'عملیات',
-    // minWidth: '100px',
-    maxWidth:'200px',
-    cell: row => (
-      <div className='column-action'>
-        {/* <UncontrolledDropdown>
-          <DropdownToggle tag='div' className='btn btn-sm'>
-            <MoreVertical size={14} className='cursor-pointer' />
-          </DropdownToggle>
-          <DropdownMenu>
-            <DropdownItem
-              tag={Link}
-              className='w-100'
-              to={`/apps/user/view/${row.id}`}
-              onClick={() => store.dispatch(getUser(row.id))}
-            >
-              <FileText size={14} className='me-50' />
-              <span className='align-middle'>Details</span>
-            </DropdownItem>
-            <DropdownItem
-              tag='a' 
-              href='/' 
-              className='w-100' onClick={e => e.preventDefault()}
-            >
-              <Archive size={14} className='me-50' />
-              <span className='align-middle'>Edit</span>
-            </DropdownItem>
-            <DropdownItem
-              tag='a'
-              href='/'
-              className='w-100'
-              onClick={e => {
-                e.preventDefault()
-                store.dispatch(deleteUser(row.id))
-              }}
-            >
-              <Trash2 size={14} className='me-50' />
-              <span className='align-middle'>Delete</span>
-            </DropdownItem>
-          </DropdownMenu>
-        </UncontrolledDropdown> */}
-        <Button color='relief-secondary'>جزئیات</Button>
-      </div>
-    )
-  }
- 
 ]
 
 const ReserveTab = () => {

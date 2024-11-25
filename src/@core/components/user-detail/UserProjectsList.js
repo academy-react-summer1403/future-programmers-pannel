@@ -1,6 +1,7 @@
 // ** Reactstrap Imports
 import { Card } from 'reactstrap'
 import pic from '../../../assets/images/avatars/1.png'
+import { Link } from "react-router-dom";
 
 // ** Third Party Components
 import { ChevronDown } from 'react-feather'
@@ -40,7 +41,9 @@ export const columns = [
             <Avatar className='me-1' img={pic} alt={row.title} imgWidth='32' />
           </div>
           <div className='d-flex flex-column'>
-            <span className='text-truncate fw-bolder'>{row.title}</span>
+            <Link to={`/courseDetail/${row.id}`}>
+              <span className='text-truncate fw-bolder'>{row.title}</span>
+            </Link>
             <small className='text-muted'>{row.subtitle}</small>
           </div>
         </div>

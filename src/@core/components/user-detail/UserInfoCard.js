@@ -1,7 +1,7 @@
 // ** React Imports
 import { useState, Fragment } from 'react'
 import pic from '../../../assets/images/avatars/avatar-blank.png'
-import { Formik, Form, Field } from 'formik'
+import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as yup from 'yup';
 // ** Reactstrap Imports
 import { Row, Col, Card, CardBody, Button, Badge, Modal, Input, Label, ModalBody, ModalHeader } from 'reactstrap'
@@ -268,6 +268,7 @@ const UserInfoCard = ({ selectedUser, detail }) => {
                     name='firstName' 
                     placeholder='John'
                   />
+                  <ErrorMessage name='firstName' component={'p'} class="text-danger"/>
                 </Col>
                 <Col md={6} xs={12}>
                   <Label className='form-label' for='lastName'>
@@ -279,6 +280,7 @@ const UserInfoCard = ({ selectedUser, detail }) => {
                     id='lastName' 
                     placeholder='Doe' 
                   />
+                  <ErrorMessage name='lastName' component={'p'} class="text-danger"/>
                 </Col>
                 <Col xs={12}>
                   <Label className='form-label' for='username'>
@@ -290,6 +292,7 @@ const UserInfoCard = ({ selectedUser, detail }) => {
                     id='username' 
                     placeholder='john.doe.007'
                   />
+                  <ErrorMessage name='username' component={'p'} class="text-danger"/>
                 </Col>
                 <Col md={6} xs={12}>
                   <Label className='form-label' for='billing-email'>
@@ -302,6 +305,7 @@ const UserInfoCard = ({ selectedUser, detail }) => {
                     name='email'
                     placeholder='example@domain.com'
                   />
+                  <ErrorMessage name='email' component={'p'} class="text-danger"/>
                 </Col>
                 <Col md={6} xs={12}>
                   <Label className='form-label' for='status'>
@@ -322,12 +326,19 @@ const UserInfoCard = ({ selectedUser, detail }) => {
                     name='id' 
                     placeholder='+1 609 933 4422' 
                   />
+                  <ErrorMessage name='id' component={'p'} class="text-danger"/>
                 </Col> 
                 <Col md={6} xs={12}>
                   <Label className='form-label' for='contact'>
                     شماره موبایل
                   </Label>
-                  <Field class="form-select form-select-md" id='contact' name='contact' placeholder='0911 111 1111' />
+                  <Field 
+                    class="form-select form-select-md" 
+                    id='contact' 
+                    name='contact' 
+                    placeholder='0911 111 1111' 
+                  />
+                  <ErrorMessage name='contact' component={'p'} class="text-danger"/>
                 </Col>    
                 <Col xs={12} className='text-center mt-2 pt-50'>
                   <Button type='submit' className='me-1' color='primary'>

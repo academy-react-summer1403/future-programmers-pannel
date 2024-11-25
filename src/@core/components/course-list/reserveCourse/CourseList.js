@@ -330,7 +330,7 @@ const CourseList = ({course, setSearch, setExpire, expire, currentPage, setCurre
 
         <div className='d-flex flex-column'>
           <Link
-            to={`/courseDetail/${row.id}`}
+            to={`/courseDetail/${row.courseId}`}
             className='user_name text-truncate text-body'
           >
             <span className='fw-bolder'>{row.title}</span>

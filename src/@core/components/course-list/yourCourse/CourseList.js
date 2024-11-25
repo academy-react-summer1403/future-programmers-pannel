@@ -184,7 +184,6 @@ const CourseList = ({course, setSearch, setExpire, expire, currentPage, setCurre
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [currentPlan, setCurrentPlan] = useState({ value: '', label: 'Select Plan' })
   const [currentStatus, setCurrentStatus] = useState({ value: '', label: 'Select Status', number: 0 })
- console.log(course)
   // ** Function to toggle sidebar
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen)
 
@@ -256,7 +255,6 @@ const CourseList = ({course, setSearch, setExpire, expire, currentPage, setCurre
   // ** Custom Pagination
   const CustomPagination = () => {
     const count = Number(Math.ceil(courseCount / 10))
-console.log(courseCount)
     return (
       <ReactPaginate
         previousLabel={''}
@@ -329,7 +327,7 @@ console.log(courseCount)
 
         <div className='d-flex flex-column'>
           <Link
-            to={`/courseDetail/${row.id}`}
+            to={`/courseDetail/${row.courseId}`}
             className='user_name text-truncate text-body'
           >
             <span className='fw-bolder'>{row.title}</span>

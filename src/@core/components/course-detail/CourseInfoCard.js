@@ -21,13 +21,6 @@ import { selectThemeColors } from '@utils'
 // ** Styles
 import '@styles/react/libs/react-select/_react-select.scss'
 
-
-const statusColors = {
-  فعال: 'light-success',
-  pending: 'light-warning',
-  غیرفعال: 'light-secondary'
-}
-
 const levelOptions = [
   { value: 'active', label: 'ساده' },
   { value: 'inactive', label: 'متوسط' },
@@ -44,10 +37,12 @@ const classOptions = [
 
 const MySwal = withReactContent(Swal)
 
-const CourseInfoCard = ({ selectedUser }) => {
+const CourseInfoCard = ({ selectedUser, detail }) => {
   // ** State
   const [show, setShow] = useState(false)
-
+console.log(detail)
+const start= detail?.startTime?.toString()
+const end= detail?.endTime?.toString()
   // ** Hook
   const {
     reset,
@@ -62,40 +57,6 @@ const CourseInfoCard = ({ selectedUser }) => {
       // firstName: selectedUser.fullName.split(' ')[0]
     }
   })
-
-  // ** render user img
-  // const renderUserImg = () => {
-  //   if (data !== null && data.avatar.length) {
-  //     return (
-  //       <img
-  //         height='110'
-  //         width='110'
-  //         alt='user-avatar'
-  //         src={data.avatar}
-  //         className='img-fluid rounded mt-3 mb-2'
-  //       />
-  //     )
-  //   } else {
-  //     return (
-  //       <Avatar
-  //         initials
-  //         color={data.avatarColor || 'light-primary'}
-  //         className='rounded mt-3 mb-2'
-  //         content={data.fullName}
-  //         contentStyles={{
-  //           borderRadius: 0,
-  //           fontSize: 'calc(48px)',
-  //           width: '100%',
-  //           height: '100%'
-  //         }}
-  //         style={{
-  //           height: '110px',
-  //           width: '110px'
-  //         }}
-  //       />
-  //     )
-  //   }
-  // }
 
   const onSubmit = data => {
     if (Object.values(data).every(field => field.length > 0)) {
@@ -161,25 +122,16 @@ const CourseInfoCard = ({ selectedUser }) => {
         <CardBody>
           <div className='user-avatar-section'>
             <div className='d-flex align-items-center flex-column'>
-              {/* {renderUserImg()} */}
-              <img
-          height='110'
-          width='110'
-          alt='user-avatar'
-          src={pic}
-          className='img-fluid rounded mt-3 mb-2'
-        />
+              {detail.imageAddress !== null && detail.imageAddress !== 'Not-set' ? <img height='110' width='110' alt='user-avatar' src={detail.imageAddress} className='img-fluid rounded mt-3 mb-2'/> :  <img height='110' width='110' alt='user-avatar' src={pic} className='img-fluid rounded mt-3 mb-2'/>}
               <div className='d-flex flex-column align-items-center text-center'>
                 <div className='user-info'>
-                  <h4>{data !== null ? data.fullName : 'Eleanor Aguilar'}</h4>
+                  <h4>{detail !== null ? detail.title : 'Eleanor Aguilar'}</h4>
+                  
                   {selectedUser !== null ? (
-                    <Badge color={statusColors[data.statuse]} className='text-capitalize'>
-                      {data.statuse}
-                    </Badge>
+                    <Badge className='text-capitalize' color={detail.active = true ? "light-success" : "light-danger"} pill>
+                    {detail.active = true ? "فعال" : "غیرفعال"}
+                  </Badge>
                   ) : null}
-                  {/* <Badge color={roleColors[data.role]} className='text-capitalize'>
-                      {data.role}
-                    </Badge> */}
                 </div>
               </div>
             </div>
@@ -190,7 +142,7 @@ const CourseInfoCard = ({ selectedUser }) => {
                 <Users className='font-medium-2' />
               </Badge>
               <div className='ms-75'>
-                <h4 className='mb-0'>11</h4>
+                <h4 className='mb-0'>{detail.courseUserTotal}</h4>
                 <small> کاربر </small>
               </div>
             </div>
@@ -199,7 +151,7 @@ const CourseInfoCard = ({ selectedUser }) => {
                 <MessageCircle className='font-medium-2' />
               </Badge>
               <div className='ms-75'>
-                <h4 className='mb-0'>2</h4>
+                <h4 className='mb-0'>{detail.courseCommentTotal}</h4>
                 <small> کامنت ها</small>
               </div>
             </div>
@@ -210,41 +162,39 @@ const CourseInfoCard = ({ selectedUser }) => {
               <ul className='list-unstyled'>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'>نام استاد:</span>
-                  <span>{data.username}</span>
+                  <span>{detail.teacherName}</span>
                 </li>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'>نام کلاس:</span>
-                  <span>{data.email}</span>
+                  <span>{detail.courseClassRoomName}</span>
                 </li>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'>سطح دوره:</span>
-                  <Badge className='text-capitalize' color={statusColors[data.statuse]}>
-                    {data.statuse}
-                  </Badge>
+                  <span className='text-capitalize'>{detail.courseLevelName}</span>
                 </li>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'>  وضعیت دوره:</span>
-                  <span className='text-capitalize'>{data.complete}</span>
+                  <span className='text-capitalize'>{detail.courseStatusName}</span>
                 </li>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'>نوع دوره:</span>
-                  <span>{data.gender}</span>
+                  <span>{detail.courseTypeName}</span>
                 </li>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'>قیمت دوره :</span>
-                  <span>{data.identification}</span>
+                  <span>{detail.cost} تومان</span>
                 </li>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'> شروع دوره:</span>
-                  <span>{data.phone}</span>
+                  <span>{start?.slice(0,4)+"/"+start?.slice(5,7)+"/"+start?.slice(8,10)}</span>
                 </li>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'> پایان دوره:</span>
-                  <span>{data.phone}</span>
+                  <span>{end?.slice(0,4)+"/"+end?.slice(5,7)+"/"+end?.slice(8,10)}</span>
                 </li>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'> توضیحات :</span>
-                  <span>{data.desc}</span>
+                  <span>{detail.describe}</span>
                 </li>
               </ul>
             ) : null}

@@ -12,17 +12,6 @@ import getNewsDetail from "../core/services/api/getNewsDetail"
 
 
 function NewsDetail() {
-      // ** Store Vars
-//   const store = useSelector(state => state.users)
-//   const dispatch = useDispatch()
-
-//   // ** Hooks
-//   const { id } = useParams()
-
-//   // ** Get suer on mount
-//   useEffect(() => {
-//     dispatch(getUser(parseInt(id)))
-//   }, [dispatch])
 
   const [cardDetail, setCardDetail]=useState([])
   const [commentDetail, setCommentDetail] = useState([])

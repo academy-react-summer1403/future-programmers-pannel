@@ -13,7 +13,8 @@ import { useParams } from "react-router-dom"
 function UserDetail() {
   const [active, setActive] = useState('1')
   const [detail, setDetail]=useState([])
-  
+  // console.log(detail)
+
   const toggleTab = tab => {
     if (active !== tab) {
       setActive(tab)

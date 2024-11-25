@@ -22,7 +22,7 @@ function CourseDetail() {
 
   const [active, setActive] = useState('1')
   const [detail, setDetail]=useState([])
-
+  // console.log(detail)
   const toggleTab = tab => {
     if (active !== tab) {
       setActive(tab)
@@ -50,9 +50,7 @@ useEffect(() => {
     <div className='app-user-view'>
     <Row>
       <Col xl='4' lg='5' xs={{ order: 1 }} md={{ order: 0, size: 5 }}>
-        <CourseInfoCard
-        //  selectedUser={store.selectedUser}
-        />
+        <CourseInfoCard detail={detail} />
       </Col>
       <Col xl='8' lg='7' xs={{ order: 0 }} md={{ order: 1, size: 7 }}>
         <CourseTabs  active={active} toggleTab={toggleTab}/> 

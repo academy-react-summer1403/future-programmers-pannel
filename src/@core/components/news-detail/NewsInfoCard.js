@@ -42,6 +42,8 @@ const NewsInfoCard = ({ selectedUser, cardDetail }) => {
   // ** State
   const [show, setShow] = useState(false)
 
+  const insert = cardDetail?.insertDate?.toString()
+  const update = cardDetail?.updateDate?.toString()
   // ** Hook
   const {
     reset,
@@ -214,16 +216,16 @@ const NewsInfoCard = ({ selectedUser, cardDetail }) => {
                   <span>{cardDetail.miniDescribe}</span>
                 </li>
                 <li className='mb-75'>
-                  <span className='fw-bolder me-25'>عنوان گوگل :</span>
+                  <span className='fw-bolder me-25'>عنوان گوگل: </span>
                   <span>{cardDetail.googleTitle}</span>
                 </li>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'>تاریخ ایجاد:</span>
-                  <span>{cardDetail?.insertDate?.toString()?.slice(0,10)}</span>
+                  <span>{insert?.slice(0,4)+"/"+insert?.slice(5,7)+"/"+insert?.slice(8,10)}</span>
                 </li>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'>تاریخ بروزرسانی :</span>
-                  <span>{cardDetail?.updateDate?.toString()?.slice(0,10)}</span>
+                  <span>{update?.slice(0,4)+"/"+update?.slice(5,7)+"/"+update?.slice(8,10)}</span>
                 </li>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'>  توضیحات دوره :</span>

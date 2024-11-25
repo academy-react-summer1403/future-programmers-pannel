@@ -14,7 +14,7 @@ const Technology = ({ stepper, type }) => {
     { value: 'active', label: 'فرانت اند', color: '#00B8D9', isFixed: true  },
     { value: 'inactive', label: 'بک اند', color: '#0052CC', isFixed: true },
     { value: 'suspended', label: 'React', color: '#5243AA', isFixed: false },
-    { value: 'suspended', label: 'NextJs', color: '#FF5630', isFixed: false },
+    { value: 'suspend', label: 'NextJs', color: '#FF5630', isFixed: false },
   ]
   // const colorOptions = [
   //   { value: 'ocean', label: 'Ocean', color: '#00B8D9', isFixed: true },
@@ -35,7 +35,7 @@ const Technology = ({ stepper, type }) => {
             <Select
               isClearable={false}
               theme={selectThemeColors}
-              defaultValue={[techOptions[2], techOptions[3]]}
+              defaultValue={[]}
               isMulti
               name='colors'
               options={techOptions}

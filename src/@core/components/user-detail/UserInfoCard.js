@@ -1,9 +1,10 @@
 // ** React Imports
 import { useState, Fragment } from 'react'
 import pic from '../../../assets/images/avatars/avatar-blank.png'
-
+import { Formik, Form, Field } from 'formik'
+import * as yup from 'yup';
 // ** Reactstrap Imports
-import { Row, Col, Card, Form, CardBody, Button, Badge, Modal, Input, Label, ModalBody, ModalHeader } from 'reactstrap'
+import { Row, Col, Card, CardBody, Button, Badge, Modal, Input, Label, ModalBody, ModalHeader } from 'reactstrap'
 
 // ** Third Party Components
 import Swal from 'sweetalert2'
@@ -32,7 +33,6 @@ const roleColors = {
 const statusOptions = [
   { value: 'active', label: 'Active' },
   { value: 'inactive', label: 'Inactive' },
-  { value: 'suspended', label: 'Suspended' }
 ]
 
 
@@ -91,19 +91,29 @@ const UserInfoCard = ({ selectedUser, detail }) => {
   //   }
   // }
 
-  // const onSubmit = data => {
-  //   if (Object.values(data).every(field => field.length > 0)) {
-  //     setShow(false)
-  //   } else {
-  //     for (const key in data) {
-  //       if (data[key].length === 0) {
-  //         setError(key, {
-  //           type: 'manual'
-  //         })
-  //       }
-  //     }
-  //   }
-  // }
+  const onSubmit = data => {
+    if (Object.values(data).every(field => field.length > 0)) {
+      setShow(false)
+    } else {
+      for (const key in data) {
+        if (data[key].length === 0) {
+          setError(key, {
+            type: 'manual'
+          })
+        }
+      }
+    }
+  }
+
+  const validation = yup.object().shape({
+    firstName:yup.string().required(),
+    lastName:yup.string().required(),
+    username:yup.string().required(),
+    email:yup.string().required(),
+    status:yup.string().required(),
+    id:yup.string().required(),
+    contact:yup.string().required(),
+  });
 
   // const handleReset = () => {
   //   reset({
@@ -147,8 +157,8 @@ const UserInfoCard = ({ selectedUser, detail }) => {
   //     }
   //   })
   // }
-  const data = {fullName:'oveiss', username :'09111111111',avatarColor:null, email:'sdsdsdsdsdsd', statuse : 'فعال', complete:'90%', gender:"مرد", identification:'99887766', phone:'0922222222', role:'ادمین'};
- console.log(detail)
+  // const data = {fullName:'oveiss', username :'09111111111',avatarColor:null, email:'sdsdsdsdsdsd', statuse : 'فعال', complete:'90%', gender:"مرد", identification:'99887766', contact:'0922222222', role:'ادمین'};
+//  console.log(detail)
   return (
     <Fragment>
       <Card>
@@ -235,164 +245,112 @@ const UserInfoCard = ({ selectedUser, detail }) => {
           </div>
         </CardBody>
       </Card>
-      {/* <Modal isOpen={show} toggle={() => setShow(!show)} className='modal-dialog-centered modal-lg'>
+      <Modal isOpen={show} toggle={() => setShow(!show)} className='modal-dialog-centered modal-lg'>
         <ModalHeader className='bg-transparent' toggle={() => setShow(!show)}></ModalHeader>
         <ModalBody className='px-sm-5 pt-50 pb-5'>
           <div className='text-center mb-2'>
-            <h1 className='mb-1'>Edit User Information</h1>
-            <p>Updating user details will receive a privacy audit.</p>
+            <h1 className='mb-1'>ویرایش اطلاعات کاربر</h1>
           </div>
-          <Form onSubmit={handleSubmit(onSubmit)}>
-            <Row className='gy-1 pt-75'>
-              <Col md={6} xs={12}>
-                <Label className='form-label' for='firstName'>
-                  First Name
-                </Label>
-                <Controller
-                  defaultValue=''
-                  control={control}
-                  id='firstName'
-                  name='firstName'
-                  render={({ field }) => (
-                    <Input {...field} id='firstName' placeholder='John' invalid={errors.firstName && true} />
-                  )}
-                />
-              </Col>
-              <Col md={6} xs={12}>
-                <Label className='form-label' for='lastName'>
-                  Last Name
-                </Label>
-                <Controller
-                  defaultValue=''
-                  control={control}
-                  id='lastName'
-                  name='lastName'
-                  render={({ field }) => (
-                    <Input {...field} id='lastName' placeholder='Doe' invalid={errors.lastName && true} />
-                  )}
-                />
-              </Col>
-              <Col xs={12}>
-                <Label className='form-label' for='username'>
-                  Username
-                </Label>
-                <Controller
-                  defaultValue=''
-                  control={control}
-                  id='username'
-                  name='username'
-                  render={({ field }) => (
-                    <Input {...field} id='username' placeholder='john.doe.007' invalid={errors.username && true} />
-                  )}
-                />
-              </Col>
-              <Col md={6} xs={12}>
-                <Label className='form-label' for='billing-email'>
-                  Billing Email
-                </Label>
-                <Input
-                  type='email'
-                  id='billing-email'
-                  defaultValue={selectedUser.email}
-                  placeholder='example@domain.com'
-                />
-              </Col>
-              <Col md={6} xs={12}>
-                <Label className='form-label' for='status'>
-                  Status:
-                </Label>
-                <Select
-                  id='status'
-                  isClearable={false}
-                  className='react-select'
-                  classNamePrefix='select'
-                  options={statusOptions}
-                  theme={selectThemeColors}
-                  defaultValue={statusOptions[statusOptions.findIndex(i => i.value === selectedUser.status)]}
-                />
-              </Col>
-              <Col md={6} xs={12}>
-                <Label className='form-label' for='tax-id'>
-                  Tax ID
-                </Label>
-                <Input
-                  id='tax-id'
-                  placeholder='Tax-1234'
-                  defaultValue={selectedUser.contact.substr(selectedUser.contact.length - 4)}
-                />
-              </Col>
-              <Col md={6} xs={12}>
-                <Label className='form-label' for='contact'>
-                  Contact
-                </Label>
-                <Input id='contact' defaultValue={selectedUser.contact} placeholder='+1 609 933 4422' />
-              </Col>
-              <Col md={6} xs={12}>
-                <Label className='form-label' for='language'>
-                  language
-                </Label>
-                <Select
-                  id='language'
-                  isClearable={false}
-                  className='react-select'
-                  classNamePrefix='select'
-                  options={languageOptions}
-                  theme={selectThemeColors}
-                  defaultValue={languageOptions[0]}
-                />
-              </Col>
-              <Col md={6} xs={12}>
-                <Label className='form-label' for='country'>
-                  Country
-                </Label>
-                <Select
-                  id='country'
-                  isClearable={false}
-                  className='react-select'
-                  classNamePrefix='select'
-                  options={countryOptions}
-                  theme={selectThemeColors}
-                  defaultValue={countryOptions[0]}
-                />
-              </Col>
-              <Col xs={12}>
-                <div className='d-flex align-items-center mt-1'>
-                  <div className='form-switch'>
-                    <Input type='switch' defaultChecked id='billing-switch' name='billing-switch' />
-                    <Label className='form-check-label' htmlFor='billing-switch'>
-                      <span className='switch-icon-left'>
-                        <Check size={14} />
-                      </span>
-                      <span className='switch-icon-right'>
-                        <X size={14} />
-                      </span>
-                    </Label>
-                  </div>
-                  <Label className='form-check-label fw-bolder' for='billing-switch'>
-                    Use as a billing address?
+          <Formik 
+            initialValues={{firstName:'',lastName:'',username:'',email:'',status:'',id:'',contact:''}} 
+            onSubmit={handleSubmit(onSubmit)}
+            validationSchema={validation}
+          >
+            <Form>
+              <Row className='gy-1 pt-75'>
+                <Col md={6} xs={12}>
+                  <Label className='form-label' for='firstName'>
+                    نام
                   </Label>
-                </div>
-              </Col>
-              <Col xs={12} className='text-center mt-2 pt-50'>
-                <Button type='submit' className='me-1' color='primary'>
-                  Submit
-                </Button>
-                <Button
-                  type='reset'
-                  color='secondary'
-                  outline
-                  onClick={() => {
-                    handleReset()
-                    setShow(false)
-                  }}
-                >
-                  Discard
-                </Button>
-              </Col>
-            </Row>
-          </Form>
+                  <Field 
+                    class="form-select form-select-md" 
+                    id='firstName' 
+                    name='firstName' 
+                    placeholder='John'
+                  />
+                </Col>
+                <Col md={6} xs={12}>
+                  <Label className='form-label' for='lastName'>
+                    نام خانوادگی
+                  </Label>
+                  <Field 
+                    class="form-select form-select-md" 
+                    name='lastName' 
+                    id='lastName' 
+                    placeholder='Doe' 
+                  />
+                </Col>
+                <Col xs={12}>
+                  <Label className='form-label' for='username'>
+                    نام کاربری
+                  </Label>
+                  <Field 
+                    class="form-select form-select-md" 
+                    name='username' 
+                    id='username' 
+                    placeholder='john.doe.007'
+                  />
+                </Col>
+                <Col md={6} xs={12}>
+                  <Label className='form-label' for='billing-email'>
+                    ایمیل
+                  </Label>
+                  <Field
+                    class="form-select form-select-md"
+                    type='email'
+                    id='billing-email'
+                    name='email'
+                    placeholder='example@domain.com'
+                  />
+                </Col>
+                <Col md={6} xs={12}>
+                  <Label className='form-label' for='status'>
+                    وضعیت:
+                  </Label>
+                  <select class="form-select form-select-md" id='status'name='status'>
+                    <option>فعال</option>
+                    <option>فعال</option>
+                  </select>
+                </Col>
+                <Col md={6} xs={12}>
+                  <Label className='form-label' for='id'>
+                    کد ملی
+                  </Label>
+                  <Field 
+                    class="form-select form-select-md" 
+                    id='id' 
+                    name='id' 
+                    placeholder='+1 609 933 4422' 
+                  />
+                </Col> 
+                <Col md={6} xs={12}>
+                  <Label className='form-label' for='contact'>
+                    شماره موبایل
+                  </Label>
+                  <Field class="form-select form-select-md" id='contact' name='contact' placeholder='0911 111 1111' />
+                </Col>    
+                <Col xs={12} className='text-center mt-2 pt-50'>
+                  <Button type='submit' className='me-1' color='primary'>
+                    Submit
+                  </Button>
+                  <Button
+                    type='reset'
+                    color='secondary'
+                    outline
+                    onClick={() => {
+                      handleReset()
+                      setShow(false)
+                    }}
+                  >
+                    Discard
+                  </Button>
+                </Col>
+              </Row>
+            </Form>
+          </Formik>
+          
         </ModalBody>
-      </Modal> */}
+      </Modal>
     </Fragment>
   )
 }

@@ -1,7 +1,7 @@
 import http from '../interceptor'
 
 
-export const getNewsCategory = async()=>{
+const getNewsCategory = async()=>{
     try {
         // const queryObj = {}
         const result = await http.get('/News/GetListNewsCategory')
@@ -14,10 +14,13 @@ export const getNewsCategory = async()=>{
 }
 export default getNewsCategory
 
-export const postNews = async()=>{
+
+
+
+export const postAddNews = async(form)=>{
     try {
         // const queryObj = {}
-        const result = await http.post('/News/CreateNews')
+        const result = await http.post('/News/CreateNews',form)
         
         return result
         // console.log('qqq', result)

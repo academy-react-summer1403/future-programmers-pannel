@@ -12,25 +12,25 @@ const StatsCard = ({ cols }) => {
   const data = [
     {
       title: '230k',
-      subtitle: 'Sales',
+      subtitle: 'کاربران',
       color: 'light-primary',
       icon: <TrendingUp size={24} />
     },
     {
       title: '8.549k',
-      subtitle: 'Customers',
+      subtitle: 'دوره ها',
       color: 'light-info',
       icon: <User size={24} />
     },
     {
       title: '1.423k',
-      subtitle: 'Products',
+      subtitle: 'اساتید',
       color: 'light-danger',
       icon: <Box size={24} />
     },
     {
       title: '$9745',
-      subtitle: 'Revenue',
+      subtitle: 'کامنت ها',
       color: 'light-success',
       icon: <DollarSign size={24} />
     }
@@ -63,7 +63,7 @@ const StatsCard = ({ cols }) => {
   return (
     <Card className='card-statistics'>
       <CardHeader>
-        <CardTitle tag='h4'>Statistics</CardTitle>
+        <CardTitle tag='h4'>آمار سایت</CardTitle>
         <CardText className='card-text font-small-2 me-25 mb-0'>Updated 1 month ago</CardText>
       </CardHeader>
       <CardBody className='statistics-body'>

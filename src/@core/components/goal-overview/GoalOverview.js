@@ -8,15 +8,38 @@ import { HelpCircle } from 'react-feather'
 
 // ** Reactstrap Imports
 import { Card, CardHeader, CardTitle, CardBody, CardText, Row, Col } from 'reactstrap'
+import { userCount } from '../../../core/services/api/userList'
 
 const GoalOverview = props => {
   // ** State
-  const [data, setData] = useState(null)
+  // const [data, setData] = useState(null)
 
-  useEffect(() => {
-    axios.get('/card/card-analytics/goal-overview').then(res => setData(res.data))
-    return () => setData(null)
-  }, [])
+  // useEffect(() => {
+  //   axios.get('/card/card-analytics/goal-overview').then(res => setData(res.data))
+  //   return () => setData(null)
+  // }, [])
+  const [statics , setStatics] = useState([])
+  console.log(statics)
+  const getUserStatic = async()=>{
+    try {
+      const result = await userCount(1000, 1)
+      setStatics(result.listUser)
+    } catch (error) {
+      
+    }
+  }
+
+  const totalNumber = statics?.length
+  const student = statics?.filter((e)=>e.profileCompletionPercentage >=80)
+  const studentNumber = student?.length
+  const percent = Math.ceil((studentNumber*100)/totalNumber)
+ 
+ 
+
+
+  useEffect(()=>{
+    getUserStatic(); 
+},[]);
 
   const options = {
       chart: {
@@ -79,7 +102,7 @@ const GoalOverview = props => {
         }
       }
     },
-    series = [80]
+    series = [percent]
 
   return (
     <Card>

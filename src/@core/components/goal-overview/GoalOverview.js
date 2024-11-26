@@ -33,10 +33,7 @@ const GoalOverview = props => {
   const student = statics?.filter((e)=>e.profileCompletionPercentage >=80)
   const studentNumber = student?.length
   const percent = Math.ceil((studentNumber*100)/totalNumber)
- 
- 
-
-
+  
   useEffect(()=>{
     getUserStatic(); 
 },[]);

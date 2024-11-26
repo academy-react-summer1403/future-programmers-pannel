@@ -22,7 +22,7 @@ function CourseDetail() {
 
   const [active, setActive] = useState('1')
   const [detail, setDetail]=useState([])
-  // console.log(detail)
+
   const toggleTab = tab => {
     if (active !== tab) {
       setActive(tab)
@@ -53,7 +53,7 @@ useEffect(() => {
         <CourseInfoCard detail={detail} />
       </Col>
       <Col xl='8' lg='7' xs={{ order: 0 }} md={{ order: 1, size: 7 }}>
-        <CourseTabs  active={active} toggleTab={toggleTab}/> 
+        <CourseTabs  active={active} toggleTab={toggleTab} detail={detail}/> 
       </Col>
     </Row>
   </div>

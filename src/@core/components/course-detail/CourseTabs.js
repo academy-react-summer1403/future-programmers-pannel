@@ -14,7 +14,8 @@ import UsersTab from './UsersTab'
 import CommentTab from './CommentTab'
 import Payment from './Payment'
 
-const CourseTabs = ({ active, toggleTab }) => {
+const CourseTabs = ({ active, toggleTab, detail }) => {
+  const id = detail.courseId
   return (
     <Fragment>
       <Nav pills className='mb-2'>
@@ -51,7 +52,7 @@ const CourseTabs = ({ active, toggleTab }) => {
           <Groups />
         </TabPane>
         <TabPane tabId='3'>
-        <CommentTab />
+        <CommentTab id={id}/>
         </TabPane>
         <TabPane tabId='4'>
           <Payment />

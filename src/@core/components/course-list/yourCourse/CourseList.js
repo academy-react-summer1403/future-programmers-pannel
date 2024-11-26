@@ -184,6 +184,7 @@ const CourseList = ({course, setSearch, setExpire, expire, currentPage, setCurre
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [currentPlan, setCurrentPlan] = useState({ value: '', label: 'Select Plan' })
   const [currentStatus, setCurrentStatus] = useState({ value: '', label: 'Select Status', number: 0 })
+  
   // ** Function to toggle sidebar
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen)
 

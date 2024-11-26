@@ -18,6 +18,8 @@ import Avatar from '@components/avatar'
 
 // ** Styles
 import '@styles/react/libs/tables/react-dataTable-component.scss'
+import getComment from '../../../core/services/api/getComment'
+import { useEffect, useState } from 'react'
 
 
 const data = [
@@ -29,35 +31,16 @@ const data = [
 
 export const columns = [
   {
-    sortable: true,
-    minWidth: '200px',
-    name: ' نام دوره',
-    selector: row => row.title,
-    cell: row => {
-      return (
-        <div className='d-flex justify-content-left align-items-center'>
-          <div className='avatar-wrapper'>
-            <Avatar className='me-1' img={pic} alt={row.title} imgWidth='32' />
-          </div>
-          <div className='d-flex flex-column'>
-            <span className='text-truncate fw-bolder'>{row.title}</span>
-            <small className='text-muted'>{row.subtitle}</small>
-          </div>
-        </div>
-      )
-    }
-  },
-  {
     name: '  عنوان کامنت ',
     maxWidth:'200px',
     minWidth:'150px',
-    selector: row => row.date
+    selector: row => row?.commentTitle
   },
   {
     name: '  متن کامنت ',
     maxWidth:'400px',
     minWidth:'200px',
-    selector: row => row.date
+    selector: row => row?.describe
   },
   {
     name: ' وضعیت ',
@@ -65,16 +48,19 @@ export const columns = [
     // maxWidth:'100px',
     sortable: true,
     sortField: 'status',
-    // selector: row => row.active,
     cell: row => (
-      <Badge className='text-capitalize' color={row.active === "True" ? "light-success" : "light-danger"} pill>
-        {row.active === "True" ? "تائید شده" : "تائید نشده"}
+      <Badge className='text-capitalize' color={row.accept === true ? "light-success" : "light-danger"} pill>
+        {row.accept === true ? "تائید شده" : "تائید نشده"}
       </Badge>
     )
   },
   {
+    name: '  تعداد پاسخ ها ',
+    minWidth:'100px',
+    selector: row => row?.replyCount
+  },
+  {
     name: 'اقدام',
-    // minWidth: '100px',
     minWidth:'200px',
     cell: row => (
       <div className='column-action'>
@@ -112,7 +98,24 @@ export const columns = [
  
 ]
 
-const CommentTab = () => {
+const CommentTab = ({id}) => {
+  const [comment, setComment] = useState([])
+ 
+
+    const getCoursecomment = async()=>{
+      try {
+        const result = await getComment(10000, 1)
+        setComment(result.comments)
+      } catch (error) {
+        
+      }
+    }
+    const coursecomment = comment?.filter((e)=>e.courseId === id)
+    console.log(coursecomment)
+
+    useEffect(() => {
+      getCoursecomment();
+    }, [])
   return (
     <Card>
       <div className='react-dataTable user-view-account-projects'>
@@ -120,7 +123,7 @@ const CommentTab = () => {
           noHeader
           responsive
           columns={columns}
-          data={data}
+          data={coursecomment}
           className='react-dataTable'
           sortIcon={<ChevronDown size={10} />}
         />

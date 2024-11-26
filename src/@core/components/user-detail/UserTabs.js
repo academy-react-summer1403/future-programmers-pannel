@@ -20,9 +20,8 @@ const UserTabs = ({ active, toggleTab, detail }) => {
   const [reserveCourse, setReserveCourse] = useState([])
   const [comment, setComment] = useState([])
 
-  // const courses = detail.courses;
   // setCourse(courses);
-  // console.log(detail)
+  console.log(detail)
 
   return (
     <Fragment>
@@ -60,10 +59,10 @@ const UserTabs = ({ active, toggleTab, detail }) => {
       </Nav>
       <TabContent activeTab={active}>
         <TabPane tabId='1'>
-          <UserProjectsList />
+          <UserProjectsList detail={detail} />
         </TabPane>
         <TabPane tabId='2'>
-          <ReserveTab />
+          <ReserveTab detail={detail}/>
         </TabPane>
         <TabPane tabId='3'>
         <CommentTab />

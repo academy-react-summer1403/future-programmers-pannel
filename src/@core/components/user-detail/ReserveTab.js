@@ -1,6 +1,6 @@
 // ** Reactstrap Imports
 import { Badge, Button, Card } from 'reactstrap'
-import pic from '../../../assets/images/avatars/1.png'
+import pic from '../../../assets/images/portrait/small/500.png'
 import { Link } from "react-router-dom";
 
 // ** Third Party Components
@@ -31,7 +31,8 @@ const data = [
 export const columns = [
   {
     sortable: true,
-    maxWidth: '200px',
+    minWidth: '150px',
+    maxWidth: '230px',
     name: 'نام دوره',
     selector: row => row.title,
     cell: row => {
@@ -39,12 +40,13 @@ export const columns = [
         <div className='d-flex justify-content-left align-items-center'>
           <div className='avatar-wrapper'>
             <Avatar className='me-1' img={pic} alt={row.title} imgWidth='32' />
+          {/* {row?.tumbImageAddress !== null && row?.tumbImageAddress !== 'Not-set' ? <Avatar className='me-1' img={row?.tumbImageAddress} alt={row.title} imgWidth='32' />: <Avatar className='me-1' img={pic} imgWidth='32' />} */}
+
           </div>
           <div className='d-flex flex-column'>
-            <Link to={`/courseDetail/${row.id}`}>
-            <span className='text-truncate fw-bolder'>{row.title}</span>
+            <Link to={`/courseDetail/${row?.courseId}`}>
+            <span className='text-truncate fw-bolder'>{row?.courseName}</span>
             </Link>
-            <small className='text-muted'>{row.subtitle}</small>
           </div>
         </div>
       )
@@ -52,8 +54,8 @@ export const columns = [
   },
   {
     name: 'تاریخ رزرو دوره ',
-    maxWidth:'150px',
-    selector: row => row.date
+    maxWidth:'200px',
+    selector: row => row?.reserverDate?.toString()?.slice(0,10)
   },
   {
     name: ' وضعیت دوره',
@@ -61,16 +63,21 @@ export const columns = [
     // maxWidth:'100px',
     sortable: true,
     sortField: 'status',
-    // selector: row => row.active,
+    // selector: row => row?.active,
     cell: row => (
-      <Badge className='text-capitalize' color={row.active === "True" ? "light-success" : "light-danger"} pill>
-        {row.active === "True" ? "رزرو شده" : "رزرو نشده"}
+      <Badge className='text-capitalize' color={row?.accept == true ? "light-success" : "light-danger"} pill>
+        {row?.accept === true ? "فعال " : " غیرفعال"}
       </Badge>
     )
   },
 ]
 
-const ReserveTab = () => {
+const ReserveTab = ({detail}) => {
+  const courseId = detail?.coursesReseves?.courseId;
+  const reserveId = detail?.coursesReseves?.reserveId;
+  const studentId = detail?.coursesReseves?.studentId;
+  // const reserverDate = detail?.reserverDate?.toString()
+
   return (
     <Card>
       <div className='react-dataTable user-view-account-projects'>
@@ -78,7 +85,7 @@ const ReserveTab = () => {
           noHeader
           responsive
           columns={columns}
-          data={data}
+          data={detail?.coursesReseves}
           className='react-dataTable'
           sortIcon={<ChevronDown size={10} />}
         />

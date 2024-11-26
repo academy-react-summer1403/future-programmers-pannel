@@ -1,7 +1,6 @@
 // ** Reactstrap Imports
 import { Card } from 'reactstrap'
-import pic from '../../../assets/images/avatars/1.png'
-import { Link } from "react-router-dom";
+import pic from '../../../assets/images/portrait/small/500.png'
 
 // ** Third Party Components
 import { ChevronDown } from 'react-feather'
@@ -10,41 +9,28 @@ import DataTable from 'react-data-table-component'
 // ** Custom Components
 import Avatar from '@components/avatar'
 
-// ** Label Images
-// import xdLabel from '@src/assets/images/icons/brands/xd-label.png'
-// import vueLabel from '@src/assets/images/icons/brands/vue-label.png'
-// import htmlLabel from '@src/assets/images/icons/brands/html-label.png'
-// import reactLabel from '@src/assets/images/icons/brands/react-label.png'
-// import sketchLabel from '@src/assets/images/icons/brands/sketch-label.png'
-
 // ** Styles
 import '@styles/react/libs/tables/react-dataTable-component.scss'
-
-
-const data = [
-  {title:'oveiss', subtitle :'09111111111',avatarColor:null, totalTasks:'sdsdsdsdsdsd', statuse : 'فعال', date:'2022/12/23', gender:"مرد", identification:'99887766', phone:'0922222222', role:'admin'},
-  {title:'oveiss', subtitle :'09111111111',avatarColor:null, totalTasks:'sdsdsdsdsdsd', statuse : 'فعال', date:'2022/12/23', gender:"مرد", identification:'99887766', phone:'0922222222', role:'admin'},
-  {title:'oveiss', subtitle :'09111111111',avatarColor:null, totalTasks:'sdsdsdsdsdsd', statuse : 'فعال', date:'2022/12/23', gender:"مرد", identification:'99887766', phone:'0922222222', role:'admin'}
-];
+import { Link } from 'react-router-dom'
 
 
 export const columns = [
   {
     sortable: true,
     minWidth: '160px',
+    maxWidth: '200px',
     name: 'نام دوره',
-    selector: row => row.title,
+    // selector: row => row.title,
     cell: row => {
       return (
         <div className='d-flex justify-content-left align-items-center'>
           <div className='avatar-wrapper'>
-            <Avatar className='me-1' img={pic} alt={row.title} imgWidth='32' />
+          {row.tumbImageAddress !== null && row.tumbImageAddress !== 'Not-set' ? <Avatar className='me-1' img={row.tumbImageAddress} alt={row.title} imgWidth='32' />: <Avatar className='me-1' img={pic} imgWidth='32' />}
           </div>
           <div className='d-flex flex-column'>
-            <Link to={`/courseDetail/${row.id}`}>
-              <span className='text-truncate fw-bolder'>{row.title}</span>
-            </Link>
-            <small className='text-muted'>{row.subtitle}</small>
+          <Link to={`/courseDetail/${row?.courseId}`}>
+            <span className='text-truncate fw-bolder'>{row.title}</span>
+          </Link>
           </div>
         </div>
       )
@@ -52,15 +38,17 @@ export const columns = [
   },
   {
     name: 'توضیحات دوره',
-    selector: row => row.totalTasks
+    selector: row => row.describe,
+    maxWidth: '400px',
   },
   {
-    name: 'تاریخ آخرین بروززسانی',
-    selector: row => row.date
-  }
+    name: 'تاریخ رزرو دوره ',
+    maxWidth:'200px',
+    selector: row => row?.lastUpdate?.toString()?.slice(0,10)
+  },
 ]
 
-const UserProjectsList = () => {
+const UserProjectsList = ({detail}) => {
   return (
     <Card>
       <div className='react-dataTable user-view-account-projects'>
@@ -68,7 +56,7 @@ const UserProjectsList = () => {
           noHeader
           responsive
           columns={columns}
-          data={data}
+          data={detail?.courses}
           className='react-dataTable'
           sortIcon={<ChevronDown size={10} />}
         />

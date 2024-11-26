@@ -157,7 +157,6 @@ const UserInfoCard = ({ selectedUser, detail }) => {
   //     }
   //   })
   // }
-  // const data = {fullName:'oveiss', username :'09111111111',avatarColor:null, email:'sdsdsdsdsdsd', statuse : 'فعال', complete:'90%', gender:"مرد", identification:'99887766', contact:'0922222222', role:'ادمین'};
 //  console.log(detail)
   return (
     <Fragment>
@@ -165,10 +164,10 @@ const UserInfoCard = ({ selectedUser, detail }) => {
         <CardBody>
           <div className='user-avatar-section'>
             <div className='d-flex align-items-center flex-column'>
-              {detail.currentPictureAddress !== null && detail.currentPictureAddress !== 'Not-set' ? <img height='110' width='110' alt='user-avatar' src={detail.currentPictureAddress} className='img-fluid rounded mt-3 mb-2'/> :  <img height='110' width='110' alt='user-avatar' src={pic} className='img-fluid rounded mt-3 mb-2'/>}
+              {detail?.currentPictureAddress !== null && detail?.currentPictureAddress !== 'Not-set' ? <img height='110' width='110' alt='user-avatar' src={detail?.currentPictureAddress} className='img-fluid rounded mt-3 mb-2'/> :  <img height='110' width='110' src={pic} className='img-fluid rounded mt-3 mb-2'/>}
               <div className='d-flex flex-column align-items-center text-center'>
                 <div className='user-info'>
-                  <h4>{detail !== null ? detail.fName : 'Eleanor Aguilar'}</h4>
+                  <h4>{detail !== null ? detail?.fName : 'Eleanor Aguilar'}</h4>
                   {/* {selectedUser !== null ? (
                     <Badge color={roleColors[detail.roles[2]]} className='text-capitalize'>
                       {detail.roles[2]}
@@ -184,7 +183,7 @@ const UserInfoCard = ({ selectedUser, detail }) => {
                 <Book className='font-medium-2' />
               </Badge>
               <div className='ms-75'>
-                <h4 className='mb-0'>11</h4> {    /* بررسی شود */}
+                <h4 className='mb-0'>{detail?.courses?.length}</h4>
                 <small> دوره ها</small>
               </div>
             </div>
@@ -193,7 +192,7 @@ const UserInfoCard = ({ selectedUser, detail }) => {
                 <Bookmark className='font-medium-2' />
               </Badge>
               <div className='ms-75'>
-                <h4 className='mb-0'>2</h4>
+                <h4 className='mb-0'>{detail?.coursesReseves?.length}</h4>
                 <small> دوره های رزرو</small>
               </div>
             </div>
@@ -204,11 +203,11 @@ const UserInfoCard = ({ selectedUser, detail }) => {
               <ul className='list-unstyled'>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'>نام کاربری:</span>
-                  <span>{detail.userName}</span>
+                  <span>{detail?.userName}</span>
                 </li>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'>ایمیل:</span>
-                  <span>{detail.gmail}</span>
+                  <span>{detail?.gmail}</span>
                 </li>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'>وضعیت:</span>
@@ -218,7 +217,7 @@ const UserInfoCard = ({ selectedUser, detail }) => {
                 </li>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'>درصد تکمیل پروفایل:</span>
-                  <span className='text-capitalize'>{detail.profileCompletionPercentage + " " }درصد</span>
+                  <span className='text-capitalize'>{detail?.profileCompletionPercentage + " " }درصد</span>
                 </li>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'>جنسیت:</span>
@@ -226,11 +225,11 @@ const UserInfoCard = ({ selectedUser, detail }) => {
                 </li>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'>کد ملی:</span>
-                  <span>{detail.nationalCode}</span>
+                  <span>{detail?.nationalCode}</span>
                 </li>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'>شماره موبایل:</span>
-                  <span>{detail.phoneNumber}</span>
+                  <span>{detail?.phoneNumber}</span>
                 </li>
               </ul>
             ) : null}

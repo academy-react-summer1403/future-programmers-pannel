@@ -1,6 +1,6 @@
 // ** Reactstrap Imports
 import { Badge, Button, Card, DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown } from 'reactstrap'
-import pic from '../../../assets/images/avatars/1.png'
+import pic from '../../../assets/images/portrait/small/500.png'
 
 // ** Third Party Components
 import { Archive, ChevronDown, FileText, MoreVertical, Trash2 } from 'react-feather'
@@ -18,30 +18,35 @@ import Avatar from '@components/avatar'
 
 // ** Styles
 import '@styles/react/libs/tables/react-dataTable-component.scss'
+import { useEffect, useState } from 'react'
+import getComment from '../../../core/services/api/getComment'
+import { Link } from 'react-router-dom'
 
 
-const data = [
-  {title:'oveiss', subtitle :'09111111111',active: "True" , totalTasks:'sdsdsdsdsdsd', statuse : 'فعال', date:'2022/12/23', gender:"مرد", identification:'99887766', phone:'0922222222', role:'admin'},
-  {title:'oveiss', subtitle :'09111111111',active: "False" , totalTasks:'sdsdsdsdsdsd', statuse : 'فعال', date:'2022/12/23', gender:"مرد", identification:'99887766', phone:'0922222222', role:'admin'},
-  {title:'oveiss', subtitle :'09111111111',active: "True" , totalTasks:'sdsdsdsdsdsd', statuse : 'فعال', date:'2022/12/23', gender:"مرد", identification:'99887766', phone:'0922222222', role:'admin'}
-];
+// const data = [
+//   {title:'oveiss', subtitle :'09111111111',active: "True" , totalTasks:'sdsdsdsdsdsd', statuse : 'فعال', date:'2022/12/23', gender:"مرد", identification:'99887766', phone:'0922222222', role:'admin'},
+//   {title:'oveiss', subtitle :'09111111111',active: "False" , totalTasks:'sdsdsdsdsdsd', statuse : 'فعال', date:'2022/12/23', gender:"مرد", identification:'99887766', phone:'0922222222', role:'admin'},
+//   {title:'oveiss', subtitle :'09111111111',active: "True" , totalTasks:'sdsdsdsdsdsd', statuse : 'فعال', date:'2022/12/23', gender:"مرد", identification:'99887766', phone:'0922222222', role:'admin'}
+// ];
 
 
 export const columns = [
   {
     sortable: true,
-    minWidth: '200px',
+    maxWidth: '450px',
+    minWidth: '100px',
     name: ' نام دوره',
-    selector: row => row.title,
+    selector: row => row?.courseTitle,
     cell: row => {
       return (
         <div className='d-flex justify-content-left align-items-center'>
           <div className='avatar-wrapper'>
             <Avatar className='me-1' img={pic} alt={row.title} imgWidth='32' />
           </div>
-          <div className='d-flex flex-column'>
-            <span className='text-truncate fw-bolder'>{row.title}</span>
-            <small className='text-muted'>{row.subtitle}</small>
+          <div className='d-flex flex-column '>
+          <Link to={`/courseDetail/${row?.courseId}`}>
+            <span className='text-truncate fw-bolder'>{row?.courseTitle}</span>
+          </Link>
           </div>
         </div>
       )
@@ -51,13 +56,13 @@ export const columns = [
     name: '  عنوان کامنت ',
     maxWidth:'200px',
     minWidth:'150px',
-    selector: row => row.date
+    selector: row => row?.commentTitle
   },
   {
     name: '  متن کامنت ',
     maxWidth:'400px',
     minWidth:'200px',
-    selector: row => row.date
+    selector: row => row?.describe
   },
   {
     name: ' وضعیت ',
@@ -67,8 +72,8 @@ export const columns = [
     sortField: 'status',
     // selector: row => row.active,
     cell: row => (
-      <Badge className='text-capitalize' color={row.active === "True" ? "light-success" : "light-danger"} pill>
-        {row.active === "True" ? "تائید شده" : "تائید نشده"}
+      <Badge className='text-capitalize' color={row.accept === true ? "light-success" : "light-danger"} pill>
+        {row.accept === true ? "تائید شده" : "تائید نشده"}
       </Badge>
     )
   },
@@ -112,7 +117,26 @@ export const columns = [
  
 ]
 
-const CommentTab = ({userId}) => {
+const CommentTab = ({Id}) => {
+  const [comment, setComment] = useState([])
+console.log(Id)
+ 
+
+    const getusercomment = async()=>{
+      try {
+        const result = await getComment(10000, 1)
+        setComment(result.comments)
+      } catch (error) {
+        
+      }
+    }
+    const usercomment = comment?.filter((e)=>e.userId === Id)
+    console.log(usercomment)
+
+    useEffect(() => {
+      getusercomment();
+    }, [])
+
   return (
     <Card>
       <div className='react-dataTable user-view-account-projects'>
@@ -120,7 +144,7 @@ const CommentTab = ({userId}) => {
           noHeader
           responsive
           columns={columns}
-          data={data}
+          data={usercomment}
           className='react-dataTable'
           sortIcon={<ChevronDown size={10} />}
         />

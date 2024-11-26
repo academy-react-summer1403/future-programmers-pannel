@@ -1,5 +1,5 @@
 // ** Reactstrap Imports
-import { Badge, Button, Card } from 'reactstrap'
+import { Badge, Card } from 'reactstrap'
 import pic from '../../../assets/images/portrait/small/500.png'
 import { Link } from "react-router-dom";
 
@@ -10,23 +10,8 @@ import DataTable from 'react-data-table-component'
 // ** Custom Components
 import Avatar from '@components/avatar'
 
-// ** Label Images
-// import xdLabel from '@src/assets/images/icons/brands/xd-label.png'
-// import vueLabel from '@src/assets/images/icons/brands/vue-label.png'
-// import htmlLabel from '@src/assets/images/icons/brands/html-label.png'
-// import reactLabel from '@src/assets/images/icons/brands/react-label.png'
-// import sketchLabel from '@src/assets/images/icons/brands/sketch-label.png'
-
 // ** Styles
 import '@styles/react/libs/tables/react-dataTable-component.scss'
-
-
-const data = [
-  {title:'oveiss', subtitle :'09111111111',active: true , totalTasks:'sdsdsdsdsdsd', statuse : 'فعال', date:'2022/12/23', gender:"مرد", identification:'99887766', phone:'0922222222', role:'admin'},
-  {title:'oveiss', subtitle :'09111111111',active: false , totalTasks:'sdsdsdsdsdsd', statuse : 'فعال', date:'2022/12/23', gender:"مرد", identification:'99887766', phone:'0922222222', role:'admin'},
-  {title:'oveiss', subtitle :'09111111111',active: true , totalTasks:'sdsdsdsdsdsd', statuse : 'فعال', date:'2022/12/23', gender:"مرد", identification:'99887766', phone:'0922222222', role:'admin'}
-];
-
 
 export const columns = [
   {

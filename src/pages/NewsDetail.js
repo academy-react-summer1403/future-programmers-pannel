@@ -2,10 +2,8 @@ import { Col, Row } from "reactstrap"
 // ** Styles
 import '@styles/react/apps/app-users.scss'
 
-import { getUser } from '../@core/components/user-detail/data2'
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import { useDispatch, useSelector } from "react-redux"
 import NewsInfoCard from "../@core/components/news-detail/NewsInfoCard"
 import NewsTab from "../@core/components/news-detail/NewsTab"
 import getNewsDetail from "../core/services/api/getNewsDetail"

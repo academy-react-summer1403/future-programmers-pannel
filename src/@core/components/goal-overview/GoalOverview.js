@@ -18,6 +18,8 @@ const GoalOverview = props => {
   //   axios.get('/card/card-analytics/goal-overview').then(res => setData(res.data))
   //   return () => setData(null)
   // }, [])
+
+  
   const [statics , setStatics] = useState([])
   console.log(statics)
   const getUserStatic = async()=>{

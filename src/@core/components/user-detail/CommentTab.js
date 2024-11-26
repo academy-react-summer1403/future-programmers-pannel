@@ -119,7 +119,7 @@ export const columns = [
 
 const CommentTab = ({Id}) => {
   const [comment, setComment] = useState([])
-console.log(Id)
+// console.log(Id)
  
 
     const getusercomment = async()=>{
@@ -131,7 +131,7 @@ console.log(Id)
       }
     }
     const usercomment = comment?.filter((e)=>e.userId === Id)
-    console.log(usercomment)
+    // console.log(usercomment)
 
     useEffect(() => {
       getusercomment();

@@ -38,12 +38,11 @@ const classOptions = [
 const MySwal = withReactContent(Swal)
 
 const CourseInfoCard = ({ selectedUser, detail }) => {
-  console.log(detail)
   // ** State
   const [show, setShow] = useState(false)
-console.log(detail)
-const start= detail?.startTime?.toString()
-const end= detail?.endTime?.toString()
+  // console.log(detail)
+  const start= detail?.startTime?.toString()
+  const end= detail?.endTime?.toString()
   // ** Hook
   const {
     reset,

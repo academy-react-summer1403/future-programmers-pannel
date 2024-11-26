@@ -111,7 +111,7 @@ const CommentTab = ({id}) => {
       }
     }
     const coursecomment = comment?.filter((e)=>e.courseId === id)
-    console.log(coursecomment)
+    // console.log(coursecomment)
 
     useEffect(() => {
       getCoursecomment();

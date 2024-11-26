@@ -71,7 +71,7 @@ const UserTabs = ({ active, toggleTab, detail }) => {
           <OtherInformation detail={detail}/>
         </TabPane>
         <TabPane tabId='5'>
-          <Connections />
+          <Connections detail={detail}/>
         </TabPane>
       </TabContent>
     </Fragment>

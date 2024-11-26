@@ -17,25 +17,26 @@ import twitterIcon from '../../assets/images/icons/social/twitter.png'
 import facebookIcon from '../../assets/images/icons/social/facebook.png'
 import linkedinIcon from '../../assets/images/icons/social/linkedin.png'
 import dribbbleIcon from '../../assets/images/icons/social/dribbble.png'
-import mailchimpIcon from '../../assets/images/icons/social/mailchimp.png'
-
-const connectedAccounts = [
-  {
-    checked: true,
-    title: 'Telegram Id',
-    subtitle: 'Calendar and contacts',
-    logo: googleIcon
-  },
-  {
-    checked: false,
-    title: 'LinkedIn Id',
-    subtitle: 'Communication',
-    logo: linkedinIcon
-  },
-]
+import telegram from '../../assets/images/icons/social/telegram.png'
 
 
-const connections = () => {
+
+
+const connections = ({detail}) => {
+  const connectedAccounts = [
+    {
+      checked: true,
+      title: 'Telegram Id',
+      subtitle: detail?.telegramLin??"موجود نیست",
+      logo: telegram
+    },
+    {
+      checked: false,
+      title: 'LinkedIn Id',
+      subtitle: detail?.inkdinProfile??"موجود نیست",
+      logo: linkedinIcon
+    },
+  ]
   return (
     <Fragment>
       <Card>

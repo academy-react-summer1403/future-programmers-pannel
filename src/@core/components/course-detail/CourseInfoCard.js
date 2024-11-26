@@ -38,6 +38,7 @@ const classOptions = [
 const MySwal = withReactContent(Swal)
 
 const CourseInfoCard = ({ selectedUser, detail }) => {
+  console.log(detail)
   // ** State
   const [show, setShow] = useState(false)
 console.log(detail)

@@ -112,7 +112,7 @@ export const columns = [
  
 ]
 
-const CommentTab = () => {
+const CommentTab = ({userId}) => {
   return (
     <Card>
       <div className='react-dataTable user-view-account-projects'>

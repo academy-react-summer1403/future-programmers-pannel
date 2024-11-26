@@ -22,7 +22,7 @@ const UserTabs = ({ active, toggleTab, detail }) => {
 
   // setCourse(courses);
   console.log(detail)
-
+  const userId = detail.id;
   return (
     <Fragment>
       <Nav pills className='mb-2'>
@@ -65,10 +65,10 @@ const UserTabs = ({ active, toggleTab, detail }) => {
           <ReserveTab detail={detail}/>
         </TabPane>
         <TabPane tabId='3'>
-        <CommentTab />
+        <CommentTab userId={userId}/>
         </TabPane>
         <TabPane tabId='4'>
-          <OtherInformation />
+          <OtherInformation detail={detail}/>
         </TabPane>
         <TabPane tabId='5'>
           <Connections />

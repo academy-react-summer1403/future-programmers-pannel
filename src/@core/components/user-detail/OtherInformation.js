@@ -18,6 +18,9 @@ import facebookIcon from '../../assets/images/icons/social/facebook.png'
 import linkedinIcon from '../../assets/images/icons/social/linkedin.png'
 import dribbbleIcon from '../../assets/images/icons/social/dribbble.png'
 import mailchimpIcon from '../../assets/images/icons/social/mailchimp.png'
+import map from '../../assets/images/icons/social/map.png'
+import date from '../../assets/images/icons/social/date.png'
+import identification from '../../assets/images/icons/social/identification.png'
 
 const connectedAccounts = [
   {
@@ -65,13 +68,57 @@ const connectedAccounts = [
 ]
 
 
-const OtherInformation = () => {
+const OtherInformation = ({detail}) => {
+  const verification = detail?.recoveryEmail===true ? "فعال" : "غیرفعال";
+  const connectedAccounts = [
+    {
+      checked: true,
+      title: 'درباره کاربر',
+      subtitle: detail?.userAbout,
+      logo: googleIcon
+    },
+    {
+      checked: false,
+      title: 'آدرس محل سکونت',
+      subtitle: detail?.homeAdderess,
+      logo: map
+    },
+    {
+      checked: true,
+      title: 'تاریخ تولد',
+      subtitle: detail?.birthDay?.toString()?.slice(0,10),
+      logo: date
+    },
+    {
+      checked: false,
+      title: 'آی دی کاربر',
+      subtitle: detail?.id,
+      logo: identification
+    },
+    {
+      checked: false,
+      title: 'تاریخ ایجاد حساب کاربری',
+      subtitle: detail?.insertDate?.toString()?.slice(0,10),
+      logo: date
+    },
+    {
+      checked: false,
+      title: 'اعتبارسنجی دومرحله ای',
+      subtitle: verification,
+      logo: asanaIcon
+    },
+    {
+      checked: false,
+      title: 'ایمیل بازیابی',
+      subtitle: detail?.recoveryEmail,
+      logo: asanaIcon
+    }
+  ]
   return (
     <Fragment>
       <Card>
         <CardBody>
           <CardTitle className='mb-75'>سایر اطلاعات کاربر </CardTitle>
-          {/* <p>Display content from your connected accounts on your site</p> */}
           {connectedAccounts.map((item, index) => {
             return (
               <div key={index} className='d-flex mt-2'>

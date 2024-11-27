@@ -4,24 +4,31 @@ import StatsHorizontal from './StatsHorizontal';
 import { Col, Row } from 'reactstrap';
 import CourseList from './CourseList';
 import { User, UserCheck, UserMinus, UserX } from 'react-feather';
+import getCourseReserve from '../../../../core/services/api/getCourseReserve';
 
 function ReserveCourse() {
 
-    const [course, setCourse] = useState([])
+    // const [course, setCourse] = useState([])
+    const [courseReserve, setCourseReserve] = useState([])
     const [courseCount, setCourseCount] = useState([])
     const [statics , setStatics] = useState([]);
-    const [search, setSearch] = useState('')
-    const [expire, setExpire] = useState({ value: '', label: 'انتخاب وضعیت دوره' })
-    const [currentPage, setCurrentPage] = useState(1)
-
+    // const [search, setSearch] = useState('')
+    // const [expire, setExpire] = useState({ value: '', label: 'انتخاب وضعیت دوره' })
   
-  
-    const getAllCourseList = async(currentPage, search, expire)=>{
-        try {
-        const result = await courseList(10, currentPage, search, expire)
-        setCourse(result.courseDtos)
-        } catch (error) {
+    // const getAllCourseList = async(currentPage, search, expire)=>{
+    //     try {
+    //     const result = await courseList(10, currentPage, search, expire)
+    //     setCourse(result.courseDtos)
+    //     } catch (error) {
         
+    //     }
+    // }
+    const getAllCourseReserve = async()=>{
+        try {
+            const result = await getCourseReserve()
+            setCourseReserve(result)
+        } catch (error) {
+            
         }
     }
 
@@ -46,9 +53,10 @@ function ReserveCourse() {
 
 
     useEffect(()=>{
-        getAllCourseList(currentPage, search, expire);
+        // getAllCourseList(currentPage, search, expire);
+        getAllCourseReserve()
         getCourseStatic(); 
-    },[currentPage, search, expire]);
+    },[]);
 
     return (
         <div className='app-user-list'>
@@ -86,9 +94,9 @@ function ReserveCourse() {
             />
         </Col>
         </Row>
-        <CourseList course={course} setSearch={setSearch} setExpire={setExpire} expire={expire} currentPage={currentPage} setCurrentPage={setCurrentPage} courseCount={courseCount}/>
+        <CourseList courseReserve={courseReserve} setCourseReserve={setCourseReserve}  courseCount={courseCount}/>
     </div>
     )
 }
-
+// course={course} setSearch={setSearch} setExpire={setExpire} expire={expire} currentPage={currentPage} setCurrentPage={setCurrentPage}
 export default ReserveCourse

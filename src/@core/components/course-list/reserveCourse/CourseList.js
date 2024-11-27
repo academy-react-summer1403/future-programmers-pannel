@@ -170,11 +170,11 @@ import {
 //   )
 // }
 
-const CourseList = ({course, setSearch, setExpire, expire, currentPage, setCurrentPage, courseCount}) => {
+const CourseList = ({courseReserve, setCourseReserve, course , setExpire, expire, courseCount}) => {
   // ** Store Vars
   // const dispatch = useDispatch()
   // const store = useSelector(state => state.users)
-
+  // console.log(courseReserve) 
   // ** States
   const [sort, setSort] = useState('desc')
   const [searchTerm, setSearchTerm] = useState('')
@@ -183,10 +183,16 @@ const CourseList = ({course, setSearch, setExpire, expire, currentPage, setCurre
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [currentPlan, setCurrentPlan] = useState({ value: '', label: 'Select Plan' })
   const [currentStatus, setCurrentStatus] = useState({ value: '', label: 'Select Status', number: 0 })
+  const [currentPage, setCurrentPage] = useState(1)
 
   // ** Function to toggle sidebar
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen)
-
+  const handleSearch = (e)=>{
+  
+    setCourseReserve(courseReserve.filter((res) => res.courseName.includes(e.target.value))) 
+  } 
+  console.log(courseReserve)
+  // console.log(data)
   // ** Get data on mount
   // useEffect(() => {
   //   dispatch(getAllData())
@@ -256,7 +262,8 @@ const CourseList = ({course, setSearch, setExpire, expire, currentPage, setCurre
 
   // ** Custom Pagination
   const CustomPagination = () => {
-    const count = Number(Math.ceil(courseCount / 10))
+    const count = Number(Math.ceil(courseReserve.length / 10))
+    
 
     return (
       <ReactPaginate
@@ -330,10 +337,10 @@ const CourseList = ({course, setSearch, setExpire, expire, currentPage, setCurre
 
         <div className='d-flex flex-column'>
           <Link
-            to={`/courseDetail/${row.courseId}`}
+            to={`/courseDetail/${row?.courseId}`}
             className='user_name text-truncate text-body'
           >
-            <span className='fw-bolder'>{row.title}</span>
+            <span className='fw-bolder'>{row?.courseName}</span>
           </Link>
         </div>
       </div>
@@ -344,14 +351,14 @@ const CourseList = ({course, setSearch, setExpire, expire, currentPage, setCurre
     minWidth: '138px',
     sortable: true,
     sortField: 'status',
-    selector: row => row.levelName,
+    selector: row => row?.studentName,
   },
   {
     name: 'تاریخ رزرو ',
     minWidth: '100px',
     sortable: true,
     sortField: 'currentPlan',
-    selector: row => row.levelName,
+    selector: row => row?.reserverDate?.toString()?.slice(0,10),
     // cell: row => <span className='text-capitalize'>{row.teacher}</span>
   },
   {
@@ -361,8 +368,8 @@ const CourseList = ({course, setSearch, setExpire, expire, currentPage, setCurre
     sortField: 'status',
     // selector: row => row.status,
     cell: row => (
-      <Badge className='text-capitalize' color={row.isExpire ? "light-danger" : "light-success"} pill>
-        {row.isExpire ? " غیرفعال" : "فعال "}
+      <Badge className='text-capitalize' color={row.accept ? "light-success"  : "light-danger"} pill>
+        {row.accept ? " پذیرفته شده" : " پذیرفته نشده "}
       </Badge>
     )
   },
@@ -413,7 +420,7 @@ const CourseList = ({course, setSearch, setExpire, expire, currentPage, setCurre
     )
   }
 ]
-
+  
   return (
     <Fragment>
       
@@ -423,7 +430,7 @@ const CourseList = ({course, setSearch, setExpire, expire, currentPage, setCurre
         </CardHeader>
         <CardBody>
           <Row>
-            <Col md='4'>
+            {/* <Col md='4'>
               <Label for='role-select'>Role</Label>
               <Select
                 isClearable={false}
@@ -449,10 +456,11 @@ const CourseList = ({course, setSearch, setExpire, expire, currentPage, setCurre
                 //   )
                 // }}
               />
-            </Col>
+            </Col> */}
             <Col md='4'>
             <Label for='status-select'>جستجو</Label>
-            <ProductsSearchbar setSearch={setSearch}/>
+            {/* <ProductsSearchbar setSearch={setSearch}/> */}
+            <input class="form-select form-select-md" type='text' id='status-select' name='status-select' onChange={handleSearch} />
             </Col>
           </Row>
         </CardBody>
@@ -466,13 +474,13 @@ const CourseList = ({course, setSearch, setExpire, expire, currentPage, setCurre
             sortServer
             pagination
             responsive
-            paginationServer
+            // paginationServer
             columns={columns}
             // onSort={handleSort}
             sortIcon={<ChevronDown />}
             className='react-dataTable'
             paginationComponent={CustomPagination}
-            data={course}
+            data={courseReserve}
             // subHeaderComponent={
             //   <CustomHeader
             //     store={store}
@@ -486,7 +494,6 @@ const CourseList = ({course, setSearch, setExpire, expire, currentPage, setCurre
           />
         </div>
       </Card>
-
       {/* <Sidebar open={sidebarOpen} toggleSidebar={toggleSidebar} /> */}
     </Fragment>
   )

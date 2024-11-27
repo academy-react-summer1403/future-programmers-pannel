@@ -14,7 +14,7 @@ function ReserveCourse() {
     const [statics , setStatics] = useState([]);
     // const [search, setSearch] = useState('')
     // const [expire, setExpire] = useState({ value: '', label: 'انتخاب وضعیت دوره' })
-  
+
     // const getAllCourseList = async(currentPage, search, expire)=>{
     //     try {
     //     const result = await courseList(10, currentPage, search, expire)

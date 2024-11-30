@@ -1,19 +1,19 @@
 // ** React Imports
 import { Fragment, useState, useEffect } from 'react'
-
+import { Link } from "react-router-dom";
 // ** Invoice List Sidebar
 // import Sidebar from './Sidebar'
 
 import Avatar from '@components/avatar'
 
 import pic from '../../../assets/images/avatars/1.png'
-
+import getComment from '../../../core/services/api/getComment'
+import CommentSearchbar from './CommentSearchbar'
 // ** Table Columns
 // import { columns } from './columns'
 
 // ** Store & Actions
 // import { getAllData, getData } from '../store'
-// import { useDispatch, useSelector } from 'react-redux'
 
 // ** Third Party Components
 import Select from 'react-select'
@@ -170,20 +170,37 @@ import {
 // }
 
 const UsersList = () => {
-  // ** Store Vars
-  // const dispatch = useDispatch()
-  // const store = useSelector(state => state.users)
 
   // ** States
   const [sort, setSort] = useState('desc')
   const [searchTerm, setSearchTerm] = useState('')
-  const [currentPage, setCurrentPage] = useState(1)
+  
   const [sortColumn, setSortColumn] = useState('id')
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [currentRole, setCurrentRole] = useState({ value: '', label: 'Select Role' })
-  const [currentPlan, setCurrentPlan] = useState({ value: '', label: 'Select Plan' })
-  const [currentStatus, setCurrentStatus] = useState({ value: '', label: 'Select Status', number: 0 })
+  // const [currentStatus, setCurrentStatus] = useState({ value: '', label: 'Select Status', number: 0 })
+  const [currentStatus, setCurrentStatus] = useState({ value: '', label: 'انتخاب وضعیت' })
+  const [comment, setComment] = useState([])
+  const [currentPage, setCurrentPage] = useState(1)
+  const [totalCount, setTotalCount] = useState([])
+  const [search, setSearch] = useState('')
+
+  const getCourseComment = async(currentPage, search, currentStatus)=>{
+    try{
+      const result = await getComment(10 ,currentPage, search, currentStatus)
+      setComment(result.comments)
+      setTotalCount(result.totalCount)
+    }catch (error){
+      
+    }
+  }
+
+
+  useEffect(()=>{
+    getCourseComment(currentPage, search, currentStatus.value);
+  },[currentPage, search, currentStatus.value])
+
 
   // ** Function to toggle sidebar
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen)
@@ -206,39 +223,17 @@ const UsersList = () => {
   // }, [dispatch, store.data.length, sort, sortColumn, currentPage])
 
   // ** User filter options
-  const roleOptions = [
-    { value: '', label: 'Select Role' },
-    { value: 'admin', label: 'Admin' },
-    { value: 'author', label: 'Author' },
-    { value: 'editor', label: 'Editor' },
-    { value: 'maintainer', label: 'Maintainer' },
-    { value: 'subscriber', label: 'Subscriber' }
-  ]
 
-  const planOptions = [
-    { value: '', label: 'Select Plan' },
-    { value: 'basic', label: 'Basic' },
-    { value: 'company', label: 'Company' },
-    { value: 'enterprise', label: 'Enterprise' },
-    { value: 'team', label: 'Team' }
+  const statusOptions = [
+    { value: '', label: 'انتخاب وضعیت' },
+    { value: true, label: 'تائید شده' },
+    { value: false, label: 'تائید نشده' },
   ]
 
   // ** Function in get data on page change
-  // const handlePagination = page => {
-  //   dispatch(
-  //     getData({
-  //       sort,
-  //       sortColumn,
-  //       q: searchTerm,
-  //       perPage: rowsPerPage,
-  //       page: page.selected + 1,
-  //       role: currentRole.value,
-  //       status: currentStatus.value,
-  //       currentPlan: currentPlan.value
-  //     })
-  //   )
-  //   setCurrentPage(page.selected + 1)
-  // }
+  const handlePagination = page => {
+    setCurrentPage(page.selected + 1)
+  }
 
   // ** Function in get data on rows per page
   // const handlePerPage = e => {
@@ -276,27 +271,26 @@ const UsersList = () => {
   // }
 
   // ** Custom Pagination
-  // const CustomPagination = () => {
-  //   const count = Number(Math.ceil(store.total / rowsPerPage))
-
-  //   return (
-  //     <ReactPaginate
-  //       previousLabel={''}
-  //       nextLabel={''}
-  //       pageCount={count || 1}
-  //       activeClassName='active'
-  //       forcePage={currentPage !== 0 ? currentPage - 1 : 0}
-  //       onPageChange={page => handlePagination(page)}
-  //       pageClassName={'page-item'}
-  //       nextLinkClassName={'page-link'}
-  //       nextClassName={'page-item next'}
-  //       previousClassName={'page-item prev'}
-  //       previousLinkClassName={'page-link'}
-  //       pageLinkClassName={'page-link'}
-  //       containerClassName={'pagination react-paginate justify-content-end my-2 pe-1'}
-  //     />
-  //   )
-  // }
+  const CustomPagination = () => {
+    const count = Number(Math.ceil(totalCount / 10))
+    return (
+      <ReactPaginate
+        previousLabel={''}
+        nextLabel={''}
+        pageCount={count || 1}
+        activeClassName='active'
+        forcePage={currentPage !== 0 ? currentPage - 1 : 0}
+        onPageChange={page => handlePagination(page)}
+        pageClassName={'page-item'}
+        nextLinkClassName={'page-link'}
+        nextClassName={'page-item next'}
+        previousClassName={'page-item prev'}
+        previousLinkClassName={'page-link'}
+        pageLinkClassName={'page-link'}
+        containerClassName={'pagination react-paginate justify-content-end my-2 pe-1'}
+      />
+    )
+  }
 
   // ** Table data to render
   // const dataToRender = () => {
@@ -337,38 +331,23 @@ const UsersList = () => {
   //   )
   // }
 
-  const data = [
-    {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'pending'},
-    {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'active'},
-    {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'pending'},
-    {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'inactive'},
-    {name:'asasa', family:'aawwewr3', email:'hsregesdfwe', teacher:'uuunngg', status:'pending'},
-  ]
-  const statusObj = {
-    pending: 'light-warning',
-    active: 'light-success',
-    inactive: 'light-secondary'
-  }
   const columns =[
     {
     name: 'کاربر',
     sortable: true,
     minWidth: '150px',
     sortField: 'fullName',
-    selector: row => row.name,
     cell: row => (
       <div className='d-flex justify-content-left align-items-center'>
-        {/* {renderClient(row)} */}
-        <Avatar img={pic} className='me-1'/>
+
         <div className='d-flex flex-column'>
-          {/* <Link
-            to={`/apps/user/view/${row.id}`}
-            className='user_name text-truncate text-body'
-            onClick={() => store.dispatch(getUser(row.id))}
-          > */}
-            <span className='fw-bolder'>{row.family}</span>
-          {/* </Link> */}
-          <small className='text-truncate text-muted mb-0'>{row.email}</small>
+          <Link
+            to={'/userDetail/'+row.userId}
+            className='user_name text-truncate text-body' 
+          > 
+            <span className='fw-bolder'>{row.userFullName}</span>
+          </Link> 
+          <small className='text-truncate text-muted mb-0'>{row.userId}</small>
         </div>
       </div>
     )
@@ -378,15 +357,15 @@ const UsersList = () => {
     sortable: true,
     minWidth: '150px',
     sortField: 'role',
-    selector: row => row.teacher,
+    selector: row => row.commentTitle,
     // cell: row => renderRole(row)
   },
   {
-    name: 'نمایش کامنت',
+    name: 'متن کامنت',
     minWidth: '200px',
     sortable: true,
     sortField: 'currentPlan',
-    selector: row => row.teacher,
+    selector: row => row.describe,
     // cell: row => <span className='text-capitalize'>{row.teacher}</span>
   },
   {
@@ -394,7 +373,7 @@ const UsersList = () => {
     sortable: true,
     minWidth: '172px',
     sortField: 'role',
-    selector: row => row.teacher,
+    selector: row => row.courseTitle,
     // cell: row => renderRole(row)
   },
   {
@@ -402,26 +381,27 @@ const UsersList = () => {
     minWidth: '138px',
     sortable: true,
     sortField: 'status',
-    selector: row => row.status,
+    selector: row => row.accept,
     cell: row => (
-      <Badge className='text-capitalize' color={statusObj[row.status]} pill>
-        {row.status}
+      <Badge className='text-capitalize' color={row.accept === true ? "light-success" : "light-danger"} pill>
+        {row.accept === true ? "تائید شده" : "تائید نشده"}
       </Badge>
     )
   },
   {
     
-    // name: ' دوره ',
+    name: ' پاسخ ها ',
     sortable: true,
     minWidth: '80px',
     sortField: 'role',
     selector: row => row.teacher,
     // cell: row => renderRole(row)
     cell: row => <Eye size={15}/>
+    // replyCount
   },
   {
     name: 'Actions',
-    minWidth: '10px',
+    minWidth: '100px',
     cell: row => (
       <div className='column-action'>
         <UncontrolledDropdown>
@@ -470,60 +450,24 @@ const UsersList = () => {
       
       <Card>
         <CardHeader>
-          <CardTitle tag='h4'>Filters</CardTitle>
+          <CardTitle tag='h4'>فیلترها</CardTitle>
         </CardHeader>
         <CardBody>
           <Row>
             <Col md='4'>
-              <Label for='role-select'>Role</Label>
-              <Select
-                isClearable={false}
-                value={currentRole}
-                options={roleOptions}
-                className='react-select'
-                classNamePrefix='select'
-                theme={selectThemeColors}
-                onChange={data => {
-                  setCurrentRole(data)
-                  dispatch(
-                    getData({
-                      sort,
-                      sortColumn,
-                      q: searchTerm,
-                      role: data.value,
-                      page: currentPage,
-                      perPage: rowsPerPage,
-                      status: currentStatus.value,
-                      currentPlan: currentPlan.value
-                    })
-                  )
-                }}
-              />
+              <Label for='status-select'>جستجو</Label>
+              <CommentSearchbar setSearch={setSearch}/>
             </Col>
             <Col className='my-md-0 my-1' md='4'>
-              <Label for='plan-select'>Plan</Label>
+              <Label for='plan-select'>وضعیت</Label>
               <Select
                 theme={selectThemeColors}
                 isClearable={false}
                 className='react-select'
                 classNamePrefix='select'
-                options={planOptions}
-                value={currentPlan}
-                onChange={data => {
-                  setCurrentPlan(data)
-                  dispatch(
-                    getData({
-                      sort,
-                      sortColumn,
-                      q: searchTerm,
-                      page: currentPage,
-                      perPage: rowsPerPage,
-                      role: currentRole.value,
-                      currentPlan: data.value,
-                      status: currentStatus.value
-                    })
-                  )
-                }}
+                options={statusOptions}
+                value={currentStatus}
+                onChange= {(e)=>setCurrentStatus(e)}
               />
             </Col>
           </Row>
@@ -543,8 +487,8 @@ const UsersList = () => {
             // onSort={handleSort}
             sortIcon={<ChevronDown />}
             className='react-dataTable'
-            // paginationComponent={CustomPagination}
-            data={data}
+            paginationComponent={CustomPagination}
+            data={comment}
             // subHeaderComponent={
             //   <CustomHeader
             //     store={store}

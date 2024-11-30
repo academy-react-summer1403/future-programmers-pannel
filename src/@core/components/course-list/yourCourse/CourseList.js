@@ -444,21 +444,6 @@ const CourseList = ({course, setSearch, setExpire, expire, currentPage, setCurre
                 classNamePrefix='select'
                 theme={selectThemeColors}
                 onChange= {(e)=>setExpire(e)}
-                // onChange={data => {
-                //   setCurrentRole(data)
-                //   dispatch(
-                //     getData({
-                //       sort,
-                //       sortColumn,
-                //       q: searchTerm,
-                //       role: data.value,
-                //       page: currentPage,
-                //       perPage: rowsPerPage,
-                //       status: currentStatus.value,
-                //       currentPlan: currentPlan.value
-                //     })
-                //   )
-                // }}
               />
             </Col>
             <Col md='4'>

@@ -188,7 +188,6 @@ const CourseList = ({courseReserve, setCourseReserve, course , setExpire, expire
   // ** Function to toggle sidebar
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen)
   const handleSearch = (e)=>{
-  
     setCourseReserve(courseReserve.filter((res) => res.courseName.includes(e.target.value))) 
   } 
   console.log(courseReserve)
@@ -460,7 +459,7 @@ const CourseList = ({courseReserve, setCourseReserve, course , setExpire, expire
             <Col md='4'>
             <Label for='status-select'>جستجو</Label>
             {/* <ProductsSearchbar setSearch={setSearch}/> */}
-            <input class="form-select form-select-md" type='text' id='status-select' name='status-select' onChange={handleSearch} />
+            <input class="form-control form-control-md" type='text' id='status-select' name='status-select' onChange={handleSearch} />
             </Col>
           </Row>
         </CardBody>

@@ -21,6 +21,7 @@ import { selectThemeColors } from '@utils'
 
 // ** Styles
 import '@styles/react/libs/react-select/_react-select.scss'
+import { completeUser } from '../../../core/services/api/putUser';
 
 const roleColors = {
   editor: 'light-info',
@@ -47,7 +48,6 @@ const UserInfoCard = ({ selectedUser, detail }) => {
     reset,
     control,
     setError,
-    handleSubmit,
     formState: { errors }
   } = useForm({
     defaultValues: {
@@ -91,30 +91,36 @@ const UserInfoCard = ({ selectedUser, detail }) => {
   //   }
   // }
 
-  const onSubmit = data => {
-    if (Object.values(data).every(field => field.length > 0)) {
-      setShow(false)
-    } else {
-      for (const key in data) {
-        if (data[key].length === 0) {
-          setError(key, {
-            type: 'manual'
-          })
-        }
-      }
-    }
-  }
+  // const onSubmit = data => {
+  //   if (Object.values(data).every(field => field.length > 0)) {
+  //     setShow(false)
+  //   } else {
+  //     for (const key in data) {
+  //       if (data[key].length === 0) {
+  //         setError(key, {
+  //           type: 'manual'
+  //         })
+  //       }
+  //     }
+  //   }
+  // }
+ 
 
   const validation = yup.object().shape({
-    firstName:yup.string().required(),
-    lastName:yup.string().required(),
-    username:yup.string().required(),
-    email:yup.string().required(),
+    fName:yup.string().required(),
+    lName:yup.string().required(),
+    userName:yup.string().required(),
+    gmail:yup.string().required(),
     status:yup.string().required(),
-    id:yup.string().required(),
-    contact:yup.string().required(),
+    nationalCode:yup.string().required(),
+    phoneNumber:yup.string().required(),
   });
-
+  const handleReset = () => {
+    reset({fName:'',lName:'',userName:'',gmail:'',status:'',nationalCode:'',phoneNumber:'',birthDay:'',currentPictureAddress:''})
+  }
+  const handleSubmit = async(value)=>{
+    const result = await completeUser(value)
+  }
   // const handleReset = () => {
   //   reset({
   //     username: selectedUser.username,
@@ -251,42 +257,42 @@ const UserInfoCard = ({ selectedUser, detail }) => {
             <h1 className='mb-1'>ویرایش اطلاعات کاربر</h1>
           </div>
           <Formik 
-            initialValues={{firstName:'',lastName:'',username:'',email:'',status:'',id:'',contact:''}} 
-            onSubmit={handleSubmit(onSubmit)}
+            initialValues={{fName:'',lName:'',userName:'',gmail:'',nationalCode:'',phoneNumber:'',birthDay:'',currentPictureAddress:''}} 
+            onSubmit={handleSubmit}
             validationSchema={validation}
           >
             <Form>
               <Row className='gy-1 pt-75'>
                 <Col md={6} xs={12}>
-                  <Label className='form-label' for='firstName'>
+                  <Label className='form-label' for='fName'>
                     نام
                   </Label>
                   <Field 
-                    class="form-select form-select-md" 
-                    id='firstName' 
-                    name='firstName' 
+                    class="form-control form-control-md" 
+                    id='fName' 
+                    name='fName' 
                     placeholder='John'
                   />
                   <ErrorMessage name='firstName' component={'p'} class="text-danger"/>
                 </Col>
                 <Col md={6} xs={12}>
-                  <Label className='form-label' for='lastName'>
+                  <Label className='form-label' for='lName'>
                     نام خانوادگی
                   </Label>
                   <Field 
-                    class="form-select form-select-md" 
-                    name='lastName' 
-                    id='lastName' 
+                    class="form-control form-control-md" 
+                    name='lName' 
+                    id='lName' 
                     placeholder='Doe' 
                   />
                   <ErrorMessage name='lastName' component={'p'} class="text-danger"/>
                 </Col>
                 <Col xs={12}>
-                  <Label className='form-label' for='username'>
+                  <Label className='form-label' for='userName'>
                     نام کاربری
                   </Label>
                   <Field 
-                    class="form-select form-select-md" 
+                    class="form-control form-control-md" 
                     name='username' 
                     id='username' 
                     placeholder='john.doe.007'
@@ -294,65 +300,84 @@ const UserInfoCard = ({ selectedUser, detail }) => {
                   <ErrorMessage name='username' component={'p'} class="text-danger"/>
                 </Col>
                 <Col md={6} xs={12}>
-                  <Label className='form-label' for='billing-email'>
+                  <Label className='form-label' for='gmail'>
                     ایمیل
                   </Label>
                   <Field
-                    class="form-select form-select-md"
-                    type='email'
-                    id='billing-email'
-                    name='email'
+                    class="form-control form-control-md"
+                    type='gmail'
+                    id='gmail'
+                    name='gmail'
                     placeholder='example@domain.com'
                   />
                   <ErrorMessage name='email' component={'p'} class="text-danger"/>
                 </Col>
-                <Col md={6} xs={12}>
-                  <Label className='form-label' for='status'>
+                {/* <Col md={6} xs={12}>
+                  <Label className='form-label' for='active'>
                     وضعیت:
                   </Label>
-                  <select class="form-select form-select-md" id='status'name='status'>
-                    <option>فعال</option>
-                    <option>فعال</option>
-                  </select>
-                </Col>
+                  <Field class="form-select form-select-md" id='active'name='active'>
+                  <datalist id="active">
+                    <option value='true'>فعال</option>
+                    <option value="false">غیرفعال</option>
+                  </datalist>
+                  </Field>
+                </Col> */}
                 <Col md={6} xs={12}>
-                  <Label className='form-label' for='id'>
+                  <Label className='form-label' for='nationalCode'>
                     کد ملی
                   </Label>
                   <Field 
-                    class="form-select form-select-md" 
-                    id='id' 
-                    name='id' 
+                    class="form-control form-control-md" 
+                    id='nationalCode' 
+                    name='nationalCode' 
                     placeholder='+1 609 933 4422' 
                   />
                   <ErrorMessage name='id' component={'p'} class="text-danger"/>
                 </Col> 
                 <Col md={6} xs={12}>
-                  <Label className='form-label' for='contact'>
+                  <Label className='form-label' for='phoneNumber'>
                     شماره موبایل
                   </Label>
                   <Field 
-                    class="form-select form-select-md" 
-                    id='contact' 
-                    name='contact' 
+                    class="form-control form-control-md" 
+                    id='phoneNumber' 
+                    name='phoneNumber' 
                     placeholder='0911 111 1111' 
                   />
                   <ErrorMessage name='contact' component={'p'} class="text-danger"/>
-                </Col>    
+                </Col> 
+                <Col md={6} xs={12}>
+                  <Label className='form-label' for='birthDay'>
+                    تاریخ تولد
+                  </Label>
+                  <Field 
+                  type='date'
+                    class="form-control form-control-md" 
+                    id='birthDay' 
+                    name='birthDay' 
+                    placeholder='0911 111 1111' 
+                  />
+                  <ErrorMessage name='contact' component={'p'} class="text-danger"/>
+                </Col> 
+                <Col md={6} xs={12}>
+                  <Label className='form-label' for='currentPictureAddress'>
+                    عکس کاربر
+                  </Label>
+                  <Field 
+                    type='file'
+                    class="form-control form-control-md" 
+                    id='currentPictureAddress' 
+                    name='currentPictureAddress' 
+                  />
+                  <ErrorMessage name='contact' component={'p'} class="text-danger"/>
+                </Col>   
                 <Col xs={12} className='text-center mt-2 pt-50'>
                   <Button type='submit' className='me-1' color='primary'>
-                    Submit
+                    ثبت
                   </Button>
-                  <Button
-                    type='reset'
-                    color='secondary'
-                    outline
-                    onClick={() => {
-                      handleReset()
-                      setShow(false)
-                    }}
-                  >
-                    Discard
+                  <Button outline color='secondary' type='reset' onClick={handleReset} >
+                    انصراف
                   </Button>
                 </Col>
               </Row>

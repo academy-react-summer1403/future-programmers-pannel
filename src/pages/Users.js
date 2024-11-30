@@ -10,7 +10,7 @@ import { userCount, userList } from "../core/services/api/userList";
 const Users = () => {
 
   const [users , setUsers] = useState([])
-  const [usersCount , setUserCount] = useState([])
+  const [usersCount , setUserCount] = useState()
   const [statics , setStatics] = useState([]);
   const [search, setSearch] = useState('')
   const [role, setRole] = useState({ value: '', id: null, label: 'انتخاب نقش کاربر' })
@@ -31,7 +31,7 @@ const Users = () => {
   }
   const getUserStatic = async()=>{
     try {
-      const result = await userCount(1000, 1)
+      const result = await userCount(usersCount, 1)
       setStatics(result.listUser)
       setUserCount(result.totalCount)
     } catch (error) {

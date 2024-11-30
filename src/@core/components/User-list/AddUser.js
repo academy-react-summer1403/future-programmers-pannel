@@ -4,6 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as yup from 'yup';
 
+
 // ** Custom Components
 import Avatar from '@components/avatar'
 
@@ -32,6 +33,7 @@ import { selectThemeColors } from '@utils'
 
 // ** Styles
 import '@styles/react/libs/react-select/_react-select.scss'
+import { postAddUser } from '../../../core/services/api/addUser';
 
 const AddUser = () => {
   // ** States
@@ -96,8 +98,9 @@ const AddUser = () => {
   }
 
   const handleSubmit = async(value)=>{
-    console.log(value)
-    const result = await postAddUser()
+    
+      const result = await postAddUser(value)
+      toast.success(result.message)
   }
 
   return (
@@ -114,26 +117,24 @@ const AddUser = () => {
             <h1 className='mb-1'>لطفا اطلاعات کاربر را وارد نمائید</h1>
           </div>
           <Formik
-            initialvalues={{firstName:'', lastName:'', email:'', number:'', password:'',student:true, teacher:true}}
+            initialValues={{firstName:'', lastName:'', gmail:'', phoneNumber:'', password:'',isStudent:true, isTeacher:true}}
             onSubmit={handleSubmit}
-            // validatinonSchema={validation}
+            validatinonSchema={validation}
           >
             <Form>
-              {/* <div className='mb-1'>
+              <div className='mb-1'>
                 <Label className='form-label' for='firstName'>
                   نام
                 </Label>
                 <Field
-                  type='text'
                   id='firstName'
                   name='firstName'
                   placeholder='نام'
                   class="form-control form-control-md"
-                  onChange={(e)=>e.target.value}
                 />
                 <ErrorMessage name='firstName' component={'p'} class="text-danger"/>
-              </div> */}
-              {/* <div className='mb-1'>
+              </div>
+              <div className='mb-1'>
                 <Label className='form-label' for='lastName'>
                   نام خانوادگی
                 </Label>
@@ -145,34 +146,33 @@ const AddUser = () => {
                   class="form-control form-control-md"
                 />
                 <ErrorMessage name='lastName' component={'p'} class="text-danger"/>
-              </div> */}
-              {/* <div className='mb-1'>
+              </div>
+              <div className='mb-1'>
                 <Label className='form-label' for='email'>
                   ایمیل
                 </Label>
                 <Field
                   type='email'
                   id='email'
-                  name='email'
+                  name='gmail'
                   placeholder='bruce.wayne@email.com '
                   class="form-control form-control-md"
                 />
                 <ErrorMessage name='email' component={'p'} class="text-danger"/>
-              </div> */}
+              </div> 
               <div className='mb-1'>
                 <Label className='form-label' for='number'>
                   شماره موبایل
                 </Label>
                 <Field
-                  type='number'
                   id='number'
-                  name='number'
+                  name='phoneNumber'
                   placeholder='09111111111'
                   class="form-control form-control-md"
                 />
-                {/* <ErrorMessage name='number' component={'p'} class="text-danger"/> */}
+                <ErrorMessage name='number' component={'p'} class="text-danger"/>
               </div>
-              {/* <div className='mb-1'>
+              <div className='mb-1'>
                 <Label className='form-label' for='password'>
                   رمز عبور
                 </Label>
@@ -184,26 +184,26 @@ const AddUser = () => {
                   class="form-control form-control-md"
                 />
                 <ErrorMessage name='password' component={'p'} class="text-danger"/>
-              </div> */}
-              {/* <div className='mb-1'>
+              </div>
+              <div className='mb-1'>
                 <Label className='form-label' for='password'>
                   تعیین نقش کاربر
                 </Label>
                 <div className='mt-1'>
                   <div className='form-check form-check-inline'>
-                    <Field type='checkbox' name='student'  id='student' className='form-check-input'/>
+                    <Field type='checkbox' name='isStudent'  id='student' className='form-check-input'/>
                     <Label for='student' className='form-check-label'>
                       دانشجو
                     </Label>
                   </div>
                   <div className='form-check form-check-inline'>
-                    <Field type='checkbox' name='teacher' id='teacher' className='form-check-input'/>
+                    <Field type='checkbox' name='isTeacher' id='teacher' className='form-check-input'/>
                     <Label for='teacher' className='form-check-label'>
                       استاد
                     </Label>
                   </div>
                 </div>
-              </div> */}
+              </div>
               <div className='d-flex mt-1'>
                 <Button className='me-1' color='primary' type='submit'>
                   ثبت

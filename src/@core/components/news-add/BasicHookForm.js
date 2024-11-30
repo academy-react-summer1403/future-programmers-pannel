@@ -45,7 +45,7 @@ useEffect(()=>{
     formData.append('NewsCatregoryId', addNews.NewsCatregoryId)
     formData.append('Image', addNews.Image)
     const result = await postAddNews(formData)
-    console.log(result)
+    // console.log(result)
   }
 
 
@@ -121,10 +121,10 @@ useEffect(()=>{
             </Col>
             <Col xs={12} className='text-center mt-2 pt-50'>
                 <Button onClick={handleForm} type='submit' className='me-1' color='primary' >
-                  Submit
+                  ثبت
                 </Button>
                 <Button outline color='secondary' type='reset' onClick={handleReset}>
-                  Reset
+                  انصراف
                 </Button>
             </Col>
           </Row>

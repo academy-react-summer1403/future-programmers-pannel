@@ -169,7 +169,7 @@ import {
 //   )
 // }
 
-const UsersList = () => {
+const CommentTable = () => {
 
   // ** States
   const [sort, setSort] = useState('desc')
@@ -508,4 +508,4 @@ const UsersList = () => {
   )
 }
 
-export default UsersList
+export default CommentTable

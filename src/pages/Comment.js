@@ -1,10 +1,10 @@
-import Table from "../@core/components/comments/Table";
+import CommentTable from "../@core/components/comments/CommentTable";
 
 
 const Comment = () => {
     return (
       <div>
-        <Table />
+        <CommentTable />
       </div>
     );
   };

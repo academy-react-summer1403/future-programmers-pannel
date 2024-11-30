@@ -1,7 +1,8 @@
 // ** Third Party Components
-import * as yup from 'yup'
 import toast from 'react-hot-toast'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { Formik, Form, Field, ErrorMessage } from 'formik'
+import * as yup from 'yup';
 
 // ** Custom Components
 import Avatar from '@components/avatar'
@@ -18,7 +19,6 @@ import {
   CardBody,
   ModalBody,
   ModalHeader,
-  Form,
   FormFeedback
 } from 'reactstrap'
 
@@ -33,78 +33,71 @@ import { selectThemeColors } from '@utils'
 // ** Styles
 import '@styles/react/libs/react-select/_react-select.scss'
 
-const statusOptions = [
-  { value: 'active', label: 'Active' },
-  { value: 'inactive', label: 'Inactive' },
-  { value: 'suspended', label: 'Suspended' }
-]
-
-const defaultValues = {
-  firstName: 'Bob',
-  lastName: 'Barton',
-  username: 'bob.dev'
-}
-
 const AddUser = () => {
   // ** States
   const [show, setShow] = useState(false)
 
-  const SignupSchema = yup.object().shape({
-    email: yup.string().email().required(),
-    lastName: yup.string().min(3).required(),
-    firstName: yup.string().min(3).required(),
-    number: yup.string().min(11).required(),
-    password: yup.string().min(6).required()
+  const validation = yup.object().shape({
+    firstName: yup.string().required(),
+    lastName: yup.string().required(),
+    email: yup.string().required(),
+    number: yup.string().required(),
+    password: yup.string().required()
   })
 
   // ** Hooks
-  const {
-    reset,
-    control,
-    handleSubmit,
-    formState: { errors }
-  } = useForm({ mode: 'onChange', resolver: yupResolver(SignupSchema) })
+  // const {
+  //   reset,
+  //   control,
+  //   // handleSubmit,
+  //   formState: { errors }
+  // } = useForm({ mode: 'onChange', resolver: yupResolver(SignupSchema) })
 
-  const onSubmit = data => {
-    if (Object.values(data).every(field => field.length > 0)) {
-      toast(
-        <div className='d-flex'>
-          <div className='me-1'>
-            <Avatar size='sm' color='success' icon={<Check size={12} />} />
-          </div>
-          <div className='d-flex flex-column'>
-            <h6>Form Submitted!</h6>
-            <ul className='list-unstyled mb-0'>
-              <li>
-                <strong>firstName</strong>: {data.firstName}
-              </li>
-              <li>
-                <strong>lastName</strong>: {data.lastName}
-              </li>
-              <li>
-                <strong>email</strong>: {data.email}
-              </li>
-              <li>
-                <strong>phone number</strong>: {data.number}
-              </li>
-              <li>
-                <strong>password</strong>: {data.password}
-              </li>
-            </ul>
-          </div>
-        </div>
-      )
-    }
-  }
+  // const onSubmit = data => {
+  //   if (Object.values(data).every(field => field.length > 0)) {
+  //     toast(
+  //       <div className='d-flex'>
+  //         <div className='me-1'>
+  //           <Avatar size='sm' color='success' icon={<Check size={12} />} />
+  //         </div>
+  //         <div className='d-flex flex-column'>
+  //           <h6>Form Submitted!</h6>
+  //           <ul className='list-unstyled mb-0'>
+  //             <li>
+  //               <strong>firstName</strong>: {data.firstName}
+  //             </li>
+  //             <li>
+  //               <strong>lastName</strong>: {data.lastName}
+  //             </li>
+  //             <li>
+  //               <strong>email</strong>: {data.email}
+  //             </li>
+  //             <li>
+  //               <strong>phone number</strong>: {data.number}
+  //             </li>
+  //             <li>
+  //               <strong>password</strong>: {data.password}
+  //             </li>
+  //           </ul>
+  //         </div>
+  //       </div>
+  //     )
+  //   }
+  // }
 
   const handleReset = () => {
     reset({
+      firstName: '',
+      lastName: '',
       email: '',
       number: '',
       password: '',
-      firstName: '',
-      lastName: ''
     })
+  }
+
+  const handleSubmit = async(value)=>{
+    console.log(value)
+    const result = await postAddUser()
   }
 
   return (
@@ -120,116 +113,108 @@ const AddUser = () => {
           <div className=' mb-2'>
             <h1 className='mb-1'>لطفا اطلاعات کاربر را وارد نمائید</h1>
           </div>
-          <Form onSubmit={handleSubmit(onSubmit)}>
-            <div className='mb-1'>
-              <Label className='form-label' for='firstName'>
-                نام
-              </Label>
-              <Controller
-                id='firstName'
-                name='firstName'
-                defaultValue=''
-                control={control}
-                render={({ field }) => <Input {...field} placeholder='Bruce' invalid={errors.firstName && true} />}
-              />
-              {errors.firstName && <FormFeedback>{errors.firstName.message}</FormFeedback>}
-            </div>
-            <div className='mb-1'>
-              <Label className='form-label' for='lastName'>
-                نام خانوادگی
-              </Label>
-              <Controller
-                id='lastName'
-                name='lastName'
-                defaultValue=''
-                control={control}
-                render={({ field }) => <Input {...field} placeholder='Wayne' invalid={errors.lastName && true} />}
-              />
-              {errors.lastName && <FormFeedback>{errors.lastName.message}</FormFeedback>}
-            </div>
-            <div className='mb-1'>
-              <Label className='form-label' for='email'>
-                ایمیل
-              </Label>
-              <Controller
-                id='email'
-                name='email'
-                defaultValue=''
-                control={control}
-                render={({ field }) => (
-                  <Input {...field} type='email' placeholder='bruce.wayne@email.com' invalid={errors.email && true} />
-                )}
-              />
-              {errors.email && <FormFeedback>{errors.email.message}</FormFeedback>}
-            </div>
-            <div className='mb-1'>
-              <Label className='form-label' for='number'>
-                شماره موبایل
-              </Label>
-              <Controller
-                id='number'
-                name='number'
-                defaultValue=''
-                control={control}
-                render={({ field }) => (
-                  <Input {...field} type='number' placeholder='09111111111' invalid={errors.number && true} />
-                )}
-              />
-              {errors.number && <FormFeedback>{errors.number.message}</FormFeedback>}
-            </div>
-            <div className='mb-1'>
-              <Label className='form-label' for='password'>
-                رمز عبور
-              </Label>
-              <Controller
-                id='password'
-                name='password'
-                defaultValue=''
-                control={control}
-                render={({ field }) => (
-                  <Input {...field} type='password' placeholder='Password' invalid={errors.password && true} />
-                )}
-              />
-              {errors.password && <FormFeedback>{errors.password.message}</FormFeedback>}
-            </div>
-            <div className='mb-1'>
-              <Label className='form-label' for='password'>
-                تعیین نقش کاربر
-              </Label>
-             {/* <Controller
-                id='password'
-                name='password'
-                defaultValue=''
-                control={control}
-                render={({ field }) => (
-                  <Input {...field} type='password' placeholder='Password' invalid={errors.password && true} />
-                )}
-              />
-              {errors.password && <FormFeedback>{errors.password.message}</FormFeedback>} */}
-              <div className='mt-1'>
-                <div className='form-check form-check-inline'>
-                  <Input type='checkbox' defaultChecked id='student' />
-                  <Label for='student' className='form-check-label'>
-                    دانشجو
-                  </Label>
-                </div>
-                <div className='form-check form-check-inline'>
-                  <Input type='checkbox' id='teacher' />
-                  <Label for='teacher' className='form-check-label'>
-                    استاد
-                  </Label>
-                </div>
+          <Formik
+            initialvalues={{firstName:'', lastName:'', email:'', number:'', password:'',student:true, teacher:true}}
+            onSubmit={handleSubmit}
+            // validatinonSchema={validation}
+          >
+            <Form>
+              {/* <div className='mb-1'>
+                <Label className='form-label' for='firstName'>
+                  نام
+                </Label>
+                <Field
+                  type='text'
+                  id='firstName'
+                  name='firstName'
+                  placeholder='نام'
+                  class="form-control form-control-md"
+                  onChange={(e)=>e.target.value}
+                />
+                <ErrorMessage name='firstName' component={'p'} class="text-danger"/>
+              </div> */}
+              {/* <div className='mb-1'>
+                <Label className='form-label' for='lastName'>
+                  نام خانوادگی
+                </Label>
+                <Field
+                  type='text'
+                  id='lastName'
+                  name='lastName'
+                  placeholder='نام خانوادگی'
+                  class="form-control form-control-md"
+                />
+                <ErrorMessage name='lastName' component={'p'} class="text-danger"/>
+              </div> */}
+              {/* <div className='mb-1'>
+                <Label className='form-label' for='email'>
+                  ایمیل
+                </Label>
+                <Field
+                  type='email'
+                  id='email'
+                  name='email'
+                  placeholder='bruce.wayne@email.com '
+                  class="form-control form-control-md"
+                />
+                <ErrorMessage name='email' component={'p'} class="text-danger"/>
+              </div> */}
+              <div className='mb-1'>
+                <Label className='form-label' for='number'>
+                  شماره موبایل
+                </Label>
+                <Field
+                  type='number'
+                  id='number'
+                  name='number'
+                  placeholder='09111111111'
+                  class="form-control form-control-md"
+                />
+                {/* <ErrorMessage name='number' component={'p'} class="text-danger"/> */}
               </div>
-            </div>
-            <div className='d-flex mt-1'>
-              <Button className='me-1' color='primary' type='submit'>
-                ثبت
-              </Button>
-              <Button outline color='secondary' type='reset' onClick={handleReset}>
-                انصراف
-              </Button>
-            </div>
-          </Form>
+              {/* <div className='mb-1'>
+                <Label className='form-label' for='password'>
+                  رمز عبور
+                </Label>
+                <Field
+                  type='password'
+                  id='password'
+                  name='password'
+                  placeholder='Password'
+                  class="form-control form-control-md"
+                />
+                <ErrorMessage name='password' component={'p'} class="text-danger"/>
+              </div> */}
+              {/* <div className='mb-1'>
+                <Label className='form-label' for='password'>
+                  تعیین نقش کاربر
+                </Label>
+                <div className='mt-1'>
+                  <div className='form-check form-check-inline'>
+                    <Field type='checkbox' name='student'  id='student' className='form-check-input'/>
+                    <Label for='student' className='form-check-label'>
+                      دانشجو
+                    </Label>
+                  </div>
+                  <div className='form-check form-check-inline'>
+                    <Field type='checkbox' name='teacher' id='teacher' className='form-check-input'/>
+                    <Label for='teacher' className='form-check-label'>
+                      استاد
+                    </Label>
+                  </div>
+                </div>
+              </div> */}
+              <div className='d-flex mt-1'>
+                <Button className='me-1' color='primary' type='submit'>
+                  ثبت
+                </Button>
+                <Button outline color='secondary' type='reset' onClick={handleReset}>
+                  انصراف
+                </Button>
+              </div>
+            </Form>
+          </Formik>
+          
         </ModalBody>
       </Modal>
     </Fragment>

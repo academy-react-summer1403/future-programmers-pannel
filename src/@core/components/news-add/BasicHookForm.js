@@ -6,6 +6,7 @@ import { Card, CardHeader, CardTitle, CardBody, Button, Label, Input, Form, Row,
 import { useState, useEffect } from 'react'
 import getNewsCategory from '../../../core/services/api/getNewsCategory'
 import {postAddNews} from '../../../core/services/api/getNewsCategory'
+import toast from 'react-hot-toast'
 
 
 const BasicHookForm = () => {
@@ -45,7 +46,7 @@ useEffect(()=>{
     formData.append('NewsCatregoryId', addNews.NewsCatregoryId)
     formData.append('Image', addNews.Image)
     const result = await postAddNews(formData)
-    // console.log(result)
+    toast.success(result.message)
   }
 
 

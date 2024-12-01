@@ -392,11 +392,8 @@ console.log(users)
     // minWidth: '200px',
     maxWidth: '200px',
     sortField: 'fullName',
-    // selector: row => row.name,
     cell: row => (
       <div className='d-flex justify-content-left align-items-center'>
-        {/* {renderClient(row)} */}
-        
         {row.pictureAddress !== null && row.pictureAddress !== 'Not-set' ? <Avatar img={row.pictureAddress } className='me-1'/>: <Avatar img={pic} className='me-1'/>}
         <div className='d-flex flex-column'>
           <Link
@@ -447,44 +444,25 @@ console.log(users)
           </DropdownToggle>
           <DropdownMenu>
             <DropdownItem
-              // tag={Link}
               className='w-100'
-              // to={`/apps/user/view/${row.id}`}
-              // onClick={() => store.dispatch(getUser(row.id))}
             >
               <FileText size={14} className='me-50' />
               <Link to={'/userDetail/'+row.id} >
                 <span className='align-middle'>جزئیات</span>
               </Link>
             </DropdownItem>
-            <DropdownItem
-              // tag='a' 
-              href='/' 
+            <DropdownItem 
               // className='w-100' onClick={e => e.preventDefault()}
             >
               <XCircle  size={14} className='me-50' />
               <span className='align-middle'>حذف</span>
             </DropdownItem>
             <DropdownItem
-              // tag='a' 
-              href='/' 
               // className='w-100' onClick={e => e.preventDefault()}
             >
               <MinusCircle size={14} className='me-50' />
               <span className='align-middle'>غیرفال کردن</span>
             </DropdownItem>
-            {/* <DropdownItem
-              tag='a'
-              href='/'
-              className='w-100'
-              onClick={e => {
-                e.preventDefault()
-                store.dispatch(deleteUser(row.id))
-              }}
-            >
-              <Trash2 size={14} className='me-50' />
-              <span className='align-middle'>Delete</span>
-            </DropdownItem> */}
           </DropdownMenu>
         </UncontrolledDropdown>
       </div>

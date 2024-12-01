@@ -367,7 +367,7 @@ const NewsTable = ({news, setSearch, setActivation, activation, currentPage, set
   },
   {
     name: 'دسته بندی خبر',
-    minWidth: '138px',
+    maxWidth: '170px',
     sortable: true,
     sortField: 'currentPlan',
     selector: row => row.newsCatregoryName,
@@ -383,7 +383,7 @@ const NewsTable = ({news, setSearch, setActivation, activation, currentPage, set
   },
   {
     name: 'وضعیت',
-    minWidth: '100px',
+    maxWidth: '100px',
     sortable: true,
     sortField: 'status',
     selector: row => row.isActive,
@@ -395,7 +395,7 @@ const NewsTable = ({news, setSearch, setActivation, activation, currentPage, set
   },
   {
     name: 'Actions',
-    minWidth: '100px',
+    maxWidth: '170px',
     cell: row => (
       <div className='column-action'>
         <UncontrolledDropdown>

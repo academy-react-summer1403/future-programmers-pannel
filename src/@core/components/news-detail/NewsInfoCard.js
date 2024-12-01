@@ -1,42 +1,22 @@
 // ** React Imports
 import { useState, Fragment } from 'react'
 import pic from '../../../assets/images/portrait/small/news.png'
+import { Formik, Form, Field, ErrorMessage } from 'formik'
+import * as yup from 'yup';
+import toast from 'react-hot-toast'
 
 // ** Reactstrap Imports
-import { Row, Col, Card, Form, CardBody, Button, Badge, Modal, Input, Label, ModalBody, ModalHeader } from 'reactstrap'
+import { Row, Col, Card, CardBody, Button, Badge, Modal, Label, ModalBody, ModalHeader } from 'reactstrap'
 
 // ** Third Party Components
-import Swal from 'sweetalert2'
-import Select from 'react-select'
 import { MessageCircle,Eye } from 'react-feather'
-import { useForm, Controller } from 'react-hook-form'
-import withReactContent from 'sweetalert2-react-content'
 
 // ** Custom Components
 import Avatar from '@components/avatar'
 
-// ** Utils
-import { selectThemeColors } from '@utils'
-
 // ** Styles
 import '@styles/react/libs/react-select/_react-select.scss'
-
-
-const levelOptions = [
-  { value: 'active', label: 'ساده' },
-  { value: 'inactive', label: 'متوسط' },
-  { value: 'suspended', label: 'پیشرفته' }
-]
-const typeOptions = [
-  { value: 'online', label: 'اخبار پژوهشگاه' },
-  { value: 'offline', label: 'اخبار تکنولوژی' }
-]
-const classOptions = [
-  { value: 'class1', label: 'classRoom1' },
-  { value: 'class2', label: 'classRoom2' }
-]
-
-const MySwal = withReactContent(Swal)
+import { UpdateNews } from '../../../core/services/api/putNews';
 
 const NewsInfoCard = ({ selectedUser, cardDetail }) => {
   // ** State
@@ -44,112 +24,42 @@ const NewsInfoCard = ({ selectedUser, cardDetail }) => {
 
   const insert = cardDetail?.insertDate?.toString()
   const update = cardDetail?.updateDate?.toString()
-  // ** Hook
-  const {
-    reset,
-    control,
-    setError,
-    handleSubmit,
-    formState: { errors }
-  } = useForm({
-    defaultValues: {
-      // username: selectedUser.username,
-      // lastName: selectedUser.fullName.split(' ')[1],
-      // firstName: selectedUser.fullName.split(' ')[0]
-    }
-  })
+  console.log(cardDetail)
 
-  // ** render user img
-  // const renderUserImg = () => {
-  //   if (data !== null && data.avatar.length) {
-  //     return (
-  //       <img
-  //         height='110'
-  //         width='110'
-  //         alt='user-avatar'
-  //         src={data.avatar}
-  //         className='img-fluid rounded mt-3 mb-2'
-  //       />
-  //     )
-  //   } else {
-  //     return (
-  //       <Avatar
-  //         initials
-  //         color={data.avatarColor || 'light-primary'}
-  //         className='rounded mt-3 mb-2'
-  //         content={data.fullName}
-  //         contentStyles={{
-  //           borderRadius: 0,
-  //           fontSize: 'calc(48px)',
-  //           width: '100%',
-  //           height: '100%'
-  //         }}
-  //         style={{
-  //           height: '110px',
-  //           width: '110px'
-  //         }}
-  //       />
-  //     )
-  //   }
-  // }
-
-  const onSubmit = data => {
-    if (Object.values(data).every(field => field.length > 0)) {
-      setShow(false)
-    } else {
-      for (const key in data) {
-        if (data[key].length === 0) {
-          setError(key, {
-            type: 'manual'
-          })
-        }
-      }
-    }
+  const initialValues={
+    Id:cardDetail.id,
+    // SlideNumber:cardDetail,
+    CurrentImageAddress:cardDetail.currentImageAddress,
+    CurrentImageAddressTumb:cardDetail.currentImageAddressTumb,
+    Active:cardDetail.active,
+    Title:cardDetail.title,
+    GoogleTitle:cardDetail.googleTitle,
+    GoogleDescribe:cardDetail.googleDescribe,
+    MiniDescribe:cardDetail.miniDescribe,
+    Describe:cardDetail.describe,
+    Keyword:cardDetail.keyword,
+    IsSlider:cardDetail.isSlider,
+    NewsCatregoryId:cardDetail.newsCatregoryId,
+    // Image:cardDetail
   }
 
-  // const handleReset = () => {
-  //   reset({
-  //     username: selectedUser.username,
-  //     lastName: selectedUser.fullName.split(' ')[1],
-  //     firstName: selectedUser.fullName.split(' ')[0]
-  //   })
-  // }
-
-  // const handleSuspendedClick = () => {
-  //   return MySwal.fire({
-  //     title: 'Are you sure?',
-  //     text: "You won't be able to revert user!",
-  //     icon: 'warning',
-  //     showCancelButton: true,
-  //     confirmButtonText: 'Yes, Suspend user!',
-  //     customClass: {
-  //       confirmButton: 'btn btn-primary',
-  //       cancelButton: 'btn btn-outline-danger ms-1'
-  //     },
-  //     buttonsStyling: false
-  //   }).then(function (result) {
-  //     if (result.value) {
-  //       MySwal.fire({
-  //         icon: 'success',
-  //         title: 'Suspended!',
-  //         text: 'User has been suspended.',
-  //         customClass: {
-  //           confirmButton: 'btn btn-success'
-  //         }
-  //       })
-  //     } else if (result.dismiss === MySwal.DismissReason.cancel) {
-  //       MySwal.fire({
-  //         title: 'Cancelled',
-  //         text: 'Cancelled Suspension :)',
-  //         icon: 'error',
-  //         customClass: {
-  //           confirmButton: 'btn btn-success'
-  //         }
-  //       })
-  //     }
-  //   })
-  // }
-  const data = {fullName:'Tailwind css',subject:"asqwerty",capacity:'23', username :'09111111111',avatarColor:null, email:'sdsdsdsdsdsd', statuse : 'فعال', complete:'90%', gender:"مرد", identification:'99887766', phone:'0922222222',contact:'2323454567', role:'ادمین', desc:'سلام خوبی من یک کار اکوز برنامه نویسی هستم تو چه کاره ای'};
+  const handleSubmit = async ()=>{
+    const formData = new FormData();
+    formData.append("Id",Id)
+    formData.append("CurrentImageAddress",CurrentImageAddress)
+    formData.append("CurrentImageAddressTumb",CurrentImageAddressTumb)
+    formData.append("Active",Active)
+    formData.append("Title",Title)
+    formData.append("GoogleTitle",GoogleTitle)
+    formData.append("GoogleDescribe",GoogleDescribe)
+    formData.append("MiniDescribe",MiniDescribe)
+    formData.append("Describe",Describe)
+    formData.append("Keyword",Keyword)
+    formData.append("IsSlider",IsSlider)
+    formData.append("NewsCatregoryId",NewsCatregoryId)
+    const result = await UpdateNews(formData);
+    toast.success(result.message)
+  }
 
   return (
     <Fragment>
@@ -161,20 +71,17 @@ const NewsInfoCard = ({ selectedUser, cardDetail }) => {
                 height='110'
                 width='110'
                 alt='user-avatar'
-                src={pic}
+                src={cardDetail?.currentImageAddress??pic}
                 className='img-fluid rounded mt-3 mb-2'
               />
               <div className='d-flex flex-column align-items-center text-center'>
                 <div className='user-info'>
-                  <h4>{cardDetail !== null ? cardDetail.fullName : 'Eleanor Aguilar'}</h4>
+                  <h4>{cardDetail !== null ? cardDetail?.fullName : 'Eleanor Aguilar'}</h4>
                   {selectedUser !== null ? (
-                    <Badge className='text-capitalize' color={cardDetail.active === 'true' ? "light-success" : "light-danger"} pill>
-                      {cardDetail.active === 'true' ? "فعال" : "غیرفعال"}
+                    <Badge className='text-capitalize' color={cardDetail.active === true ? "light-success" : "light-danger"} pill>
+                      {cardDetail?.active === true ? "فعال" : "غیرفعال"}
                     </Badge>
                   ) : null}
-                  {/* <Badge color={roleColors[data.role]} className='text-capitalize'>
-                      {data.role}
-                    </Badge> */}
                 </div>
               </div>
             </div>
@@ -185,7 +92,7 @@ const NewsInfoCard = ({ selectedUser, cardDetail }) => {
                 <Eye className='font-medium-2' />
               </Badge>
               <div className='ms-75'>
-                <h4 className='mb-0'>{cardDetail.currentView}</h4>
+                <h4 className='mb-0'>{cardDetail?.currentView}</h4>
                 <small> بازدیدها </small>
               </div>
             </div>
@@ -194,7 +101,7 @@ const NewsInfoCard = ({ selectedUser, cardDetail }) => {
                 <MessageCircle className='font-medium-2' />
               </Badge>
               <div className='ms-75'>
-                <h4 className='mb-0'>{cardDetail.commentsCount}</h4>
+                <h4 className='mb-0'>{cardDetail?.commentsCount}</h4>
                 <small> کامنت ها</small>
               </div>
             </div>
@@ -205,19 +112,19 @@ const NewsInfoCard = ({ selectedUser, cardDetail }) => {
               <ul className='list-unstyled'>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'>نام نویسنده:</span>
-                  <span>{cardDetail.addUserFullName}</span>
+                  <span>{cardDetail?.addUserFullName}</span>
                 </li>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'> دسته بندی:</span>
-                  <span>{cardDetail.newsCatregoryName}</span>
+                  <span>{cardDetail?.newsCatregoryName}</span>
                 </li>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'>عنوان کوتاه :</span>
-                  <span>{cardDetail.miniDescribe}</span>
+                  <span>{cardDetail?.miniDescribe}</span>
                 </li>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'>عنوان گوگل: </span>
-                  <span>{cardDetail.googleTitle}</span>
+                  <span>{cardDetail?.googleTitle}</span>
                 </li>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'>تاریخ ایجاد:</span>
@@ -228,8 +135,8 @@ const NewsInfoCard = ({ selectedUser, cardDetail }) => {
                   <span>{update?.slice(0,4)+"/"+update?.slice(5,7)+"/"+update?.slice(8,10)}</span>
                 </li>
                 <li className='mb-75'>
-                  <span className='fw-bolder me-25'>  توضیحات دوره :</span>
-                  <span>{" " + cardDetail.describe}</span>
+                  <span className='fw-bolder me-25'>  توضیحات خبر :</span>
+                  <span>{" " + cardDetail?.describe}</span>
                 </li>
               </ul>
             ) : null}
@@ -250,127 +157,156 @@ const NewsInfoCard = ({ selectedUser, cardDetail }) => {
           <div className='text-center mb-2'>
             <h1 className='mb-1'>ویرایش اطلاعات اخبار و مقالات</h1>
           </div>
-          <Form onSubmit={handleSubmit(onSubmit)}>
-            <Row className='gy-1 pt-75'>
-              <Col md={5} xs={12}>
-                <Label className='form-label' for='subject'>
+          <Formik
+          initialValues={initialValues}
+          onSubmit={handleSubmit}
+          >
+            <Form>
+              <Row className='gy-1 pt-75'>
+              <Col md={6} xs={12}>
+                <Label className='form-label' for='Id'>
+                  آیدی خبر 
+                </Label>
+                <Field 
+                  class="form-control form-control-md" 
+                  id='Id' 
+                  name='Id' 
+                />
+                <ErrorMessage name='Id' component={'p'} class="text-danger"/>
+              </Col>
+              <Col md={6} xs={12}>
+                <Label className='form-label' for='Title'>
                   عنوان 
                 </Label>
-                <Controller
-                  defaultValue=''
-                  control={control}
-                  id='subject'
-                  name='subject'
-                  render={({ field }) => (
-                    <Input {...field} id='subject' placeholder='John' invalid={errors.subject && true} />
-                  )}
+                <Field 
+                  class="form-control form-control-md" 
+                  id='Title' 
+                  name='Title' 
                 />
-              </Col>
-              <Col md={7} xs={12}>
-                <Label className='form-label' for='capacity'>
-                  عنوان گوگل
-                </Label>
-                <Controller
-                  defaultValue=''
-                  control={control}
-                  id='capacity'
-                  name='capacity'
-                  render={({ field }) => (
-                    <Input {...field} id='capacity' placeholder='Doe' invalid={errors.capacity && true} />
-                  )}
-                />
+                <ErrorMessage name='Title' component={'p'} class="text-danger"/>
               </Col>
               <Col md={6} xs={12}>
-                <Label className='form-label' for='capacity'>
-                  کلمات کلیدی
+                <Label className='form-label' for='GoogleDescribe'>
+                  عنوان گوگل 
                 </Label>
-                <Controller
-                  defaultValue=''
-                  control={control}
-                  id='capacity'
-                  name='capacity'
-                  render={({ field }) => (
-                    <Input {...field} id='capacity' placeholder='Doe' invalid={errors.capacity && true} />
-                  )}
+                <Field 
+                  class="form-control form-control-md" 
+                  id='GoogleDescribe' 
+                  name='GoogleDescribe' 
                 />
+                <ErrorMessage name='GoogleDescribe' component={'p'} class="text-danger"/>
               </Col>
               <Col md={6} xs={12}>
-                <Label className='form-label' for='type'>
-                  انتخاب دسته بندی
+                <Label className='form-label' for='Keyword'>
+                  کلمات کلیدی 
                 </Label>
-                <Select
-                  id='type'
-                  isClearable={false}
-                  className='react-select'
-                  classNamePrefix='select'
-                  options={typeOptions}
-                  theme={selectThemeColors}
-                  defaultValue={typeOptions[typeOptions.findIndex(i => i.value === data.type)]}
+                <Field 
+                  class="form-control form-control-md" 
+                  id='Keyword' 
+                  name='Keyword' 
+                  placeholder='111'
                 />
+                <ErrorMessage name='Keyword' component={'p'} class="text-danger"/>
+              </Col>
+              
+              <Col md={4} xs={12}>
+                <Label className='form-label' for='NewsCatregoryId'>
+                آیدی دسته بندی
+                </Label>
+                <Field 
+                  class="form-control form-control-md" 
+                  id='NewsCatregoryId' 
+                  name='NewsCatregoryId' 
+                />
+                <ErrorMessage name='NewsCatregoryId' component={'p'} class="text-danger"/>
+              </Col>
+              <Col md={4} xs={12}>
+                <Label className='form-label' for='Active'>
+                  وضعیت
+                </Label>
+                <Field 
+                  class="form-control form-control-md" 
+                  id='Active' 
+                  name='Active' 
+                />
+                <ErrorMessage name='Active' component={'p'} class="text-danger"/>
+              </Col>
+              <Col md={4} xs={12}>
+                <Label className='form-label' for='IsSlider'>
+                IsSlider
+                </Label>
+                <Field 
+                  class="form-control form-control-md" 
+                  id='IsSlider' 
+                  name='IsSlider' 
+                />
+                <ErrorMessage name='IsSlider' component={'p'} class="text-danger"/>
               </Col>
               <Col md={6} xs={12}>
-                <Label className='form-label' for='shortDesc'>
-                  توضیح کوتاه
+                <Label className='form-label' for='MiniDescribe'>
+                توضیح کوتاه
                 </Label>
-                <Controller
-                  defaultValue=''
-                  control={control}
-                  id='shortDesc'
-                  name='shortDesc'
-                  render={({ field }) => (
-                    <Input {...field} id='shortDesc' placeholder='john.doe.007' invalid={errors.shortDesc && true} />
-                  )}
+                <Field 
+                  class="form-control form-control-md" 
+                  id='MiniDescribe' 
+                  name='MiniDescribe' 
                 />
+                <ErrorMessage name='MiniDescribe' component={'p'} class="text-danger"/>
               </Col>
               <Col md={6} xs={12}>
-                <Label className='form-label' for='shortDesc'>
-                  توضیحات 
+                <Label className='form-label' for='GoogleDescribe'>
+                توضیحات گوگل
                 </Label>
-                <Controller
-                  defaultValue=''
-                  control={control}
-                  id='shortDesc'
-                  name='shortDesc'
-                  render={({ field }) => (
-                    <Input {...field} id='shortDesc' placeholder='john.doe.007' invalid={errors.shortDesc && true} />
-                  )}
+                <Field 
+                  class="form-control form-control-md" 
+                  id='GoogleDescribe' 
+                  name='GoogleDescribe' 
                 />
+                <ErrorMessage name='GoogleDescribe' component={'p'} class="text-danger"/>
               </Col>
-              <Col md={7} xs={12}>
-                <Label className='form-label' for='teacher'>
-                  توضیحات گوگل
+              <Col md={12} xs={12}>
+                <Label className='form-label' for='Describe'>
+                توضیحات 
                 </Label>
-                <Controller
-                  defaultValue=''
-                  control={control}
-                  id='teacher'
-                  name='teacher'
-                  render={({ field }) => (
-                    <Input {...field} id='teacher' placeholder='john.doe.007' invalid={errors.teacher && true} />
-                  )}
+                <Field 
+                  class="form-control form-control-md" 
+                  id='Describe' 
+                  name='Describe' 
                 />
+                <ErrorMessage name='Describe' component={'p'} class="text-danger"/>
               </Col>
-              <Col md={5} xs={12}>
-                <Label className='form-label' for='exampleMultipleFileBrowser'>
-                  آپلود عکس 
+              
+              <Col md={4} xs={12}>
+                <Label className='form-label' for='CurrentImageAddress'>
+                آپلود عکس 
                 </Label>
-                <Controller
-                  defaultValue=''
-                  control={control}
-                  id='number'
-                  name='number'
-                  render={({ field }) => (
-                    <Input {...field} type='file' id='exampleMultipleFileBrowser' name='MultipleFiles' invalid={errors.number && true} multiple />
-                  )}
+                <Field 
+                  class="form-control form-control-md" 
+                  id='CurrentImageAddress' 
+                  name='CurrentImageAddress' 
                 />
+                <ErrorMessage name='CurrentImageAddress' component={'p'} class="text-danger"/>
               </Col>
-              <Col xs={12} className='text-center mt-2 pt-50'>
-                <Button type='submit' className='me-1' color='primary'>
-                  ثبت
-                </Button>
+              <Col md={4} xs={12}>
+                <Label className='form-label' for='CurrentImageAddressTumb'>
+                2آپلود عکس 
+                </Label>
+                <Field 
+                  class="form-control form-control-md" 
+                  id='CurrentImageAddressTumb' 
+                  name='CurrentImageAddressTumb' 
+                />
+                <ErrorMessage name='CurrentImageAddressTumb' component={'p'} class="text-danger"/>
               </Col>
-            </Row>
-          </Form>
+              
+                <Col xs={12} className='text-center mt-2 pt-50'>
+                  <Button type='submit' className='me-1' color='primary'>
+                    ثبت
+                  </Button>
+                </Col>
+              </Row>
+            </Form>
+          </Formik>
         </ModalBody>
       </Modal>
     </Fragment>
@@ -379,4 +315,4 @@ const NewsInfoCard = ({ selectedUser, cardDetail }) => {
 
 export default NewsInfoCard
 
-// selectedUser
+

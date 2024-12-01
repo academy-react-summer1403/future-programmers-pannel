@@ -261,7 +261,7 @@ const UserInfoCard = ({ selectedUser, detail }) => {
             <h1 className='mb-1'>ویرایش اطلاعات کاربر</h1>
           </div>
           <Formik 
-            initialValues={{id:detail.id, fName:detail.fName ,lName:detail.lName ,userName:detail.userName ,gmail:detail.gmail, nationalCode:detail.nationalCode, phoneNumber:detail.phoneNumber, birthDay:detail.birthDay, currentPictureAddress:detail.currentPictureAddress, homeAdderess:detail.homeAdderess, recoveryEmail:detail.recoveryEmail, userAbout:detail.userAbout, linkdinProfile:detail.linkdinProfile, telegramLink:detail.telegramLink, longitude:detail.longitude, latitude:detail.latitude, insertDate:detail.insertDate ,birthDay:detail.birthDay}} 
+            initialValues={{id:detail.id, fName:detail.fName ,lName:detail.lName ,userName:detail.userName ,gmail:detail.gmail, nationalCode:detail.nationalCode, phoneNumber:detail.phoneNumber, birthDay:detail.birthDay, currentPictureAddress:detail.currentPictureAddress, homeAdderess:detail.homeAdderess, recoveryEmail:detail.recoveryEmail, userAbout:detail.userAbout, linkdinProfile:detail.linkdinProfile, telegramLink:detail.telegramLink, longitude:detail.longitude, latitude:detail.latitude, insertDate:detail.insertDate ,birthDay:detail.birthDay, active:detail.active, gender:detail.gender, isDelete:detail.isDelete, isTecher:detail.isTecher, isStudent:detail.isStudent, twoStepAuth:detail.twoStepAuth, receiveMessageEvent:detail.receiveMessageEvent }} 
             onSubmit={handleSubmit}
             // validationSchema={validation}
           >
@@ -473,18 +473,90 @@ const UserInfoCard = ({ selectedUser, detail }) => {
                   />
                   <ErrorMessage name='insertDate' component={'p'} class="text-danger"/>
                 </Col> 
-                <Col md={6} xs={12}>
-                  <Label className='form-label' for='birthDay'>
-                    تاریخ تولد
+                <Col md={3} xs={12}>
+                  <Label className='form-label' for='activ'>
+                    وضعیت
                   </Label>
                   <Field 
-                    type='date'
-                    class="form-control form-control-md" 
-                    id='birthDay' 
-                    name='birthDay' 
+                    as='select'
+                    class="form-select form-select-md" 
+                    id='active' 
+                    name='active' 
                   />
-                  <ErrorMessage name='birthDay' component={'p'} class="text-danger"/>
-                </Col>   
+                  <ErrorMessage name='active' component={'p'} class="text-danger"/>
+                </Col> 
+                <Col md={3} xs={12}>
+                  <Label className='form-label' for='gender'>
+                  جنسیت
+                  </Label>
+                  <Field 
+                    as='select'
+                    class="form-select form-select-md" 
+                    id='gender' 
+                    name='gender' 
+                  />
+                  <ErrorMessage name='gender' component={'p'} class="text-danger"/>
+                </Col> 
+                <Col md={3} xs={12}>
+                  <Label className='form-label' for='isDelete'>
+                  isDelete
+                  </Label>
+                  <Field 
+                    as='select'
+                    class="form-select form-select-md" 
+                    id='isDelete' 
+                    name='isDelete' 
+                  />
+                  <ErrorMessage name='isDelete' component={'p'} class="text-danger"/>
+                </Col> 
+                <Col md={3} xs={12}>
+                  <Label className='form-label' for='isTecher'>
+                  isTecher
+                  </Label>
+                  <Field 
+                    as='select'
+                    class="form-select form-select-md" 
+                    id='isTecher' 
+                    name='isTecher' 
+                  />
+                  <ErrorMessage name='isTecher' component={'p'} class="text-danger"/>
+                </Col> 
+                <Col md={3} xs={12}>
+                  <Label className='form-label' for='isStudent'>
+                  isStudent
+                  </Label>
+                  <Field 
+                    as='select'
+                    class="form-select form-select-md" 
+                    id='isStudent' 
+                    name='isStudent' 
+                  />
+                  <ErrorMessage name='isStudent' component={'p'} class="text-danger"/>
+                </Col> 
+                <Col md={3} xs={12}>
+                  <Label className='form-label' for='twoStepAuth'>
+                  اعتبارسنجی دومرحله ای
+                  </Label>
+                  <Field 
+                    as='select'
+                    class="form-select form-select-md" 
+                    id='twoStepAuth' 
+                    name='twoStepAuth' 
+                  />
+                  <ErrorMessage name='twoStepAuth' component={'p'} class="text-danger"/>
+                </Col> 
+                <Col md={3} xs={12}>
+                  <Label className='form-label' for='receiveMessageEvent'>
+                  دریافت پیامک
+                  </Label>
+                  <Field 
+                    as='select'
+                    class="form-select form-select-md" 
+                    id='receiveMessageEvent' 
+                    name='receiveMessageEvent' 
+                  />
+                  <ErrorMessage name='receiveMessageEvent' component={'p'} class="text-danger"/>
+                </Col> 
                 <Col xs={12} className='text-center mt-2 pt-50'>
                   <Button type='submit' className='me-1' color='primary'>
                     ثبت
@@ -506,17 +578,12 @@ const UserInfoCard = ({ selectedUser, detail }) => {
 export default UserInfoCard
 
 // فرستاده شود
-  // "active": "<boolean>",
-  // "isDelete": "<boolean>",
-  // "isTecher": "<boolean>",
   // "isStudent": "<boolean>",
   // "twoStepAuth": "<boolean>",
   // "receiveMessageEvent": "<boolean>",
-  // "gender": "<boolean>",
 
 // گرفته شده
-// active:,
-// gender:,
+
 // isDelete:,
 // isStudent:,
 // isTecher:,

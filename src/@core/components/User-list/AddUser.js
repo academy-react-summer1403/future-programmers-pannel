@@ -1,12 +1,7 @@
 // ** Third Party Components
 import toast from 'react-hot-toast'
-import { yupResolver } from '@hookform/resolvers/yup'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as yup from 'yup';
-
-
-// ** Custom Components
-import Avatar from '@components/avatar'
 
 // ** React Imports
 import { Fragment, useState } from 'react'
@@ -14,7 +9,6 @@ import { Fragment, useState } from 'react'
 // ** Reactstrap Imports
 import {
   Modal,
-  Input,
   Label,
   Button,
   CardBody,
@@ -23,13 +17,7 @@ import {
   FormFeedback
 } from 'reactstrap'
 
-// ** Third Party Components
-import Select from 'react-select'
-import { User, Check, X } from 'react-feather'
-import { useForm, Controller } from 'react-hook-form'
 
-// ** Utils
-import { selectThemeColors } from '@utils'
 
 // ** Styles
 import '@styles/react/libs/react-select/_react-select.scss'
@@ -47,45 +35,6 @@ const AddUser = () => {
     password: yup.string().required()
   })
 
-  // ** Hooks
-  // const {
-  //   reset,
-  //   control,
-  //   // handleSubmit,
-  //   formState: { errors }
-  // } = useForm({ mode: 'onChange', resolver: yupResolver(SignupSchema) })
-
-  // const onSubmit = data => {
-  //   if (Object.values(data).every(field => field.length > 0)) {
-  //     toast(
-  //       <div className='d-flex'>
-  //         <div className='me-1'>
-  //           <Avatar size='sm' color='success' icon={<Check size={12} />} />
-  //         </div>
-  //         <div className='d-flex flex-column'>
-  //           <h6>Form Submitted!</h6>
-  //           <ul className='list-unstyled mb-0'>
-  //             <li>
-  //               <strong>firstName</strong>: {data.firstName}
-  //             </li>
-  //             <li>
-  //               <strong>lastName</strong>: {data.lastName}
-  //             </li>
-  //             <li>
-  //               <strong>email</strong>: {data.email}
-  //             </li>
-  //             <li>
-  //               <strong>phone number</strong>: {data.number}
-  //             </li>
-  //             <li>
-  //               <strong>password</strong>: {data.password}
-  //             </li>
-  //           </ul>
-  //         </div>
-  //       </div>
-  //     )
-  //   }
-  // }
 
   const handleReset = () => {
     reset({

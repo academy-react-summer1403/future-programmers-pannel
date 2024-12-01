@@ -1,5 +1,5 @@
 import http from '../interceptor'
-
+import toast from 'react-hot-toast'
 
 const getNewsCategory = async()=>{
     try {
@@ -25,7 +25,7 @@ export const postAddNews = async(form)=>{
         return result
         // console.log('qqq', result)
     } catch (error) {
-        console.log(error)
+        toast.error(error.response.data.ErrorMessage[0])
     }
 }
 

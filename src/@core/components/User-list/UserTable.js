@@ -1,6 +1,12 @@
 // ** React Imports
 import { Fragment, useState, useEffect } from 'react'
 import { Link } from "react-router-dom";
+import AvatarGroup from '@components/avatar-group'
+import RoleCards from '@components/avatar-group/RoleCards'
+import avatar1 from '../../../assets/images/portrait/small/administrator.jpg'
+import avatar2 from '../../../assets/images/portrait/small/teacher.jpg'
+import avatar3 from '../../../assets/images/portrait/small/student.jpg'
+import avatar4 from '../../../assets/images/portrait/small/usual.png'
 
 // ** Invoice List Sidebar
 // import Sidebar from './Sidebar'
@@ -22,7 +28,7 @@ import ProductsSearchbar from './ProductsSearchbar'
 import Select from 'react-select'
 import ReactPaginate from 'react-paginate'
 import DataTable from 'react-data-table-component'
-import { ChevronDown, Share, Printer, FileText, File, Grid, Copy, MoreVertical, Archive } from 'react-feather'
+import { ChevronDown, Trash, Share, Printer, MinusCircle, XCircle, FileText, File, Grid, Copy, MoreVertical, Archive } from 'react-feather'
 import AddUser from './AddUser'
 // ** Utils
 import { selectThemeColors } from '@utils'
@@ -177,6 +183,7 @@ const UserTable = ({users , setSearch, setRole, role, setActivation, activation,
   // ** Store Vars
   // const dispatch = useDispatch()
   // const store = useSelector(state => state.users)
+console.log(users)
 
   // ** States
   const [sort, setSort] = useState('desc')
@@ -289,6 +296,55 @@ const UserTable = ({users , setSearch, setRole, role, setActivation, activation,
     )
   }
 
+  const RoleGenerator = ({ Roles }) => {
+    var data = [
+      {
+        title: "Administrator",
+        users: [],
+      },
+    ];
+  
+    if (
+      Roles === null ||
+      Roles === "" ||
+      (typeof Roles === "string" &&
+        Roles.indexOf("Administrator") === -1 &&
+        Roles.indexOf("Student") === -1 &&
+        Roles.indexOf("Teacher") === -1)
+    ) {
+      data[0].users.push({
+        size: "md",
+        title: "کاربر ساده",
+        img: avatar4,
+      });
+    } else {
+      let Admin = Roles.indexOf("Administrator");
+      let Student = Roles.indexOf("Student");
+      let Teacher = Roles.indexOf("Teacher");
+  
+      Student != -1 &&
+        data[0].users.push({
+          size: "md",
+          title: "دانش آموز",
+          img: avatar3,
+        });
+      Teacher != -1 &&
+        data[0].users.push({
+          size: "md",
+          title: "استاد",
+          img: avatar2,
+        });
+      Admin != -1 &&
+        data[0].users.push({
+          size: "md",
+          title: "ادمین",
+          img: avatar1,
+        });
+    }
+  
+    return <RoleCards data={data} />;
+  };
+
   // ** Table data to render
   // const dataToRender = () => {
   //   const filters = {
@@ -347,7 +403,7 @@ const UserTable = ({users , setSearch, setRole, role, setActivation, activation,
             to={'/userDetail/'+row.id}
             className='user_name text-truncate text-body' 
           > 
-            <span className='fw-bolder'>{row.fname}</span>
+            <span className='fw-bolder'>{row.fname??'بدون نام'}</span>
           </Link> 
           <small className='text-truncate text-muted mb-0'>{row.lname}</small>
         </div>
@@ -357,26 +413,22 @@ const UserTable = ({users , setSearch, setRole, role, setActivation, activation,
   {
     name: 'نقش کاربر',
     sortable: true,
-    minWidth: '172px',
+    maxWidth: '160px',
     sortField: 'role',
-    selector: row => row.userRoles??'اطلاعات موجود نیست',
-    // cell: row => renderRole(row)
+    cell: row => <RoleGenerator  Roles={row.userRoles}/>
   },
   {
     name: 'ایمیل',
-    minWidth: '138px',
+    maxWidth: '300px',
     sortable: true,
     sortField: 'currentPlan',
     selector: row => row.gmail,
-    // cell: row => <span className='text-capitalize'>{row.teacher}</span>
   },
   {
     name: 'وضعیت',
-    minWidth: '100px',
-    maxWidth:'100px',
+    maxWidth:'150px',
     sortable: true,
     sortField: 'status',
-    // selector: row => row.active,
     cell: row => (
       <Badge className='text-capitalize' color={row.active === "True" ? "light-success" : "light-danger"} pill>
         {row.active === "True" ? "فعال" : "غیرفعال"}
@@ -401,15 +453,25 @@ const UserTable = ({users , setSearch, setRole, role, setActivation, activation,
               // onClick={() => store.dispatch(getUser(row.id))}
             >
               <FileText size={14} className='me-50' />
-              <span className='align-middle'>Details</span>
+              <Link to={'/userDetail/'+row.id} >
+                <span className='align-middle'>جزئیات</span>
+              </Link>
             </DropdownItem>
             <DropdownItem
               // tag='a' 
               href='/' 
               // className='w-100' onClick={e => e.preventDefault()}
             >
-              <Archive size={14} className='me-50' />
-              <span className='align-middle'>Edit</span>
+              <XCircle  size={14} className='me-50' />
+              <span className='align-middle'>حذف</span>
+            </DropdownItem>
+            <DropdownItem
+              // tag='a' 
+              href='/' 
+              // className='w-100' onClick={e => e.preventDefault()}
+            >
+              <MinusCircle size={14} className='me-50' />
+              <span className='align-middle'>غیرفال کردن</span>
             </DropdownItem>
             {/* <DropdownItem
               tag='a'

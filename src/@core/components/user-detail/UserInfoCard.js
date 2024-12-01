@@ -1,5 +1,6 @@
 // ** React Imports
 import { useState, Fragment } from 'react'
+import toast from 'react-hot-toast'
 import pic from '../../../assets/images/avatars/avatar-blank.png'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as yup from 'yup';
@@ -42,7 +43,7 @@ const MySwal = withReactContent(Swal)
 const UserInfoCard = ({ selectedUser, detail }) => {
   // ** State
   const [show, setShow] = useState(false)
-
+  console.log(detail.userName)
   // ** Hook
   const {
     reset,
@@ -106,20 +107,23 @@ const UserInfoCard = ({ selectedUser, detail }) => {
   // }
  
 
-  const validation = yup.object().shape({
-    fName:yup.string().required(),
-    lName:yup.string().required(),
-    userName:yup.string().required(),
-    gmail:yup.string().required(),
-    status:yup.string().required(),
-    nationalCode:yup.string().required(),
-    phoneNumber:yup.string().required(),
-  });
+  // const validation = yup.object().shape({
+  //   id:yup.string().required(),
+  //   fName:yup.string().required(),
+  //   lName:yup.string().required(),
+  //   username:yup.string().required(),
+  //   gmail:yup.string().required(),
+  //   status:yup.string().required(),
+  //   nationalCode:yup.string().required(),
+  //   phoneNumber:yup.string().required(),
+  // });
   const handleReset = () => {
     reset({fName:'',lName:'',userName:'',gmail:'',status:'',nationalCode:'',phoneNumber:'',birthDay:'',currentPictureAddress:''})
   }
   const handleSubmit = async(value)=>{
     const result = await completeUser(value)
+    console.log(result)
+    toast.success(result.message)
   }
   // const handleReset = () => {
   //   reset({
@@ -257,37 +261,48 @@ const UserInfoCard = ({ selectedUser, detail }) => {
             <h1 className='mb-1'>ویرایش اطلاعات کاربر</h1>
           </div>
           <Formik 
-            initialValues={{fName:'',lName:'',userName:'',gmail:'',nationalCode:'',phoneNumber:'',birthDay:'',currentPictureAddress:''}} 
+            initialValues={{id:detail.id, fName:detail.fName ,lName:detail.lName ,userName:detail.userName ,gmail:detail.gmail, nationalCode:detail.nationalCode, phoneNumber:detail.phoneNumber, birthDay:detail.birthDay, currentPictureAddress:detail.currentPictureAddress, homeAdderess:detail.homeAdderess, recoveryEmail:detail.recoveryEmail, userAbout:detail.userAbout, linkdinProfile:detail.linkdinProfile, telegramLink:detail.telegramLink, longitude:detail.longitude, latitude:detail.latitude, insertDate:detail.insertDate ,birthDay:detail.birthDay}} 
             onSubmit={handleSubmit}
-            validationSchema={validation}
+            // validationSchema={validation}
           >
             <Form>
               <Row className='gy-1 pt-75'>
-                <Col md={6} xs={12}>
-                  <Label className='form-label' for='fName'>
-                    نام
+                <Col md={2} xs={12}>
+                  <Label className='form-label' for='id'>
+                    آیدی 
                   </Label>
                   <Field 
                     class="form-control form-control-md" 
-                    id='fName' 
-                    name='fName' 
-                    placeholder='John'
+                    id='id' 
+                    name='id' 
+                    placeholder='111'
                   />
-                  <ErrorMessage name='firstName' component={'p'} class="text-danger"/>
+                  <ErrorMessage name='id' component={'p'} class="text-danger"/>
                 </Col>
-                <Col md={6} xs={12}>
+                <Col md={3} xs={12}>
+                    <Label className='form-label' for='fName'>
+                      نام
+                    </Label>
+                    <Field 
+                      class="form-control form-control-md" 
+                      id='fName' 
+                      name='fName' 
+                      placeholder='John'
+                    />
+                    <ErrorMessage name='fName' component={'p'} class="text-danger"/>
+                  </Col>
+                <Col md={3} xs={12}>
                   <Label className='form-label' for='lName'>
                     نام خانوادگی
                   </Label>
                   <Field 
                     class="form-control form-control-md" 
                     name='lName' 
-                    id='lName' 
-                    placeholder='Doe' 
+                    id='lName'  
                   />
-                  <ErrorMessage name='lastName' component={'p'} class="text-danger"/>
+                  <ErrorMessage name='lName' component={'p'} class="text-danger"/>
                 </Col>
-                <Col xs={12}>
+                <Col xs={4}>
                   <Label className='form-label' for='userName'>
                     نام کاربری
                   </Label>
@@ -295,7 +310,6 @@ const UserInfoCard = ({ selectedUser, detail }) => {
                     class="form-control form-control-md" 
                     name='username' 
                     id='username' 
-                    placeholder='john.doe.007'
                   />
                   <ErrorMessage name='username' component={'p'} class="text-danger"/>
                 </Col>
@@ -305,13 +319,13 @@ const UserInfoCard = ({ selectedUser, detail }) => {
                   </Label>
                   <Field
                     class="form-control form-control-md"
-                    type='gmail'
+                    type='email'
                     id='gmail'
                     name='gmail'
-                    placeholder='example@domain.com'
                   />
-                  <ErrorMessage name='email' component={'p'} class="text-danger"/>
+                  <ErrorMessage name='gmail' component={'p'} class="text-danger"/>
                 </Col>
+                
                 {/* <Col md={6} xs={12}>
                   <Label className='form-label' for='active'>
                     وضعیت:
@@ -323,6 +337,7 @@ const UserInfoCard = ({ selectedUser, detail }) => {
                   </datalist>
                   </Field>
                 </Col> */}
+                
                 <Col md={6} xs={12}>
                   <Label className='form-label' for='nationalCode'>
                     کد ملی
@@ -331,11 +346,10 @@ const UserInfoCard = ({ selectedUser, detail }) => {
                     class="form-control form-control-md" 
                     id='nationalCode' 
                     name='nationalCode' 
-                    placeholder='+1 609 933 4422' 
                   />
-                  <ErrorMessage name='id' component={'p'} class="text-danger"/>
+                  <ErrorMessage name='nationalCode' component={'p'} class="text-danger"/>
                 </Col> 
-                <Col md={6} xs={12}>
+                <Col md={3} xs={12}>
                   <Label className='form-label' for='phoneNumber'>
                     شماره موبایل
                   </Label>
@@ -343,34 +357,133 @@ const UserInfoCard = ({ selectedUser, detail }) => {
                     class="form-control form-control-md" 
                     id='phoneNumber' 
                     name='phoneNumber' 
-                    placeholder='0911 111 1111' 
                   />
-                  <ErrorMessage name='contact' component={'p'} class="text-danger"/>
-                </Col> 
-                <Col md={6} xs={12}>
+                  <ErrorMessage name='phoneNumber' component={'p'} class="text-danger"/>
+                </Col>
+                <Col md={5} xs={12}>
+                  <Label className='form-label' for='recoveryEmail'>
+                    ایمیل بازیابی
+                  </Label>
+                  <Field 
+                    class="form-control form-control-md" 
+                    id='recoveryEmail' 
+                    name='recoveryEmail' 
+                  />
+                  <ErrorMessage name='recoveryEmail' component={'p'} class="text-danger"/>
+                </Col>  
+                <Col md={4} xs={12}>
                   <Label className='form-label' for='birthDay'>
                     تاریخ تولد
                   </Label>
                   <Field 
-                  type='date'
+                    
                     class="form-control form-control-md" 
                     id='birthDay' 
-                    name='birthDay' 
-                    placeholder='0911 111 1111' 
+                    name='birthDay'  
                   />
-                  <ErrorMessage name='contact' component={'p'} class="text-danger"/>
+                  <ErrorMessage name='birthDay' component={'p'} class="text-danger"/>
                 </Col> 
                 <Col md={6} xs={12}>
                   <Label className='form-label' for='currentPictureAddress'>
                     عکس کاربر
                   </Label>
                   <Field 
-                    type='file'
+                    // type='file'
                     class="form-control form-control-md" 
                     id='currentPictureAddress' 
                     name='currentPictureAddress' 
                   />
-                  <ErrorMessage name='contact' component={'p'} class="text-danger"/>
+                  <ErrorMessage name='currentPictureAddress' component={'p'} class="text-danger"/>
+                </Col> 
+                <Col md={6} xs={12}>
+                  <Label className='form-label' for='homeAdderess'>
+                    آدرس منزل 
+                  </Label>
+                  <Field 
+                    class="form-control form-control-md" 
+                    id='homeAdderess' 
+                    name='homeAdderess' 
+                  />
+                  <ErrorMessage name='homeAdderess' component={'p'} class="text-danger"/>
+                </Col> 
+                <Col md={6} xs={12}>
+                  <Label className='form-label' for='userAbout'>
+                    درباره کاربر
+                  </Label>
+                  <Field 
+                    class="form-control form-control-md" 
+                    id='userAbout' 
+                    name='userAbout' 
+                  />
+                  <ErrorMessage name='userAbout' component={'p'} class="text-danger"/>
+                </Col> 
+                <Col md={6} xs={12}>
+                  <Label className='form-label' for='linkdinProfile'>
+                    پروفایل لینکدین
+                  </Label>
+                  <Field 
+                    class="form-control form-control-md" 
+                    id='linkdinProfile' 
+                    name='linkdinProfile' 
+                  />
+                  <ErrorMessage name='linkdinProfile' component={'p'} class="text-danger"/>
+                </Col> 
+                <Col md={6} xs={12}>
+                  <Label className='form-label' for='telegramLink'>
+                    لینک تلگرام
+                  </Label>
+                  <Field 
+                    class="form-control form-control-md" 
+                    id='telegramLink' 
+                    name='telegramLink' 
+                  />
+                  <ErrorMessage name='telegramLink' component={'p'} class="text-danger"/>
+                </Col> 
+                <Col md={6} xs={12}>
+                  <Label className='form-label' for='longitude'>
+                  longitude
+                  </Label>
+                  <Field 
+                    class="form-control form-control-md" 
+                    id='longitude' 
+                    name='longitude' 
+                  />
+                  <ErrorMessage name='longitude' component={'p'} class="text-danger"/>
+                </Col> 
+                <Col md={6} xs={12}>
+                  <Label className='form-label' for='latitude'>
+                  latitude
+                  </Label>
+                  <Field 
+                    class="form-control form-control-md" 
+                    id='latitude' 
+                    name='latitude' 
+                  />
+                  <ErrorMessage name='latitude' component={'p'} class="text-danger"/>
+                </Col> 
+                <Col md={6} xs={12}>
+                  <Label className='form-label' for='insertDate'>
+                    تاریخ ثبت
+                  </Label>
+                  <Field 
+                    type='date'
+                    class="form-control form-control-md" 
+                    id='insertDate' 
+                    name='insertDate' 
+                  />
+                  <ErrorMessage name='insertDate' component={'p'} class="text-danger"/>
+                </Col> 
+                <Col md={6} xs={12}>
+                  <Label className='form-label' for='birthDay'>
+                    تاریخ تولد
+                  </Label>
+                  <Field 
+                    type='date'
+                    class="form-control form-control-md" 
+                    id='birthDay' 
+                    name='birthDay' 
+                  />
+                  <ErrorMessage name='birthDay' component={'p'} class="text-danger"/>
                 </Col>   
                 <Col xs={12} className='text-center mt-2 pt-50'>
                   <Button type='submit' className='me-1' color='primary'>
@@ -380,7 +493,7 @@ const UserInfoCard = ({ selectedUser, detail }) => {
                     انصراف
                   </Button>
                 </Col>
-              </Row>
+              </Row> 
             </Form>
           </Formik>
           
@@ -391,3 +504,22 @@ const UserInfoCard = ({ selectedUser, detail }) => {
 }
 
 export default UserInfoCard
+
+// فرستاده شود
+  // "active": "<boolean>",
+  // "isDelete": "<boolean>",
+  // "isTecher": "<boolean>",
+  // "isStudent": "<boolean>",
+  // "twoStepAuth": "<boolean>",
+  // "receiveMessageEvent": "<boolean>",
+  // "gender": "<boolean>",
+
+// گرفته شده
+// active:,
+// gender:,
+// isDelete:,
+// isStudent:,
+// isTecher:,
+// profileCompletionPercentage:,
+// receiveMessageEvent:,
+// twoStepAuth:,

@@ -1,25 +1,25 @@
 // ** React Imports
-import { useState, Fragment } from 'react'
+import { useState, Fragment, useEffect } from 'react'
 import pic from '../../../assets/images/portrait/small/500.png'
+import { Formik, Form, Field, ErrorMessage } from 'formik'
+import * as yup from 'yup';
+import toast from 'react-hot-toast'
 
 // ** Reactstrap Imports
-import { Row, Col, Card, Form, CardBody, Button, Badge, Modal, Input, Label, ModalBody, ModalHeader } from 'reactstrap'
+import { Row, Col, Card, CardBody, Button, Badge, Modal, Input, Label, ModalBody, ModalHeader } from 'reactstrap'
 
 // ** Third Party Components
 import Swal from 'sweetalert2'
-import Select from 'react-select'
-import { Check, Briefcase, X, Book, Bookmark, MessageCircle, User, Users } from 'react-feather'
-import { useForm, Controller } from 'react-hook-form'
+import { MessageCircle, Users } from 'react-feather'
+import { useForm } from 'react-hook-form'
 import withReactContent from 'sweetalert2-react-content'
 
 // ** Custom Components
 import Avatar from '@components/avatar'
 
-// ** Utils
-import { selectThemeColors } from '@utils'
-
 // ** Styles
 import '@styles/react/libs/react-select/_react-select.scss'
+import { getCourseLevel, getTeacher } from '../../../core/services/api/putCourse';
 
 const levelOptions = [
   { value: 'active', label: 'ساده' },
@@ -27,8 +27,9 @@ const levelOptions = [
   { value: 'suspended', label: 'پیشرفته' }
 ]
 const typeOptions = [
-  { value: 'online', label: 'آنلاین' },
-  { value: 'offline', label: 'حضوری' }
+  { value: 1, label: 'آنلاین' },
+  { value: 2, label: 'حضوری' },
+  { value: 3, label: 'حضوری' }
 ]
 const classOptions = [
   { value: 'class1', label: 'classRoom1' },
@@ -40,15 +41,42 @@ const MySwal = withReactContent(Swal)
 const CourseInfoCard = ({ selectedUser, detail }) => {
   // ** State
   const [show, setShow] = useState(false)
+  const [level, setLevel] = useState([])
+  const [teacherId, setTeacherId] = useState([])
   // console.log(detail)
+  console.log(teacherId)
+
+  const getLevel = async()=>{
+    try {
+    const result = await getCourseLevel()
+    setLevel(result)
+    } catch (error) {
+    
+    }
+  }
+  const getTeacherList = async()=>{
+    try {
+    const result = await getTeacher()
+    setTeacherId(result)
+    } catch (error) {
+    
+    }
+  }
+
+getTeacher
+
+useEffect(()=>{
+  getLevel();
+  getTeacherList();
+},[]);
+
   const start= detail?.startTime?.toString()
   const end= detail?.endTime?.toString()
-  // ** Hook
+  console.log(detail)
+
+
   const {
-    reset,
-    control,
-    setError,
-    handleSubmit,
+
     formState: { errors }
   } = useForm({
     defaultValues: {
@@ -58,63 +86,46 @@ const CourseInfoCard = ({ selectedUser, detail }) => {
     }
   })
 
-  const onSubmit = data => {
-    if (Object.values(data).every(field => field.length > 0)) {
-      setShow(false)
-    } else {
-      for (const key in data) {
-        if (data[key].length === 0) {
-          setError(key, {
-            type: 'manual'
-          })
-        }
-      }
-    }
+  const initialValues={
+    Id:detail.courseId,
+    Title:detail.title,
+    Describe:detail.describe,
+    MiniDescribe:'ندارد',
+    Capacity:"ندارد",
+    CourseTypeId:detail.courseTypeName,
+    // SessionNumber:detail.,
+    // CurrentCoursePaymentNumber:detail.,
+    // TremId:detail.,
+    ClassId:detail.courseClassRoomName,
+    CourseLvlId:detail.courseLevelName,
+    TeacherId:detail.teacherId,
+    Cost:detail.cost,
+    // UniqeUrlString:detail,
+    // Image:detail,
+    StartTime:detail.startTime,
+    EndTime:detail.endTime,
+    // GoogleSchema:detail,
+    // GoogleTitle:detail.,
+    // CoursePrerequisiteId:detail.,
+    // ShortLink:detail.,
+    // TumbImageAddress:detail.,
+    ImageAddress:detail.imageAddress,
   }
-
-  // const handleReset = () => {
-  //   reset({
-  //     username: selectedUser.username,
-  //     lastName: selectedUser.fullName.split(' ')[1],
-  //     firstName: selectedUser.fullName.split(' ')[0]
-  //   })
-  // }
-
-  // const handleSuspendedClick = () => {
-  //   return MySwal.fire({
-  //     title: 'Are you sure?',
-  //     text: "You won't be able to revert user!",
-  //     icon: 'warning',
-  //     showCancelButton: true,
-  //     confirmButtonText: 'Yes, Suspend user!',
-  //     customClass: {
-  //       confirmButton: 'btn btn-primary',
-  //       cancelButton: 'btn btn-outline-danger ms-1'
-  //     },
-  //     buttonsStyling: false
-  //   }).then(function (result) {
-  //     if (result.value) {
-  //       MySwal.fire({
-  //         icon: 'success',
-  //         title: 'Suspended!',
-  //         text: 'User has been suspended.',
-  //         customClass: {
-  //           confirmButton: 'btn btn-success'
-  //         }
-  //       })
-  //     } else if (result.dismiss === MySwal.DismissReason.cancel) {
-  //       MySwal.fire({
-  //         title: 'Cancelled',
-  //         text: 'Cancelled Suspension :)',
-  //         icon: 'error',
-  //         customClass: {
-  //           confirmButton: 'btn btn-success'
-  //         }
-  //       })
-  //     }
-  //   })
-  // }
-  const data = {fullName:'Tailwind css',subject:"asqwerty",capacity:'23', username :'09111111111',avatarColor:null, email:'sdsdsdsdsdsd', statuse : 'فعال', complete:'90%', gender:"مرد", identification:'99887766', phone:'0922222222',contact:'2323454567', role:'ادمین', desc:'سلام خوبی من یک کار اکوز برنامه نویسی هستم تو چه کاره ای'};
+  const handleSubmit = async ()=>{
+    const formData = new FormData();
+    formData.append("Id",Id)
+    formData.append("Title",Title)
+    formData.append("Describe",Describe)
+    formData.append("MiniDescribe",MiniDescribe)
+    formData.append("Capacity",Capacity)
+    formData.append("TeacherId",TeacherId)
+    formData.append("Cost",Cost)
+    formData.append("StartTime",StartTime)
+    formData.append("EndTime",EndTime)
+    formData.append("ImageAddress",ImageAddress)
+    const result = await UpdateCourse(formData);
+    toast.success(result.message)
+  }
 
   return (
     <Fragment>
@@ -215,199 +226,184 @@ const CourseInfoCard = ({ selectedUser, detail }) => {
           <div className='text-center mb-2'>
             <h1 className='mb-1'>ویرایش اطلاعات دوره</h1>
           </div>
-          <Form onSubmit={handleSubmit(onSubmit)}>
-            <Row className='gy-1 pt-75'>
-              <Col md={4} xs={12}>
-                <Label className='form-label' for='subject'>
-                  موضوع دوره
-                </Label>
-                <Controller
-                  defaultValue=''
-                  control={control}
-                  id='subject'
-                  name='subject'
-                  render={({ field }) => (
-                    <Input {...field} id='subject' placeholder='John' invalid={errors.subject && true} />
-                  )}
-                />
-              </Col>
-              <Col md={4} xs={12}>
-                <Label className='form-label' for='capacity'>
-                  ظرفیت دوره
-                </Label>
-                <Controller
-                  defaultValue=''
-                  control={control}
-                  id='capacity'
-                  name='capacity'
-                  render={({ field }) => (
-                    <Input {...field} id='capacity' placeholder='Doe' invalid={errors.capacity && true} />
-                  )}
-                />
-              </Col>
-              <Col md={4} xs={12}>
-                <Label className='form-label' for='type'>
-                  نوع دوره
-                </Label>
-                <Select
-                  id='type'
-                  isClearable={false}
-                  className='react-select'
-                  classNamePrefix='select'
-                  options={typeOptions}
-                  theme={selectThemeColors}
-                  defaultValue={typeOptions[typeOptions.findIndex(i => i.value === data.type)]}
-                />
-              </Col>
-              <Col md={7} xs={12}>
-                <Label className='form-label' for='shortDesc'>
-                  توضیحات کوتاه
-                </Label>
-                <Controller
-                  defaultValue=''
-                  control={control}
-                  id='shortDesc'
-                  name='shortDesc'
-                  render={({ field }) => (
-                    <Input {...field} id='shortDesc' placeholder='john.doe.007' invalid={errors.shortDesc && true} />
-                  )}
-                />
-              </Col>
-              <Col md={5} xs={12}>
-                <Label className='form-label' for='classRoom'>
-                  کلاس دوره
-                </Label>
-                <Select
-                  id='classRoom'
-                  isClearable={false}
-                  className='react-select'
-                  classNamePrefix='select'
-                  options={classOptions}
-                  theme={selectThemeColors}
-                  defaultValue={classOptions[classOptions.findIndex(i => i.value === data.classRoom)]}
-                />
-              </Col>
-              <Col md={4} xs={12}>
-                <Label className='form-label' for='teacher'>
-                  استاد دوره
-                </Label>
-                <Controller
-                  defaultValue=''
-                  control={control}
-                  id='teacher'
-                  name='teacher'
-                  render={({ field }) => (
-                    <Input {...field} id='teacher' placeholder='john.doe.007' invalid={errors.teacher && true} />
-                  )}
-                />
-              </Col>
-              <Col md={4} xs={12}>
-                <Label className='form-label' for='semester'>
-                  ترم 
-                </Label>
-                <Controller
-                  defaultValue=''
-                  control={control}
-                  id='semester'
-                  name='semester'
-                  render={({ field }) => (
-                    <Input {...field} id='semester' placeholder='john.doe.007' invalid={errors.semester && true} />
-                  )}
-                />
-              </Col>
-              <Col md={4} xs={12}>
-                <Label className='form-label' for='number'>
-                  تعداد جلسه
-                </Label>
-                <Controller
-                  defaultValue=''
-                  control={control}
-                  id='number'
-                  name='number'
-                  render={({ field }) => (
-                    <Input {...field} id='number' placeholder='john.doe.007' invalid={errors.number && true} />
-                  )}
-                />
-              </Col>
-              <Col md={4} xs={12}>
-                <Label className='form-label' for='number'>
-                  هزینه دوره 
-                </Label>
-                <Controller
-                  defaultValue=''
-                  control={control}
-                  id='number'
-                  name='number'
-                  render={({ field }) => (
-                    <Input {...field} id='number' placeholder='john.doe.007' invalid={errors.number && true} />
-                  )}
-                />
-              </Col>
-              <Col md={3} xs={12}>
-                <Label className='form-label' for='level'>
-                  سطح دوره:
-                </Label>
-                <Select
-                  id='level'
-                  isClearable={false}
-                  className='react-select'
-                  classNamePrefix='select'
-                  options={levelOptions}
-                  theme={selectThemeColors}
-                  defaultValue={levelOptions[levelOptions.findIndex(i => i.value === data.level)]}
-                />
-              </Col>
-              <Col md={5} xs={12}>
-                <Label className='form-label' for='startDate'>
-                  تاریخ شروع 
-                </Label>
-                <Input
-                  id='startDate'
-                  placeholder='شروع'
-                  defaultValue={data.contact.substr(data.contact.length - 4)}
-                />
-              </Col>
-              <Col md={6} xs={12}>
-                <Label className='form-label' for='endDate'>
-                  تاریخ پایان 
-                </Label>
-                <Input
-                  id='endDate'
-                  placeholder='پایان'
-                  defaultValue={data.contact.substr(data.contact.length - 4)}
-                />
-              </Col>
-              <Col md={6} xs={12}>
-                <Label className='form-label' for='code'>
-                  کد یکتا 
-                </Label>
-                <Input
-                  id='code'
-                  placeholder='کد یکتا'
-                  defaultValue={data.contact.substr(data.contact.length - 4)}
-                />
-              </Col>
-              <Col xs={12}>
-                <Label className='form-label' for='desc'>
-                  توضیحات دوره 
-                </Label>
-                <Controller
-                  defaultValue=''
-                  control={control}
-                  id='desc'
-                  name='desc'
-                  render={({ field }) => (
-                    <Input {...field} id='desc' placeholder='john.doe.007' invalid={errors.desc && true} />
-                  )}
-                />
-              </Col>
-              <Col xs={12} className='text-center mt-2 pt-50'>
-                <Button type='submit' className='me-1' color='primary'>
-                  Submit
-                </Button>
-              </Col>
-            </Row>
-          </Form>
+          <Formik
+            initialValues={initialValues}
+            onSubmit={handleSubmit}
+          >
+            <Form>
+              <Row className='gy-1 pt-75'>
+                
+                <Col md={6} xs={12}>
+                  <Label className='form-label' for='Title'>
+                    موضوع دوره
+                  </Label>
+                  <Field 
+                    class="form-control form-control-md" 
+                    id='Title' 
+                    name='Title' 
+                  />
+                </Col>
+                <Col md={4} xs={12}>
+                  <Label className='form-label' for='CourseTypeId'>
+                    نوع دوره
+                  </Label>
+                  <Field 
+                    as='select'
+                    class="form-select form-select-md" 
+                    id='CourseTypeId' 
+                    name='CourseTypeId' 
+                  >
+                    <option value={1}>حضوری</option>
+                    <option value={2}>آنلاین</option>
+                    <option value={3}>حضوری آنلاین</option>
+                  </Field>
+
+                </Col>
+                <Col md={2} xs={12}>
+                  <Label className='form-label' for='Capacity'>
+                    ظرفیت دوره
+                  </Label>
+                  <Field 
+                    class="form-control form-control-md" 
+                    id='Capacity' 
+                    name='Capacity' 
+                  />
+                </Col>
+                <Col md={7} xs={12}>
+                  <Label className='form-label' for='MiniDescribe'>
+                    توضیحات کوتاه
+                  </Label>
+                  <Field 
+                    class="form-control form-control-md" 
+                    id='MiniDescribe' 
+                    name='MiniDescribe' 
+                  />
+                </Col>
+                <Col md={5} xs={12}>
+                  <Label className='form-label' for='ClassId'>
+                    کلاس دوره
+                  </Label>
+                  <Field 
+                    class="form-control form-control-md" 
+                    id='ClassId' 
+                    name='ClassId' 
+                  />
+                </Col>
+
+                <Col md={4} xs={12}>
+                  <Label className='form-label' for='TeacherId'>
+                    استاد دوره
+                  </Label>
+                  <Field 
+                    as='select'
+                    class="form-select form-select-md" 
+                    id='TeacherId' 
+                    name='TeacherId' 
+                  >
+                    {teacherId?.map((item, index)=>{
+                      return(
+                        <option key={index} value={item.teacherId}>{item?.fullName??'اسمش وارد نشده'}</option>
+                      )
+                    })}
+                  </Field>
+                </Col>
+                <Col md={4} xs={12}>
+                  <Label className='form-label' for='TremId'>
+                    ترم 
+                  </Label>
+                  <Field 
+                    class="form-control form-control-md" 
+                    id='TremId' 
+                    name='TremId' 
+                  />
+                </Col>
+                <Col md={4} xs={12}>
+                  <Label className='form-label' for='SessionNumber'>
+                    تعداد جلسه
+                  </Label>
+                  <Field 
+                    class="form-control form-control-md" 
+                    id='SessionNumber' 
+                    name='SessionNumber' 
+                  />
+                </Col>
+                <Col md={4} xs={12}>
+                  <Label className='form-label' for='Cost'>
+                    هزینه دوره 
+                  </Label>
+                  <Field 
+                    class="form-control form-control-md" 
+                    id='Cost' 
+                    name='Cost' 
+                  />
+                </Col>
+                <Col md={3} xs={12}>
+                  <Label className='form-label' for='CourseLvlId'>
+                    سطح دوره:
+                  </Label>
+                  <Field 
+                    as='select'
+                    class="form-select form-select-md" 
+                    id='CourseLvlId' 
+                    name='CourseLvlId' 
+                  >
+                    {level?.map((item, index)=>{
+                      return(
+                        <option key={index} value={item.id}>{item.levelName}</option>
+                      )
+                    })}
+                  </Field>
+                </Col>
+                <Col md={5} xs={12}>
+                  <Label className='form-label' for='CoursePrerequisiteId'>
+                    کد یکتا 
+                  </Label>
+                  <Field 
+                    class="form-control form-control-md" 
+                    id='CoursePrerequisiteId' 
+                    name='CoursePrerequisiteId' 
+                  />
+                </Col>
+                <Col md={6} xs={12}>
+                  <Label className='form-label' for='StartTime'>
+                    تاریخ شروع 
+                  </Label>
+                  <Field 
+                    class="form-control form-control-md" 
+                    id='StartTime' 
+                    name='StartTime' 
+                  />
+                </Col>
+                <Col md={6} xs={12}>
+                  <Label className='form-label' for='EndTime'>
+                    تاریخ پایان 
+                  </Label>
+                  <Field 
+                    class="form-control form-control-md" 
+                    id='EndTime' 
+                    name='EndTime' 
+                  />
+                </Col>
+                <Col md={12} xs={12}>
+                  <Label className='form-label' for='Describe'>
+                    توضیح دوره
+                  </Label>
+                  <Field 
+                    type='textarea'
+                    class="form-control form-control-md" 
+                    id='Describe' 
+                    name='Describe' 
+                  />
+                </Col>
+                
+                <Col xs={12} className='text-center mt-2 pt-50'>
+                  <Button type='submit' className='me-1' color='primary'>
+                    Submit
+                  </Button>
+                </Col>
+              </Row>
+            </Form>
+          </Formik>
         </ModalBody>
       </Modal>
     </Fragment>
@@ -415,3 +411,4 @@ const CourseInfoCard = ({ selectedUser, detail }) => {
 }
 
 export default CourseInfoCard
+

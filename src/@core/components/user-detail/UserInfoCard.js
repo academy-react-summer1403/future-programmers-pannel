@@ -38,74 +38,38 @@ const statusOptions = [
 ]
 
 
-const MySwal = withReactContent(Swal)
 
 const UserInfoCard = ({ selectedUser, detail }) => {
   // ** State
   const [show, setShow] = useState(false)
-  console.log(detail.userName)
-  // ** Hook
-  const {
-    reset,
-    control,
-    setError,
-    formState: { errors }
-  } = useForm({
-    defaultValues: {
-      // username: selectedUser.username,
-      // lastName: selectedUser.fullName.split(' ')[1],
-      // firstName: selectedUser.fullName.split(' ')[0]
-    }
-  })
-
-  //  ** render user img
-  // const renderUserImg = () => {
-  //   if (detail.currentPictureAddress !== null && detail.currentPictureAddress !== "Not-set") {
-  //     return (
-  //       <img
-  //         height='110'
-  //         width='110'
-  //         alt='user-avatar'
-  //         src={detail.avatar}
-  //         className='img-fluid rounded mt-3 mb-2'
-  //       />
-  //     )
-  //   } else {
-  //     return (
-  //       <Avatar
-  //         initials
-  //         color={detail.avatarColor || 'light-primary'}
-  //         className='rounded mt-3 mb-2'
-  //         content={detail.fullName}
-  //         contentStyles={{
-  //           borderRadius: 0,
-  //           fontSize: 'calc(48px)',
-  //           width: '100%',
-  //           height: '100%'
-  //         }}
-  //         style={{
-  //           height: '110px',
-  //           width: '110px'
-  //         }}
-  //       />
-  //     )
-  //   }
-  // }
-
-  // const onSubmit = data => {
-  //   if (Object.values(data).every(field => field.length > 0)) {
-  //     setShow(false)
-  //   } else {
-  //     for (const key in data) {
-  //       if (data[key].length === 0) {
-  //         setError(key, {
-  //           type: 'manual'
-  //         })
-  //       }
-  //     }
-  //   }
-  // }
- 
+  // console.log(detail)
+  
+  const initialValues = {
+    id:detail.id,
+    fName:detail.fName,
+    lName:detail.lName,
+    userName:detail.userName,
+    gmail:detail.gmail,
+    phoneNumber:detail.phoneNumber,
+    active:detail.active,
+    isDelete:detail.isDelete,
+    isTecher:detail.isTecher,
+    isStudent:detail.isStudent,
+    recoveryEmail:detail.recoveryEmail,
+    twoStepAuth:detail.twoStepAuth,
+    userAbout:detail.userAbout,
+    currentPictureAddress:detail.currentPictureAddress,
+    linkdinProfile:detail.linkdinProfile,
+    telegramLink:detail.telegramLink,
+    receiveMessageEvent:detail.receiveMessageEvent,
+    homeAdderess:detail.homeAdderess,
+    nationalCode:detail.nationalCode,
+    gender:detail.gender,
+    latitude:detail.latitude,
+    longitude:detail.longitude,
+    insertDate:detail.insertDate,
+    birthDay:detail.birthDay
+  }
 
   // const validation = yup.object().shape({
   //   id:yup.string().required(),
@@ -117,57 +81,12 @@ const UserInfoCard = ({ selectedUser, detail }) => {
   //   nationalCode:yup.string().required(),
   //   phoneNumber:yup.string().required(),
   // });
-  const handleReset = () => {
-    reset({fName:'',lName:'',userName:'',gmail:'',status:'',nationalCode:'',phoneNumber:'',birthDay:'',currentPictureAddress:''})
-  }
+  
   const handleSubmit = async(value)=>{
     const result = await completeUser(value)
-    console.log(result)
     toast.success(result.message)
   }
-  // const handleReset = () => {
-  //   reset({
-  //     username: selectedUser.username,
-  //     lastName: selectedUser.fullName.split(' ')[1],
-  //     firstName: selectedUser.fullName.split(' ')[0]
-  //   })
-  // }
 
-  // const handleSuspendedClick = () => {
-  //   return MySwal.fire({
-  //     title: 'Are you sure?',
-  //     text: "You won't be able to revert user!",
-  //     icon: 'warning',
-  //     showCancelButton: true,
-  //     confirmButtonText: 'Yes, Suspend user!',
-  //     customClass: {
-  //       confirmButton: 'btn btn-primary',
-  //       cancelButton: 'btn btn-outline-danger ms-1'
-  //     },
-  //     buttonsStyling: false
-  //   }).then(function (result) {
-  //     if (result.value) {
-  //       MySwal.fire({
-  //         icon: 'success',
-  //         title: 'Suspended!',
-  //         text: 'User has been suspended.',
-  //         customClass: {
-  //           confirmButton: 'btn btn-success'
-  //         }
-  //       })
-  //     } else if (result.dismiss === MySwal.DismissReason.cancel) {
-  //       MySwal.fire({
-  //         title: 'Cancelled',
-  //         text: 'Cancelled Suspension :)',
-  //         icon: 'error',
-  //         customClass: {
-  //           confirmButton: 'btn btn-success'
-  //         }
-  //       })
-  //     }
-  //   })
-  // }
-//  console.log(detail)
   return (
     <Fragment>
       <Card>
@@ -261,37 +180,25 @@ const UserInfoCard = ({ selectedUser, detail }) => {
             <h1 className='mb-1'>ویرایش اطلاعات کاربر</h1>
           </div>
           <Formik 
-            initialValues={{id:detail.id, fName:detail.fName ,lName:detail.lName ,userName:detail.userName ,gmail:detail.gmail, nationalCode:detail.nationalCode, phoneNumber:detail.phoneNumber, birthDay:detail.birthDay, currentPictureAddress:detail.currentPictureAddress, homeAdderess:detail.homeAdderess, recoveryEmail:detail.recoveryEmail, userAbout:detail.userAbout, linkdinProfile:detail.linkdinProfile, telegramLink:detail.telegramLink, longitude:detail.longitude, latitude:detail.latitude, insertDate:detail.insertDate ,birthDay:detail.birthDay, active:detail.active, gender:detail.gender, isDelete:detail.isDelete, isTecher:detail.isTecher, isStudent:detail.isStudent, twoStepAuth:detail.twoStepAuth, receiveMessageEvent:detail.receiveMessageEvent }} 
+            initialValues={initialValues} 
             onSubmit={handleSubmit}
             // validationSchema={validation}
           >
             <Form>
               <Row className='gy-1 pt-75'>
-                <Col md={2} xs={12}>
-                  <Label className='form-label' for='id'>
-                    آیدی 
+                <Col md={4} xs={12}>
+                  <Label className='form-label' for='fName'>
+                    نام
                   </Label>
                   <Field 
                     class="form-control form-control-md" 
-                    id='id' 
-                    name='id' 
-                    placeholder='111'
+                    id='fName' 
+                    name='fName' 
+                    placeholder='John'
                   />
-                  <ErrorMessage name='id' component={'p'} class="text-danger"/>
+                  <ErrorMessage name='fName' component={'p'} class="text-danger"/>
                 </Col>
-                <Col md={3} xs={12}>
-                    <Label className='form-label' for='fName'>
-                      نام
-                    </Label>
-                    <Field 
-                      class="form-control form-control-md" 
-                      id='fName' 
-                      name='fName' 
-                      placeholder='John'
-                    />
-                    <ErrorMessage name='fName' component={'p'} class="text-danger"/>
-                  </Col>
-                <Col md={3} xs={12}>
+                <Col md={4} xs={12}>
                   <Label className='form-label' for='lName'>
                     نام خانوادگی
                   </Label>
@@ -308,8 +215,8 @@ const UserInfoCard = ({ selectedUser, detail }) => {
                   </Label>
                   <Field 
                     class="form-control form-control-md" 
-                    name='username' 
-                    id='username' 
+                    name='userName' 
+                    id='userName' 
                   />
                   <ErrorMessage name='username' component={'p'} class="text-danger"/>
                 </Col>
@@ -325,19 +232,6 @@ const UserInfoCard = ({ selectedUser, detail }) => {
                   />
                   <ErrorMessage name='gmail' component={'p'} class="text-danger"/>
                 </Col>
-                
-                {/* <Col md={6} xs={12}>
-                  <Label className='form-label' for='active'>
-                    وضعیت:
-                  </Label>
-                  <Field class="form-select form-select-md" id='active'name='active'>
-                  <datalist id="active">
-                    <option value='true'>فعال</option>
-                    <option value="false">غیرفعال</option>
-                  </datalist>
-                  </Field>
-                </Col> */}
-                
                 <Col md={6} xs={12}>
                   <Label className='form-label' for='nationalCode'>
                     کد ملی
@@ -360,7 +254,22 @@ const UserInfoCard = ({ selectedUser, detail }) => {
                   />
                   <ErrorMessage name='phoneNumber' component={'p'} class="text-danger"/>
                 </Col>
-                <Col md={5} xs={12}>
+                <Col md={3} xs={12}>
+                  <Label className='form-label' for='activ'>
+                    وضعیت
+                  </Label>
+                  <Field 
+                    as='select'
+                    class="form-select form-select-md" 
+                    id='active' 
+                    name='active' 
+                  >
+                    <option value= {true} >فعال</option>
+                    <option value={false}>غیرفعال</option>
+                  </Field>
+                  <ErrorMessage name='active' component={'p'} class="text-danger"/>
+                </Col> 
+                <Col md={6} xs={12}>
                   <Label className='form-label' for='recoveryEmail'>
                     ایمیل بازیابی
                   </Label>
@@ -370,19 +279,18 @@ const UserInfoCard = ({ selectedUser, detail }) => {
                     name='recoveryEmail' 
                   />
                   <ErrorMessage name='recoveryEmail' component={'p'} class="text-danger"/>
-                </Col>  
-                <Col md={4} xs={12}>
-                  <Label className='form-label' for='birthDay'>
-                    تاریخ تولد
+                </Col> 
+                <Col md={12} xs={12}>
+                  <Label className='form-label' for='homeAdderess'>
+                    آدرس منزل 
                   </Label>
                   <Field 
-                    
                     class="form-control form-control-md" 
-                    id='birthDay' 
-                    name='birthDay'  
+                    id='homeAdderess' 
+                    name='homeAdderess' 
                   />
-                  <ErrorMessage name='birthDay' component={'p'} class="text-danger"/>
-                </Col> 
+                  <ErrorMessage name='homeAdderess' component={'p'} class="text-danger"/>
+                </Col>  
                 <Col md={6} xs={12}>
                   <Label className='form-label' for='currentPictureAddress'>
                     عکس کاربر
@@ -395,17 +303,7 @@ const UserInfoCard = ({ selectedUser, detail }) => {
                   />
                   <ErrorMessage name='currentPictureAddress' component={'p'} class="text-danger"/>
                 </Col> 
-                <Col md={6} xs={12}>
-                  <Label className='form-label' for='homeAdderess'>
-                    آدرس منزل 
-                  </Label>
-                  <Field 
-                    class="form-control form-control-md" 
-                    id='homeAdderess' 
-                    name='homeAdderess' 
-                  />
-                  <ErrorMessage name='homeAdderess' component={'p'} class="text-danger"/>
-                </Col> 
+                
                 <Col md={6} xs={12}>
                   <Label className='form-label' for='userAbout'>
                     درباره کاربر
@@ -439,130 +337,9 @@ const UserInfoCard = ({ selectedUser, detail }) => {
                   />
                   <ErrorMessage name='telegramLink' component={'p'} class="text-danger"/>
                 </Col> 
-                <Col md={6} xs={12}>
-                  <Label className='form-label' for='longitude'>
-                  longitude
-                  </Label>
-                  <Field 
-                    class="form-control form-control-md" 
-                    id='longitude' 
-                    name='longitude' 
-                  />
-                  <ErrorMessage name='longitude' component={'p'} class="text-danger"/>
-                </Col> 
-                <Col md={6} xs={12}>
-                  <Label className='form-label' for='latitude'>
-                  latitude
-                  </Label>
-                  <Field 
-                    class="form-control form-control-md" 
-                    id='latitude' 
-                    name='latitude' 
-                  />
-                  <ErrorMessage name='latitude' component={'p'} class="text-danger"/>
-                </Col> 
-                <Col md={6} xs={12}>
-                  <Label className='form-label' for='insertDate'>
-                    تاریخ ثبت
-                  </Label>
-                  <Field 
-                    type='date'
-                    class="form-control form-control-md" 
-                    id='insertDate' 
-                    name='insertDate' 
-                  />
-                  <ErrorMessage name='insertDate' component={'p'} class="text-danger"/>
-                </Col> 
-                <Col md={3} xs={12}>
-                  <Label className='form-label' for='activ'>
-                    وضعیت
-                  </Label>
-                  <Field 
-                    as='select'
-                    class="form-select form-select-md" 
-                    id='active' 
-                    name='active' 
-                  />
-                  <ErrorMessage name='active' component={'p'} class="text-danger"/>
-                </Col> 
-                <Col md={3} xs={12}>
-                  <Label className='form-label' for='gender'>
-                  جنسیت
-                  </Label>
-                  <Field 
-                    as='select'
-                    class="form-select form-select-md" 
-                    id='gender' 
-                    name='gender' 
-                  />
-                  <ErrorMessage name='gender' component={'p'} class="text-danger"/>
-                </Col> 
-                <Col md={3} xs={12}>
-                  <Label className='form-label' for='isDelete'>
-                  isDelete
-                  </Label>
-                  <Field 
-                    as='select'
-                    class="form-select form-select-md" 
-                    id='isDelete' 
-                    name='isDelete' 
-                  />
-                  <ErrorMessage name='isDelete' component={'p'} class="text-danger"/>
-                </Col> 
-                <Col md={3} xs={12}>
-                  <Label className='form-label' for='isTecher'>
-                  isTecher
-                  </Label>
-                  <Field 
-                    as='select'
-                    class="form-select form-select-md" 
-                    id='isTecher' 
-                    name='isTecher' 
-                  />
-                  <ErrorMessage name='isTecher' component={'p'} class="text-danger"/>
-                </Col> 
-                <Col md={3} xs={12}>
-                  <Label className='form-label' for='isStudent'>
-                  isStudent
-                  </Label>
-                  <Field 
-                    as='select'
-                    class="form-select form-select-md" 
-                    id='isStudent' 
-                    name='isStudent' 
-                  />
-                  <ErrorMessage name='isStudent' component={'p'} class="text-danger"/>
-                </Col> 
-                <Col md={3} xs={12}>
-                  <Label className='form-label' for='twoStepAuth'>
-                  اعتبارسنجی دومرحله ای
-                  </Label>
-                  <Field 
-                    as='select'
-                    class="form-select form-select-md" 
-                    id='twoStepAuth' 
-                    name='twoStepAuth' 
-                  />
-                  <ErrorMessage name='twoStepAuth' component={'p'} class="text-danger"/>
-                </Col> 
-                <Col md={3} xs={12}>
-                  <Label className='form-label' for='receiveMessageEvent'>
-                  دریافت پیامک
-                  </Label>
-                  <Field 
-                    as='select'
-                    class="form-select form-select-md" 
-                    id='receiveMessageEvent' 
-                    name='receiveMessageEvent' 
-                  />
-                  <ErrorMessage name='receiveMessageEvent' component={'p'} class="text-danger"/>
-                </Col> 
                 <Col xs={12} className='text-center mt-2 pt-50'>
                   <Button type='submit' className='me-1' color='primary'>
                     ثبت
-                  </Button>
-                  <Button outline color='secondary' type='reset' onClick={handleReset} >
-                    انصراف
                   </Button>
                 </Col>
               </Row> 
@@ -576,17 +353,3 @@ const UserInfoCard = ({ selectedUser, detail }) => {
 }
 
 export default UserInfoCard
-
-// فرستاده شود
-  // "isStudent": "<boolean>",
-  // "twoStepAuth": "<boolean>",
-  // "receiveMessageEvent": "<boolean>",
-
-// گرفته شده
-
-// isDelete:,
-// isStudent:,
-// isTecher:,
-// profileCompletionPercentage:,
-// receiveMessageEvent:,
-// twoStepAuth:,

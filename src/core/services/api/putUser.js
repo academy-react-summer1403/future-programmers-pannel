@@ -6,6 +6,7 @@ export const completeUser = async(value)=>{
         const result = await http.put('/User/UpdateUser',value)
         return result
     } catch (error) {
-        toast.error(error.response.data.ErrorMessage[0])
+        toast.error(error)
     }
 }
+// error.response.data.ErrorMessage[0]

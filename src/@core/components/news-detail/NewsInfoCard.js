@@ -22,7 +22,7 @@ const NewsInfoCard = ({ selectedUser, cardDetail }) => {
   // ** State
   const [show, setShow] = useState(false)
   const [newsCategory, setNewsCategory] = useState([])
-console.log(newsCategory)
+// console.log(newsCategory)
 
   const GetCategory = async()=>{
     try {

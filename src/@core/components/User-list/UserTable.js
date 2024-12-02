@@ -452,13 +452,13 @@ console.log(users)
               </Link>
             </DropdownItem>
             <DropdownItem 
-              // className='w-100' onClick={e => e.preventDefault()}
+              className='w-100'
             >
               <XCircle  size={14} className='me-50' />
               <span className='align-middle'>حذف</span>
             </DropdownItem>
             <DropdownItem
-              // className='w-100' onClick={e => e.preventDefault()}
+              className='w-100' 
             >
               <MinusCircle size={14} className='me-50' />
               <span className='align-middle'>غیرفال کردن</span>

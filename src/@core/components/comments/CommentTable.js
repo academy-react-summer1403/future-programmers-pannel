@@ -19,7 +19,7 @@ import CommentSearchbar from './CommentSearchbar'
 import Select from 'react-select'
 import ReactPaginate from 'react-paginate'
 import DataTable from 'react-data-table-component'
-import { ChevronDown, Share, Printer, FileText, File, Grid, Copy, MoreVertical, Archive, Trash2, Sidebar, Eye } from 'react-feather'
+import { ChevronDown, Share, Printer, FileText, File, Grid, Copy, XCircle, MoreVertical, Archive, Trash2, Sidebar, Eye } from 'react-feather'
 
 // ** Utils
 import { selectThemeColors } from '@utils'
@@ -39,8 +39,13 @@ import {
   DropdownItem,
   DropdownToggle,
   UncontrolledDropdown,
+  Modal,
+  ModalHeader,
+  ModalBody,
   Badge
 } from 'reactstrap'
+import ReplyCourseCommentTab from './ReplyCourseCommentTab';
+import { DeleteCourseComment } from '../../../core/services/api/deleteCourseComment';
 
 // ** Styles
 // import '@styles/react/libs/react-select/_react-select.scss'
@@ -172,14 +177,11 @@ import {
 const CommentTable = () => {
 
   // ** States
-  const [sort, setSort] = useState('desc')
-  const [searchTerm, setSearchTerm] = useState('')
   
-  const [sortColumn, setSortColumn] = useState('id')
-  const [rowsPerPage, setRowsPerPage] = useState(10)
+  
+
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [currentRole, setCurrentRole] = useState({ value: '', label: 'Select Role' })
-  // const [currentStatus, setCurrentStatus] = useState({ value: '', label: 'Select Status', number: 0 })
   const [currentStatus, setCurrentStatus] = useState({ value: '', label: 'انتخاب وضعیت' })
   const [comment, setComment] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
@@ -196,6 +198,14 @@ const CommentTable = () => {
     }
   }
 
+ 
+  const handleDelete = async()=>{
+    const result = await DeleteCourseComment()
+    // toast.success(result.message)
+  }
+
+
+  console.log(comment)
 
   useEffect(()=>{
     getCourseComment(currentPage, search, currentStatus.value);
@@ -235,40 +245,7 @@ const CommentTable = () => {
     setCurrentPage(page.selected + 1)
   }
 
-  // ** Function in get data on rows per page
-  // const handlePerPage = e => {
-  //   const value = parseInt(e.currentTarget.value)
-  //   dispatch(
-  //     getData({
-  //       sort,
-  //       sortColumn,
-  //       q: searchTerm,
-  //       perPage: value,
-  //       page: currentPage,
-  //       role: currentRole.value,
-  //       currentPlan: currentPlan.value,
-  //       status: currentStatus.value
-  //     })
-  //   )
-  //   setRowsPerPage(value)
-  // }
 
-  // ** Function in get data on search query change
-  // const handleFilter = val => {
-  //   setSearchTerm(val)
-  //   dispatch(
-  //     getData({
-  //       sort,
-  //       q: val,
-  //       sortColumn,
-  //       page: currentPage,
-  //       perPage: rowsPerPage,
-  //       role: currentRole.value,
-  //       status: currentStatus.value,
-  //       currentPlan: currentPlan.value
-  //     })
-  //   )
-  // }
 
   // ** Custom Pagination
   const CustomPagination = () => {
@@ -292,44 +269,6 @@ const CommentTable = () => {
     )
   }
 
-  // ** Table data to render
-  // const dataToRender = () => {
-  //   const filters = {
-  //     role: currentRole.value,
-  //     currentPlan: currentPlan.value,
-  //     status: currentStatus.value,
-  //     q: searchTerm
-  //   }
-
-  //   const isFiltered = Object.keys(filters).some(function (k) {
-  //     return filters[k].length > 0
-  //   })
-
-  //   if (store.data.length > 0) {
-  //     return store.data
-  //   } else if (store.data.length === 0 && isFiltered) {
-  //     return []
-  //   } else {
-  //     return store.allData.slice(0, rowsPerPage)
-  //   }
-  // }
-
-  // const handleSort = (column, sortDirection) => {
-  //   setSort(sortDirection)
-  //   setSortColumn(column.sortField)
-  //   dispatch(
-  //     getData({
-  //       sort,
-  //       sortColumn,
-  //       q: searchTerm,
-  //       page: currentPage,
-  //       perPage: rowsPerPage,
-  //       role: currentRole.value,
-  //       status: currentStatus.value,
-  //       currentPlan: currentPlan.value
-  //     })
-  //   )
-  // }
 
   const columns =[
     {
@@ -358,7 +297,6 @@ const CommentTable = () => {
     minWidth: '150px',
     sortField: 'role',
     selector: row => row.commentTitle,
-    // cell: row => renderRole(row)
   },
   {
     name: 'متن کامنت',
@@ -366,7 +304,6 @@ const CommentTable = () => {
     sortable: true,
     sortField: 'currentPlan',
     selector: row => row.describe,
-    // cell: row => <span className='text-capitalize'>{row.teacher}</span>
   },
   {
     name: ' دوره ',
@@ -374,7 +311,6 @@ const CommentTable = () => {
     minWidth: '172px',
     sortField: 'role',
     selector: row => row.courseTitle,
-    // cell: row => renderRole(row)
   },
   {
     name: 'وضعیت',
@@ -389,15 +325,26 @@ const CommentTable = () => {
     )
   },
   {
-    
-    name: ' پاسخ ها ',
-    sortable: true,
-    minWidth: '80px',
-    sortField: 'role',
-    selector: row => row.teacher,
-    // cell: row => renderRole(row)
-    cell: row => <Eye size={15}/>
-    // replyCount
+    name: 'پاسخ ها',
+    maxWidth:'200px',
+    cell: row => {
+      const [show, setShow] = useState(false);
+      return(
+      <div className='column-action'>
+        <UncontrolledDropdown>
+          <DropdownToggle tag='div' className='btn btn-sm'>
+            <Eye size={16} className='cursor-pointer' onClick={()=>setShow(!show)}/>
+          </DropdownToggle>
+        </UncontrolledDropdown>
+        <Modal isOpen={show} toggle={() => setShow(!show)} className='modal-dialog-centered modal-lg'>
+        <ModalHeader className='bg-transparent' toggle={() => setShow(!show)}></ModalHeader>
+        <ModalBody className='px-sm-5 pt-50 pb-5'>
+          <ReplyCourseCommentTab CourseId={row?.courseId}  CommentId={row?.commentId}/>
+              
+        </ModalBody>
+      </Modal>
+      </div>)
+    }
   },
   {
     name: 'Actions',
@@ -418,26 +365,13 @@ const CommentTable = () => {
               <FileText size={14} className='me-50' />
               <span className='align-middle'>Details</span>
             </DropdownItem>
-            <DropdownItem
-              // tag='a' 
-              href='/' 
-              // className='w-100' onClick={e => e.preventDefault()}
-            >
-              <Archive size={14} className='me-50' />
-              <span className='align-middle'>Edit</span>
-            </DropdownItem>
-            {/* <DropdownItem
-              tag='a'
-              href='/'
+            <DropdownItem  
               className='w-100'
-              onClick={e => {
-                e.preventDefault()
-                store.dispatch(deleteUser(row.id))
-              }}
             >
-              <Trash2 size={14} className='me-50' />
-              <span className='align-middle'>Delete</span>
-            </DropdownItem> */}
+              <XCircle size={14} className='me-50' />
+              <span className='align-middle' onClick={handleDelete(row.comment)}>حذف</span>
+            </DropdownItem>
+            {/* commentId */}
           </DropdownMenu>
         </UncontrolledDropdown>
       </div>
@@ -502,8 +436,6 @@ const CommentTable = () => {
           />
         </div>
       </Card>
-
-      {/* <Sidebar open={sidebarOpen} toggleSidebar={toggleSidebar} /> */}
     </Fragment>
   )
 }

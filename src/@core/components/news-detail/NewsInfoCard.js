@@ -1,5 +1,5 @@
 // ** React Imports
-import { useState, Fragment } from 'react'
+import { useState, Fragment, useEffect } from 'react'
 import pic from '../../../assets/images/portrait/small/news.png'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as yup from 'yup';
@@ -16,36 +16,37 @@ import Avatar from '@components/avatar'
 
 // ** Styles
 import '@styles/react/libs/react-select/_react-select.scss'
-import { UpdateNews } from '../../../core/services/api/putNews';
+import { GetListNewsCategory, UpdateNews } from '../../../core/services/api/putNews';
 
 const NewsInfoCard = ({ selectedUser, cardDetail }) => {
   // ** State
   const [show, setShow] = useState(false)
+  const [newsCategory, setNewsCategory] = useState([])
+console.log(newsCategory)
+
+  const GetCategory = async()=>{
+    try {
+    const result = await GetListNewsCategory()
+    setNewsCategory(result)
+    } catch (error) {
+    
+    }
+  }
+
+
+useEffect(()=>{
+  GetCategory();
+},[]);
+
 
   const insert = cardDetail?.insertDate?.toString()
   const update = cardDetail?.updateDate?.toString()
-  console.log(cardDetail)
-
-  const initialValues={
-    Id:cardDetail.id,
-    // SlideNumber:cardDetail,
-    CurrentImageAddress:cardDetail.currentImageAddress,
-    CurrentImageAddressTumb:cardDetail.currentImageAddressTumb,
-    Active:cardDetail.active,
-    Title:cardDetail.title,
-    GoogleTitle:cardDetail.googleTitle,
-    GoogleDescribe:cardDetail.googleDescribe,
-    MiniDescribe:cardDetail.miniDescribe,
-    Describe:cardDetail.describe,
-    Keyword:cardDetail.keyword,
-    IsSlider:cardDetail.isSlider,
-    NewsCatregoryId:cardDetail.newsCatregoryId,
-    // Image:cardDetail
-  }
+ 
 
   const handleSubmit = async ()=>{
     const formData = new FormData();
     formData.append("Id",Id)
+    formData.append("SlideNumber",SlideNumber)
     formData.append("CurrentImageAddress",CurrentImageAddress)
     formData.append("CurrentImageAddressTumb",CurrentImageAddressTumb)
     formData.append("Active",Active)
@@ -57,6 +58,7 @@ const NewsInfoCard = ({ selectedUser, cardDetail }) => {
     formData.append("Keyword",Keyword)
     formData.append("IsSlider",IsSlider)
     formData.append("NewsCatregoryId",NewsCatregoryId)
+    formData.append("Image",Image)
     const result = await UpdateNews(formData);
     toast.success(result.message)
   }
@@ -158,146 +160,148 @@ const NewsInfoCard = ({ selectedUser, cardDetail }) => {
             <h1 className='mb-1'>ویرایش اطلاعات اخبار و مقالات</h1>
           </div>
           <Formik
-          initialValues={initialValues}
+          initialValues={{
+            Id:cardDetail.id,
+            SlideNumber:1,
+            CurrentImageAddress:cardDetail.currentImageAddress,
+            CurrentImageAddressTumb:cardDetail.currentImageAddressTumb,
+            Active:cardDetail.active,
+            Title:cardDetail.title,
+            GoogleTitle:cardDetail.googleTitle,
+            GoogleDescribe:cardDetail.googleDescribe,
+            MiniDescribe:cardDetail.miniDescribe,
+            Describe:cardDetail.describe,
+            Keyword:cardDetail.keyword,
+            IsSlider:cardDetail.isSlider,
+            NewsCatregoryId:cardDetail.newsCatregoryId,
+            Image:''
+          }}
           onSubmit={handleSubmit}
           >
             <Form>
               <Row className='gy-1 pt-75'>
-              <Col md={6} xs={12}>
-                <Label className='form-label' for='Id'>
-                  آیدی خبر 
-                </Label>
-                <Field 
-                  class="form-control form-control-md" 
-                  id='Id' 
-                  name='Id' 
-                />
-                <ErrorMessage name='Id' component={'p'} class="text-danger"/>
-              </Col>
-              <Col md={6} xs={12}>
-                <Label className='form-label' for='Title'>
-                  عنوان 
-                </Label>
-                <Field 
-                  class="form-control form-control-md" 
-                  id='Title' 
-                  name='Title' 
-                />
-                <ErrorMessage name='Title' component={'p'} class="text-danger"/>
-              </Col>
-              <Col md={6} xs={12}>
-                <Label className='form-label' for='GoogleDescribe'>
-                  عنوان گوگل 
-                </Label>
-                <Field 
-                  class="form-control form-control-md" 
-                  id='GoogleDescribe' 
-                  name='GoogleDescribe' 
-                />
-                <ErrorMessage name='GoogleDescribe' component={'p'} class="text-danger"/>
-              </Col>
-              <Col md={6} xs={12}>
-                <Label className='form-label' for='Keyword'>
-                  کلمات کلیدی 
-                </Label>
-                <Field 
-                  class="form-control form-control-md" 
-                  id='Keyword' 
-                  name='Keyword' 
-                  placeholder='111'
-                />
-                <ErrorMessage name='Keyword' component={'p'} class="text-danger"/>
-              </Col>
-              
-              <Col md={4} xs={12}>
-                <Label className='form-label' for='NewsCatregoryId'>
-                آیدی دسته بندی
-                </Label>
-                <Field 
-                  class="form-control form-control-md" 
-                  id='NewsCatregoryId' 
-                  name='NewsCatregoryId' 
-                />
-                <ErrorMessage name='NewsCatregoryId' component={'p'} class="text-danger"/>
-              </Col>
-              <Col md={4} xs={12}>
-                <Label className='form-label' for='Active'>
-                  وضعیت
-                </Label>
-                <Field 
-                  class="form-control form-control-md" 
-                  id='Active' 
-                  name='Active' 
-                />
-                <ErrorMessage name='Active' component={'p'} class="text-danger"/>
-              </Col>
-              <Col md={4} xs={12}>
-                <Label className='form-label' for='IsSlider'>
-                IsSlider
-                </Label>
-                <Field 
-                  class="form-control form-control-md" 
-                  id='IsSlider' 
-                  name='IsSlider' 
-                />
-                <ErrorMessage name='IsSlider' component={'p'} class="text-danger"/>
-              </Col>
-              <Col md={6} xs={12}>
-                <Label className='form-label' for='MiniDescribe'>
-                توضیح کوتاه
-                </Label>
-                <Field 
-                  class="form-control form-control-md" 
-                  id='MiniDescribe' 
-                  name='MiniDescribe' 
-                />
-                <ErrorMessage name='MiniDescribe' component={'p'} class="text-danger"/>
-              </Col>
-              <Col md={6} xs={12}>
-                <Label className='form-label' for='GoogleDescribe'>
-                توضیحات گوگل
-                </Label>
-                <Field 
-                  class="form-control form-control-md" 
-                  id='GoogleDescribe' 
-                  name='GoogleDescribe' 
-                />
-                <ErrorMessage name='GoogleDescribe' component={'p'} class="text-danger"/>
-              </Col>
-              <Col md={12} xs={12}>
-                <Label className='form-label' for='Describe'>
-                توضیحات 
-                </Label>
-                <Field 
-                  class="form-control form-control-md" 
-                  id='Describe' 
-                  name='Describe' 
-                />
-                <ErrorMessage name='Describe' component={'p'} class="text-danger"/>
-              </Col>
-              
-              <Col md={4} xs={12}>
-                <Label className='form-label' for='CurrentImageAddress'>
-                آپلود عکس 
-                </Label>
-                <Field 
-                  class="form-control form-control-md" 
-                  id='CurrentImageAddress' 
-                  name='CurrentImageAddress' 
-                />
-                <ErrorMessage name='CurrentImageAddress' component={'p'} class="text-danger"/>
-              </Col>
-              <Col md={4} xs={12}>
-                <Label className='form-label' for='CurrentImageAddressTumb'>
-                2آپلود عکس 
-                </Label>
-                <Field 
-                  class="form-control form-control-md" 
-                  id='CurrentImageAddressTumb' 
-                  name='CurrentImageAddressTumb' 
-                />
-                <ErrorMessage name='CurrentImageAddressTumb' component={'p'} class="text-danger"/>
-              </Col>
+                <Col md={6} xs={12}>
+                  <Label className='form-label' for='Title'>
+                    عنوان 
+                  </Label>
+                  <Field 
+                    class="form-control form-control-md" 
+                    id='Title' 
+                    name='Title' 
+                  />
+                  <ErrorMessage name='Title' component={'p'} class="text-danger"/>
+                </Col>
+                <Col md={4} xs={12}>
+                  <Label className='form-label' for='NewsCatregoryId'>
+                    دسته بندی
+                  </Label>
+                  <Field 
+                    as='select'
+                    class="form-select form-select-md" 
+                    id='NewsCatregoryId' 
+                    name='NewsCatregoryId' 
+                  >
+                    {newsCategory?.map((item, index)=>{
+                      return(
+                        <option key={index} value={item.id}>{item.categoryName}</option>
+                      )
+                    })}
+                  </Field>
+                  <ErrorMessage name='NewsCatregoryId' component={'p'} class="text-danger"/>
+                </Col>
+                <Col md={2} xs={12}>
+                  <Label className='form-label' for='Active'>
+                    وضعیت
+                  </Label>
+                  <Field
+                    as='select'
+                    class="form-select form-select-md" 
+                    id='Active' 
+                    name='Active' 
+                  >
+                    <option value={true}>فعال</option>
+                    <option value={false}>غیرفعال</option>
+                  </Field>
+                  <ErrorMessage name='Active' component={'p'} class="text-danger"/>
+                </Col>
+                <Col md={6} xs={12}>
+                  <Label className='form-label' for='MiniDescribe'>
+                  توضیح کوتاه
+                  </Label>
+                  <Field 
+                    class="form-control form-control-md" 
+                    id='MiniDescribe' 
+                    name='MiniDescribe' 
+                  />
+                  <ErrorMessage name='MiniDescribe' component={'p'} class="text-danger"/>
+                </Col>
+                <Col md={6} xs={12}>
+                  <Label className='form-label' for='Keyword'>
+                    کلمات کلیدی 
+                  </Label>
+                  <Field 
+                    class="form-control form-control-md" 
+                    id='Keyword' 
+                    name='Keyword' 
+                    placeholder='111'
+                  />
+                  <ErrorMessage name='Keyword' component={'p'} class="text-danger"/>
+                </Col>
+                <Col md={12} xs={12}>
+                  <Label className='form-label' for='GoogleDescribe'>
+                  توضیحات گوگل
+                  </Label>
+                  <Field 
+                    class="form-control form-control-md" 
+                    id='GoogleDescribe' 
+                    name='GoogleDescribe' 
+                  />
+                  <ErrorMessage name='GoogleDescribe' component={'p'} class="text-danger"/>
+                </Col>
+                <Col md={12} xs={12}>
+                  <Label className='form-label' for='GoogleTitle'>
+                    عنوان گوگل 
+                  </Label>
+                  <Field 
+                    class="form-control form-control-md" 
+                    id='GoogleTitle' 
+                    name='GoogleTitle' 
+                  />
+                  <ErrorMessage name='GoogleDescribe' component={'p'} class="text-danger"/>
+                </Col>
+                <Col md={12} xs={12}>
+                  <Label className='form-label' for='Describe'>
+                  توضیحات 
+                  </Label>
+                  <Field 
+                    class="form-control form-control-md" 
+                    id='Describe' 
+                    name='Describe' 
+                  />
+                  <ErrorMessage name='Describe' component={'p'} class="text-danger"/>
+                </Col>          
+                <Col md={6} xs={12}>
+                  <Label className='form-label' for='CurrentImageAddress'>
+                  آپلود عکس 
+                  </Label>
+                  <Field 
+                    class="form-control form-control-md" 
+                    id='CurrentImageAddress' 
+                    name='CurrentImageAddress' 
+                  />
+                  <ErrorMessage name='CurrentImageAddress' component={'p'} class="text-danger"/>
+                </Col>
+                <Col md={6} xs={12}>
+                  <Label className='form-label' for='CurrentImageAddressTumb'>
+                  2آپلود عکس 
+                  </Label>
+                  <Field 
+                    class="form-control form-control-md" 
+                    id='CurrentImageAddressTumb' 
+                    name='CurrentImageAddressTumb' 
+                  />
+                  <ErrorMessage name='CurrentImageAddressTumb' component={'p'} class="text-danger"/>
+                </Col>
               
                 <Col xs={12} className='text-center mt-2 pt-50'>
                   <Button type='submit' className='me-1' color='primary'>

@@ -72,7 +72,7 @@ useEffect(()=>{
 
   const start= detail?.startTime?.toString()
   const end= detail?.endTime?.toString()
-  console.log(detail)
+  // console.log(detail)
 
 
   const {
@@ -87,30 +87,31 @@ useEffect(()=>{
   })
 
   const initialValues={
-    Id:detail.courseId,
-    Title:detail.title,
-    Describe:detail.describe,
+    Id:detail?.courseId,
+    Title:detail?.title,
+    Describe:detail?.describe,
     MiniDescribe:'ندارد',
     Capacity:"ندارد",
-    CourseTypeId:detail.courseTypeName,
+    CourseTypeId:detail?.courseTypeName,
     // SessionNumber:detail.,
     // CurrentCoursePaymentNumber:detail.,
     // TremId:detail.,
-    ClassId:detail.courseClassRoomName,
-    CourseLvlId:detail.courseLevelName,
-    TeacherId:detail.teacherId,
-    Cost:detail.cost,
+    ClassId:detail?.courseClassRoomName,
+    CourseLvlId:detail?.courseLevelName,
+    TeacherId:detail?.teacherId,
+    Cost:detail?.cost,
     // UniqeUrlString:detail,
     // Image:detail,
-    StartTime:detail.startTime,
-    EndTime:detail.endTime,
+    StartTime:detail?.startTime,
+    EndTime:detail?.endTime,
     // GoogleSchema:detail,
     // GoogleTitle:detail.,
     // CoursePrerequisiteId:detail.,
     // ShortLink:detail.,
     // TumbImageAddress:detail.,
-    ImageAddress:detail.imageAddress,
+    ImageAddress:detail?.imageAddress,
   }
+  
   const handleSubmit = async ()=>{
     const formData = new FormData();
     formData.append("Id",Id)
@@ -118,6 +119,7 @@ useEffect(()=>{
     formData.append("Describe",Describe)
     formData.append("MiniDescribe",MiniDescribe)
     formData.append("Capacity",Capacity)
+    formData.append("CourseTypeId",CourseTypeId)
     formData.append("TeacherId",TeacherId)
     formData.append("Cost",Cost)
     formData.append("StartTime",StartTime)
@@ -398,7 +400,7 @@ useEffect(()=>{
                 
                 <Col xs={12} className='text-center mt-2 pt-50'>
                   <Button type='submit' className='me-1' color='primary'>
-                    Submit
+                    ثبت
                   </Button>
                 </Col>
               </Row>

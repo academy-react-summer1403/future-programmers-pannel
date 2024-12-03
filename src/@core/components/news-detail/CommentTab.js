@@ -3,7 +3,7 @@ import { Card, Col, DropdownMenu, DropdownToggle, Modal, UncontrolledDropdown, M
 import pic from '../../../assets/images/avatars/avatar-blank.png'
 import { useEffect, useState } from 'react'
 // ** Third Party Components
-import { CheckCircle, ChevronDown ,Eye , Trash2 } from 'react-feather'
+import { CheckCircle, ChevronDown ,Eye , FileText, Trash2 } from 'react-feather'
 import DataTable from 'react-data-table-component'
 import ReplyNewsCommentTab from './ReplyNewsCommentTab'
 // ** Custom Components
@@ -12,6 +12,7 @@ import Avatar from '@components/avatar'
 
 // ** Styles
 import '@styles/react/libs/tables/react-dataTable-component.scss'
+import AddReply from './AddReply'
 
 export const columns = [
   {
@@ -51,6 +52,28 @@ export const columns = [
     }
   },
   {
+    name: 'پاسخ دادن',
+    maxWidth:'70px',
+    cell: row => {
+      const [show, setShow] = useState(false);
+      return(
+      <div className='column-action'>
+        <UncontrolledDropdown>
+          <DropdownToggle tag='div' className='btn btn-sm'>
+            <FileText size={16} className='cursor-pointer' onClick={()=>setShow(!show)}/>
+          </DropdownToggle>
+        </UncontrolledDropdown>
+        <Modal isOpen={show} toggle={() => setShow(!show)} className='modal-dialog-centered modal-lg'>
+        <ModalHeader className='bg-transparent' toggle={() => setShow(!show)}></ModalHeader>
+        <ModalBody className='px-sm-5 pt-50 pb-5'>
+
+          <AddReply CommentId={row.id} newsId={row.newsId}/>
+        </ModalBody>
+      </Modal>
+      </div>)
+    }
+  },
+  {
     name: 'پاسخ ها',
     maxWidth:'100px',
     cell: row => {
@@ -80,7 +103,7 @@ export const columns = [
 
 const CommentTab = ({commentDetail}) => {
  
-// console.log(commentDetail)
+console.log(commentDetail)
 
   return (
     <Card>

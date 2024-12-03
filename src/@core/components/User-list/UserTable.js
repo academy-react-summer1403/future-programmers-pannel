@@ -461,7 +461,7 @@ console.log(users)
               className='w-100' 
             >
               <MinusCircle size={14} className='me-50' />
-              <span className='align-middle'>غیرفال کردن</span>
+              <span className='align-middle'>غیرفعال کردن</span>
             </DropdownItem>
           </DropdownMenu>
         </UncontrolledDropdown>

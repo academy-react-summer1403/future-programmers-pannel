@@ -51,7 +51,7 @@ const UserInfoCard = ({ selectedUser, detail }) => {
     userName:detail.userName,
     gmail:detail.gmail,
     phoneNumber:detail.phoneNumber,
-    active:detail.active,
+    active:detail.active=== 'فعال'? true:false,
     isDelete:detail.isDelete,
     isTecher:detail.isTecher,
     isStudent:detail.isStudent,
@@ -64,7 +64,7 @@ const UserInfoCard = ({ selectedUser, detail }) => {
     receiveMessageEvent:detail.receiveMessageEvent,
     homeAdderess:detail.homeAdderess,
     nationalCode:detail.nationalCode,
-    gender:detail.gender,
+    gender:true,
     latitude:detail.latitude,
     longitude:detail.longitude,
     insertDate:detail.insertDate,
@@ -84,6 +84,7 @@ const UserInfoCard = ({ selectedUser, detail }) => {
   
   const handleSubmit = async(value)=>{
     const result = await completeUser(value)
+    console.log(value)
     toast.success(result.message)
   }
 

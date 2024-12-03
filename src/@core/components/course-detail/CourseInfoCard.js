@@ -19,7 +19,7 @@ import Avatar from '@components/avatar'
 
 // ** Styles
 import '@styles/react/libs/react-select/_react-select.scss'
-import { getCourseLevel, getTeacher } from '../../../core/services/api/putCourse';
+import { getCourseLevel, getTeacher, UpdateCourse } from '../../../core/services/api/putCourse';
 
 const levelOptions = [
   { value: 'active', label: 'ساده' },
@@ -91,13 +91,13 @@ useEffect(()=>{
     Title:detail?.title,
     Describe:detail?.describe,
     MiniDescribe:'ندارد',
-    Capacity:"ندارد",
-    CourseTypeId:detail?.courseTypeName,
+    Capacity:10,
+    // CourseTypeId:detail?.courseTypeName,
     // SessionNumber:detail.,
     // CurrentCoursePaymentNumber:detail.,
     // TremId:detail.,
-    ClassId:detail?.courseClassRoomName,
-    CourseLvlId:detail?.courseLevelName,
+    // ClassId:detail?.courseClassRoomName,
+    // CourseLvlId:detail?.courseLevelName,
     TeacherId:detail?.teacherId,
     Cost:detail?.cost,
     // UniqeUrlString:detail,
@@ -111,21 +111,24 @@ useEffect(()=>{
     // TumbImageAddress:detail.,
     ImageAddress:detail?.imageAddress,
   }
-  
-  const handleSubmit = async ()=>{
+
+  const handleSubmit = async (e)=>{
     const formData = new FormData();
-    formData.append("Id",Id)
-    formData.append("Title",Title)
-    formData.append("Describe",Describe)
-    formData.append("MiniDescribe",MiniDescribe)
-    formData.append("Capacity",Capacity)
-    formData.append("CourseTypeId",CourseTypeId)
-    formData.append("TeacherId",TeacherId)
-    formData.append("Cost",Cost)
-    formData.append("StartTime",StartTime)
-    formData.append("EndTime",EndTime)
-    formData.append("ImageAddress",ImageAddress)
+    formData.append("Id",e.Id)
+    formData.append("Title",e.Title)
+    formData.append("Describe",e.Describe)
+    formData.append("MiniDescribe",e.MiniDescribe)
+    formData.append("Capacity",e.Capacity)
+    formData.append("CourseTypeId",1)
+    formData.append("TeacherId",e.TeacherId)
+    formData.append("TremId",1)
+    formData.append("SessionNumber",5)
+    formData.append("Cost",e.Cost)
+    formData.append("StartTime",e.StartTime)
+    formData.append("EndTime",e.EndTime)
+    formData.append("ImageAddress",e.ImageAddress)
     const result = await UpdateCourse(formData);
+    // console.log(e.TeacherId)
     toast.success(result.message)
   }
 

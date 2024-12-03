@@ -51,7 +51,7 @@ const ReplyCourseCommentTab = ({CourseId, CommentId}) => {
   
   
   const [replies, setReplies] = useState([])
-  console.log(replies)
+  
 
 
   const getReplies = async ()=>{

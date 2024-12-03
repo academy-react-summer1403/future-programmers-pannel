@@ -47,11 +47,11 @@ const UserInfoCard = ({ selectedUser, detail }) => {
   const initialValues = {
     id:detail.id,
     fName:detail.fName,
-    lName:detail.lName,
+    lName:detail.lName,   
     userName:detail.userName,
     gmail:detail.gmail,
     phoneNumber:detail.phoneNumber,
-    active:detail.active=== 'فعال'? true:false,
+    active:detail.active === 'فعال'? true:false,
     isDelete:detail.isDelete,
     isTecher:detail.isTecher,
     isStudent:detail.isStudent,
@@ -59,35 +59,25 @@ const UserInfoCard = ({ selectedUser, detail }) => {
     twoStepAuth:detail.twoStepAuth,
     userAbout:detail.userAbout,
     currentPictureAddress:detail.currentPictureAddress,
-    linkdinProfile:detail.linkdinProfile,
-    telegramLink:detail.telegramLink,
+    linkdinProfile:'https://t.mww',
+    telegramLink:'https://t.me',
     receiveMessageEvent:detail.receiveMessageEvent,
     homeAdderess:detail.homeAdderess,
     nationalCode:detail.nationalCode,
     gender:true,
-    latitude:detail.latitude,
-    longitude:detail.longitude,
+    latitude:'13',
+    longitude:'12',
     insertDate:detail.insertDate,
     birthDay:detail.birthDay
   }
 
-  // const validation = yup.object().shape({
-  //   id:yup.string().required(),
-  //   fName:yup.string().required(),
-  //   lName:yup.string().required(),
-  //   username:yup.string().required(),
-  //   gmail:yup.string().required(),
-  //   status:yup.string().required(),
-  //   nationalCode:yup.string().required(),
-  //   phoneNumber:yup.string().required(),
-  // });
   
   const handleSubmit = async(value)=>{
     const result = await completeUser(value)
     console.log(value)
     toast.success(result.message)
   }
-
+  // https://classapi.sepehracademy.ir/\Pictures\ProfileImageThumbnail\teacher_f4a15f6c-76a1-4da3-ae79-ba06406f3192.png
   return (
     <Fragment>
       <Card>
@@ -183,7 +173,6 @@ const UserInfoCard = ({ selectedUser, detail }) => {
           <Formik 
             initialValues={initialValues} 
             onSubmit={handleSubmit}
-            // validationSchema={validation}
           >
             <Form>
               <Row className='gy-1 pt-75'>
@@ -195,9 +184,7 @@ const UserInfoCard = ({ selectedUser, detail }) => {
                     class="form-control form-control-md" 
                     id='fName' 
                     name='fName' 
-                    placeholder='John'
                   />
-                  <ErrorMessage name='fName' component={'p'} class="text-danger"/>
                 </Col>
                 <Col md={4} xs={12}>
                   <Label className='form-label' for='lName'>
@@ -244,6 +231,7 @@ const UserInfoCard = ({ selectedUser, detail }) => {
                   />
                   <ErrorMessage name='nationalCode' component={'p'} class="text-danger"/>
                 </Col> 
+                
                 <Col md={3} xs={12}>
                   <Label className='form-label' for='phoneNumber'>
                     شماره موبایل
@@ -281,7 +269,7 @@ const UserInfoCard = ({ selectedUser, detail }) => {
                   />
                   <ErrorMessage name='recoveryEmail' component={'p'} class="text-danger"/>
                 </Col> 
-                <Col md={12} xs={12}>
+                <Col md={8} xs={12}>
                   <Label className='form-label' for='homeAdderess'>
                     آدرس منزل 
                   </Label>
@@ -291,7 +279,18 @@ const UserInfoCard = ({ selectedUser, detail }) => {
                     name='homeAdderess' 
                   />
                   <ErrorMessage name='homeAdderess' component={'p'} class="text-danger"/>
-                </Col>  
+                </Col>
+                <Col md={4} xs={12}>
+                  <Label className='form-label' for='birthDay'>
+                    تاریخ تولد
+                  </Label>
+                  <Field 
+                    
+                    class="form-control form-control-md" 
+                    id='birthDay' 
+                    name='birthDay' 
+                  />
+                </Col>   
                 <Col md={6} xs={12}>
                   <Label className='form-label' for='currentPictureAddress'>
                     عکس کاربر
@@ -304,6 +303,7 @@ const UserInfoCard = ({ selectedUser, detail }) => {
                   />
                   <ErrorMessage name='currentPictureAddress' component={'p'} class="text-danger"/>
                 </Col> 
+                
                 
                 <Col md={6} xs={12}>
                   <Label className='form-label' for='userAbout'>

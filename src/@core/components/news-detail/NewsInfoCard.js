@@ -43,22 +43,22 @@ useEffect(()=>{
   const update = cardDetail?.updateDate?.toString()
  
 
-  const handleSubmit = async ()=>{
+  const handleSubmit = async (e)=>{
     const formData = new FormData();
-    formData.append("Id",Id)
-    formData.append("SlideNumber",SlideNumber)
-    formData.append("CurrentImageAddress",CurrentImageAddress)
-    formData.append("CurrentImageAddressTumb",CurrentImageAddressTumb)
-    formData.append("Active",Active)
-    formData.append("Title",Title)
-    formData.append("GoogleTitle",GoogleTitle)
-    formData.append("GoogleDescribe",GoogleDescribe)
-    formData.append("MiniDescribe",MiniDescribe)
-    formData.append("Describe",Describe)
-    formData.append("Keyword",Keyword)
-    formData.append("IsSlider",IsSlider)
-    formData.append("NewsCatregoryId",NewsCatregoryId)
-    formData.append("Image",Image)
+    formData.append("Id",e.Id)
+    formData.append("SlideNumber",e.SlideNumber)
+    formData.append("CurrentImageAddress",e.CurrentImageAddress)
+    formData.append("CurrentImageAddressTumb",e.CurrentImageAddressTumb)
+    formData.append("Active",e.Active)
+    formData.append("Title",e.Title)
+    formData.append("GoogleTitle",e.GoogleTitle)
+    formData.append("GoogleDescribe",e.GoogleDescribe)
+    formData.append("MiniDescribe",e.MiniDescribe)
+    formData.append("Describe",e.Describe)
+    formData.append("Keyword",e.Keyword)
+    formData.append("IsSlider",e.IsSlider)
+    formData.append("NewsCatregoryId",e.NewsCatregoryId)
+    formData.append("Image",e.Image)
     const result = await UpdateNews(formData);
     toast.success(result.message)
   }

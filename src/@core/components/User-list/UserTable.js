@@ -183,7 +183,7 @@ const UserTable = ({users , setSearch, setRole, role, setActivation, activation,
   // ** Store Vars
   // const dispatch = useDispatch()
   // const store = useSelector(state => state.users)
-console.log(users)
+// console.log(users)
 
   // ** States
   const [sort, setSort] = useState('desc')

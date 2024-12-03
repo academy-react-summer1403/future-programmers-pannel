@@ -20,31 +20,18 @@ import Avatar from '@components/avatar'
 // ** Styles
 import '@styles/react/libs/react-select/_react-select.scss'
 import { getCourseLevel, getTeacher, UpdateCourse } from '../../../core/services/api/putCourse';
+import { getCourseSteps } from '../../../core/services/api/getCourseSteps';
 
-const levelOptions = [
-  { value: 'active', label: 'ساده' },
-  { value: 'inactive', label: 'متوسط' },
-  { value: 'suspended', label: 'پیشرفته' }
-]
-const typeOptions = [
-  { value: 1, label: 'آنلاین' },
-  { value: 2, label: 'حضوری' },
-  { value: 3, label: 'حضوری' }
-]
-const classOptions = [
-  { value: 'class1', label: 'classRoom1' },
-  { value: 'class2', label: 'classRoom2' }
-]
-
-const MySwal = withReactContent(Swal)
 
 const CourseInfoCard = ({ selectedUser, detail }) => {
   // ** State
   const [show, setShow] = useState(false)
   const [level, setLevel] = useState([])
   const [teacherId, setTeacherId] = useState([])
-  // console.log(detail)
-  console.log(teacherId)
+  const [classRoomId, setClassRoomId] = useState([])
+  const [term, setTerm] = useState([])
+  const [courseType, setCouresType] = useState([])
+
 
   const getLevel = async()=>{
     try {
@@ -62,12 +49,23 @@ const CourseInfoCard = ({ selectedUser, detail }) => {
     
     }
   }
+  const getSteps = async()=>{
+    try {
+    const result = await getCourseSteps()
+    // console.log(result)
+    setClassRoomId(result.classRoomDtos)
+    setTerm(result.termDtos)
+    setCouresType(result.courseTypeDtos)
+    } catch (error) {
+    
+    }
+  }
 
-getTeacher
 
 useEffect(()=>{
   getLevel();
   getTeacherList();
+  getSteps()
 },[]);
 
   const start= detail?.startTime?.toString()
@@ -85,30 +83,30 @@ useEffect(()=>{
       // firstName: selectedUser.fullName.split(' ')[0]
     }
   })
-
+  console.log(detail)
   const initialValues={
     Id:detail?.courseId,
     Title:detail?.title,
     Describe:detail?.describe,
     MiniDescribe:'ندارد',
-    Capacity:10,
-    // CourseTypeId:detail?.courseTypeName,
-    // SessionNumber:detail.,
-    // CurrentCoursePaymentNumber:detail.,
-    // TremId:detail.,
-    // ClassId:detail?.courseClassRoomName,
-    // CourseLvlId:detail?.courseLevelName,
+    Capacity:0,
+    CourseTypeId:detail?.courseTypeName,
+    SessionNumber:0,
+    CurrentCoursePaymentNumber:1,
+    TremId:0,
+    ClassId:detail?.courseClassRoomName,  //id
+    CourseLvlId:detail?.courseLevelName,  //id
     TeacherId:detail?.teacherId,
     Cost:detail?.cost,
-    // UniqeUrlString:detail,
-    // Image:detail,
+    UniqeUrlString:'',
+    Image:'http://',
     StartTime:detail?.startTime,
     EndTime:detail?.endTime,
-    // GoogleSchema:detail,
-    // GoogleTitle:detail.,
-    // CoursePrerequisiteId:detail.,
-    // ShortLink:detail.,
-    // TumbImageAddress:detail.,
+    GoogleSchema:'',
+    GoogleTitle:'',
+    CoursePrerequisiteId:1,  //number
+    ShortLink:'',
+    TumbImageAddress:"",
     ImageAddress:detail?.imageAddress,
   }
 
@@ -119,16 +117,24 @@ useEffect(()=>{
     formData.append("Describe",e.Describe)
     formData.append("MiniDescribe",e.MiniDescribe)
     formData.append("Capacity",e.Capacity)
-    formData.append("CourseTypeId",1)
+    formData.append("CourseTypeId",e.CourseTypeId)
+    formData.append("SessionNumber",e.SessionNumber)
+    formData.append("CurrentCoursePaymentNumber",e.CurrentCoursePaymentNumber)
+    formData.append("CourseLvlId",e.CourseLvlId)
     formData.append("TeacherId",e.TeacherId)
-    formData.append("TremId",1)
-    formData.append("SessionNumber",5)
-    formData.append("Cost",e.Cost)
+    formData.append("TremId",e.TremId)
+    formData.append("UniqeUrlString",e.UniqeUrlString)
+    formData.append("Image",e.Image)
+    formData.append("GoogleSchema",e.GoogleSchema)
+    formData.append("GoogleTitle",e.GoogleTitle)
+    formData.append("CoursePrerequisiteId",e.CoursePrerequisiteId)
+    formData.append("ShortLink",e.ShortLink)
+    formData.append("TumbImageAddress",e.TumbImageAddress)
     formData.append("StartTime",e.StartTime)
     formData.append("EndTime",e.EndTime)
     formData.append("ImageAddress",e.ImageAddress)
     const result = await UpdateCourse(formData);
-    // console.log(e.TeacherId)
+    // console.log(formData)
     toast.success(result.message)
   }
 
@@ -258,9 +264,11 @@ useEffect(()=>{
                     id='CourseTypeId' 
                     name='CourseTypeId' 
                   >
-                    <option value={1}>حضوری</option>
-                    <option value={2}>آنلاین</option>
-                    <option value={3}>حضوری آنلاین</option>
+                   {courseType?.map((item, index)=>{
+                      return(
+                        <option key={index} value={item.id}>{item.typeName}</option>
+                      )
+                    })}
                   </Field>
 
                 </Col>
@@ -269,11 +277,20 @@ useEffect(()=>{
                     ظرفیت دوره
                   </Label>
                   <Field 
-                    class="form-control form-control-md" 
+                    as='select'
+                    class="form-select form-select-md" 
                     id='Capacity' 
                     name='Capacity' 
-                  />
+                  >
+                   {classRoomId?.map((item, index)=>{
+                      return(
+                        <option key={index}>{item.capacity}</option>
+                      )
+                    })}
+                  </Field>
+
                 </Col>
+
                 <Col md={7} xs={12}>
                   <Label className='form-label' for='MiniDescribe'>
                     توضیحات کوتاه
@@ -289,12 +306,19 @@ useEffect(()=>{
                     کلاس دوره
                   </Label>
                   <Field 
-                    class="form-control form-control-md" 
+                    as='select'
+                    class="form-select form-select-md" 
                     id='ClassId' 
                     name='ClassId' 
-                  />
-                </Col>
+                  >
+                   {classRoomId?.map((item, index)=>{
+                      return(
+                        <option key={index} value={item.id}>{item.classRoomName}</option>
+                      )
+                    })}
+                  </Field>
 
+                </Col>
                 <Col md={4} xs={12}>
                   <Label className='form-label' for='TeacherId'>
                     استاد دوره
@@ -312,15 +336,24 @@ useEffect(()=>{
                     })}
                   </Field>
                 </Col>
+                
                 <Col md={4} xs={12}>
                   <Label className='form-label' for='TremId'>
-                    ترم 
+                    ترم
                   </Label>
                   <Field 
-                    class="form-control form-control-md" 
+                    as='select'
+                    class="form-select form-select-md" 
                     id='TremId' 
                     name='TremId' 
-                  />
+                  >
+                   {term?.map((item, index)=>{
+                      return(
+                        <option key={index} value={item.id}>{item.termName}</option>
+                      )
+                    })}
+                  </Field>
+
                 </Col>
                 <Col md={4} xs={12}>
                   <Label className='form-label' for='SessionNumber'>
@@ -342,6 +375,7 @@ useEffect(()=>{
                     name='Cost' 
                   />
                 </Col>
+
                 <Col md={3} xs={12}>
                   <Label className='form-label' for='CourseLvlId'>
                     سطح دوره:

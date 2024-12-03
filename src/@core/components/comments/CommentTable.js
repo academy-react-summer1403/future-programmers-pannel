@@ -124,7 +124,6 @@ const CommentTable = () => {
   }
 
 
-// console.log(comment.map((item)=>{item.replyCount}))
   // ** Custom Pagination
   const CustomPagination = () => {
     const count = Number(Math.ceil(totalCount / 10))
@@ -332,16 +331,6 @@ const CommentTable = () => {
             className='react-dataTable'
             paginationComponent={CustomPagination}
             data={comment}
-            // subHeaderComponent={
-            //   <CustomHeader
-            //     store={store}
-            //     searchTerm={searchTerm}
-            //     rowsPerPage={rowsPerPage}
-            //     handleFilter={handleFilter}
-            //     handlePerPage={handlePerPage}
-            //     toggleSidebar={toggleSidebar}
-            //   />
-            // }
           />
         </div>
       </Card>

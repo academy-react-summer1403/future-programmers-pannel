@@ -104,7 +104,7 @@ useEffect(()=>{
     EndTime:detail?.endTime,
     GoogleSchema:'',
     GoogleTitle:'',
-    CoursePrerequisiteId:1,  //number
+    // CoursePrerequisiteId:1,  
     ShortLink:'',
     TumbImageAddress:"",
     ImageAddress:detail?.imageAddress,
@@ -112,28 +112,38 @@ useEffect(()=>{
 
   const handleSubmit = async (e)=>{
     const formData = new FormData();
+    const courseTypeId = !isNaN(e.CourseTypeId)?e.CourseTypeId:'1'
+    const ClassId = !isNaN(e.ClassId)?e.ClassId:'1'
+    const CourseLvlId = !isNaN(e.CourseLvlId)?e.CourseLvlId:'1'
+    const TremId = !isNaN(e.TremId)?e.TremId:'1'
+
+    console.log(TremId)
+    
     formData.append("Id",e.Id)
     formData.append("Title",e.Title)
     formData.append("Describe",e.Describe)
     formData.append("MiniDescribe",e.MiniDescribe)
     formData.append("Capacity",e.Capacity)
-    formData.append("CourseTypeId",e.CourseTypeId)
+    formData.append("CourseTypeId",courseTypeId)
     formData.append("SessionNumber",e.SessionNumber)
     formData.append("CurrentCoursePaymentNumber",e.CurrentCoursePaymentNumber)
-    formData.append("CourseLvlId",e.CourseLvlId)
+    formData.append("CourseLvlId",CourseLvlId)
     formData.append("TeacherId",e.TeacherId)
-    formData.append("TremId",e.TremId)
+    formData.append("TremId",TremId)
+    formData.append("ClassId",ClassId)
     formData.append("UniqeUrlString",e.UniqeUrlString)
     formData.append("Image",e.Image)
+    formData.append("Cost",e.Cost)
     formData.append("GoogleSchema",e.GoogleSchema)
     formData.append("GoogleTitle",e.GoogleTitle)
-    formData.append("CoursePrerequisiteId",e.CoursePrerequisiteId)
+    // formData.append("CoursePrerequisiteId",e.CoursePrerequisiteId)
     formData.append("ShortLink",e.ShortLink)
     formData.append("TumbImageAddress",e.TumbImageAddress)
     formData.append("StartTime",e.StartTime)
     formData.append("EndTime",e.EndTime)
     formData.append("ImageAddress",e.ImageAddress)
     const result = await UpdateCourse(formData);
+    // console.log(e)
     // console.log(formData)
     toast.success(result.message)
   }
@@ -394,13 +404,13 @@ useEffect(()=>{
                   </Field>
                 </Col>
                 <Col md={5} xs={12}>
-                  <Label className='form-label' for='CoursePrerequisiteId'>
+                  <Label className='form-label' for='UniqeUrlString'>
                     کد یکتا 
                   </Label>
                   <Field 
                     class="form-control form-control-md" 
-                    id='CoursePrerequisiteId' 
-                    name='CoursePrerequisiteId' 
+                    id='UniqeUrlString' 
+                    name='UniqeUrlString' 
                   />
                 </Col>
                 <Col md={6} xs={12}>
